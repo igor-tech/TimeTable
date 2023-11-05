@@ -1,0 +1,9 @@
+:root[data-mantine-color-scheme='dark'] {
+  --react-international-phone-background-color: #25262b;
+  --react-international-phone-text-color: #c1c2c5;
+}
+
+:root[data-mantine-color-scheme='light'] {
+  --react-international-phone-background-color: #f8f9fa;
+  --react-international-phone-text-color: black;
+}
