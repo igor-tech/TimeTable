@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { DayCard } from '@/components/Card/DayCard'
 import { fetchData } from '@/data/fetchData'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay'
-import { optionsFilter } from '@/helpers/optionsFilter'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { ICouple } from '@/types/types'
 import { Box, Flex, LoadingOverlay, Select, Text } from '@mantine/core'
@@ -95,13 +94,10 @@ export const StudentPage = () => {
         checkIconPosition={'right'}
         data={groupList ?? [groupId]}
         defaultValue={groupId}
-        filter={optionsFilter}
         label={'Группа:'}
-        maxDropdownHeight={'300px'}
-        nothingFoundMessage={'Nothing found...'}
+        maxDropdownHeight={'350px'}
         onChange={value => setGroupId(value!)}
         placeholder={'Выберите группу'}
-        searchable
         value={groupId}
       />
 
@@ -110,9 +106,12 @@ export const StudentPage = () => {
           Группа {groupName} (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
         </Text>
       )}
-      <Flex gap={'20px'} justify={'center'} mt={'20px'} w={'100%'} wrap={'wrap'}>
-        {data?.map((day, i) => <DayCard day={day} key={i} />)}
-      </Flex>
+
+      {data?.length && (
+        <Flex gap={'20px'} justify={'center'} mt={'20px'} w={'100%'} wrap={'wrap'}>
+          {data?.map((day, i) => <DayCard day={day} key={i} />)}
+        </Flex>
+      )}
 
       {!data?.length && (
         <Text fw={'200'} fz={'25px'} mt={'150px'} ta={'center'}>

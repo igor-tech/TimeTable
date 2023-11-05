@@ -30,18 +30,18 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
 
         <Flex direction={'column'} gap={'3px'} w={'100%'}>
           <Text fw={700} fz={'14px'}>
-            {subjectName}
+            {subjectName ?? 'Название предмета не указано'}
           </Text>
 
           <Text fz={'14px'}>Преподаватель: {teacherName}</Text>
           <Flex justify={'space-between'}>
             {isTeacher && (
               <Text fw={'400'} fz={'14px'}>
-                Группа: {groupName}
+                Группа: {groupName ?? 'группа не указана'}
               </Text>
             )}
             <Text fw={'500'} fz={'12px'}>
-              Кабинет: {officeNumber}
+              Кабинет: {officeNumber ?? 'кабинет не указан'}
             </Text>
           </Flex>
         </Flex>

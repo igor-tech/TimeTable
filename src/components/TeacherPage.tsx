@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react'
 import { DayCard } from '@/components/Card/DayCard'
 import { fetchData } from '@/data/fetchData'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay'
-import { optionsFilter } from '@/helpers/optionsFilter'
 import { useLocalStorage } from '@/hooks/useLocalStorage'
 import { ICouple } from '@/types/types'
 import { Box, Flex, LoadingOverlay, Select, Text } from '@mantine/core'
@@ -30,7 +29,11 @@ export const TeacherPage = () => {
         if (data) {
           setLocalData(data)
 
-          setTeacherList(Array.from(new Set(data?.map(couple => couple.teacherName))))
+          setTeacherList(
+            Array.from(new Set(data?.map(couple => couple.teacherName))).sort((a, b) =>
+              a.toLowerCase().charAt(0) < b.toLowerCase().charAt(0) ? -1 : 1
+            )
+          )
 
           const filteredData = data.filter(couple => couple.groupName.includes(teacherId))
 
@@ -95,13 +98,10 @@ export const TeacherPage = () => {
         checkIconPosition={'right'}
         data={teacherList ?? [teacherId]}
         defaultValue={teacherId}
-        filter={optionsFilter}
-        label={'Имя преподавателя:'}
-        maxDropdownHeight={'300px'}
-        nothingFoundMessage={'Nothing found...'}
+        label={'Преподаватель:'}
+        maxDropdownHeight={'350px'}
         onChange={value => setTeacherId(value!)}
-        placeholder={'Начните вводить имя'}
-        searchable
+        placeholder={'Выберите перподавателя'}
         value={teacherId}
       />
 
@@ -109,15 +109,16 @@ export const TeacherPage = () => {
         <Text fz={'18px'} mt={'15px'}>
           Расписание для преподавателя {teacherName}
           <Text>
-            (с {data[0][0].numberDay} по
-            {data[data.length - 1][0].numberDay})
+            (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
           </Text>
         </Text>
       )}
 
-      <Flex gap={'20px'} justify={'center'} mt={'20px'} w={'100%'} wrap={'wrap'}>
-        {data?.map((day, i) => <DayCard day={day} isTeacher key={i} />)}
-      </Flex>
+      {data?.length && (
+        <Flex gap={'20px'} justify={'center'} mt={'20px'} w={'100%'} wrap={'wrap'}>
+          {data?.map((day, i) => <DayCard day={day} isTeacher key={i} />)}
+        </Flex>
+      )}
 
       {!data?.length && (
         <Text fw={'200'} fz={'25px'} mt={'150px'} ta={'center'}>
