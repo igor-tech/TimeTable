@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { TIME_DATA } from '@/components/config'
-import { ICouple } from '@/types/types'
+import { TIME_DATA } from '@/components/config.ts'
+import { ICouple } from '@/types/types.ts'
 import { Box, Divider, Flex, Text } from '@mantine/core'
 
 type Props = {

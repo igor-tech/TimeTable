@@ -7,12 +7,7 @@ export const TIME_DATA: Record<string, Record<string, string>> = {
   6: { 1: '17:45', 2: '19:20' },
 } as const
 
-export const DAY_OF_THE_WEEK = [
-  'Понедельник',
-  'Вторник',
-  'Среда',
-  'Четверг',
-  'Пятница',
-  'Суббота',
-  'Воскресенье',
-]
+export const DEFAULT_GROUP_ID = 'А-123/9'
+export const DEFAULT_TEACHER_ID = 'Михайлова'
+
+export const LOCAL_STORAGE_KEY = 'UKSAP'

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { Couple } from '@/components/Couple'
-import { ICouple } from '@/types/types'
+import { Couple } from '@/components/Couple.tsx'
+import { ICouple } from '@/types/types.ts'
 import { Badge, Card, Group, Text } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
 
@@ -9,6 +9,7 @@ type Props = {
   day: ICouple[]
   isTeacher?: boolean
 }
+
 export const DayCard: FC<Props> = ({ day, isTeacher }) => {
   const currentDay = new Date().getDate()
 

@@ -17,3 +17,11 @@ export interface ICouple {
   subjectName: string
   teacherName: string
 }
+
+export interface ITimeTable {
+  couple: ICouple[]
+  groupId: string
+  groupList: string[]
+  teacherId: string
+  teacherList: string[]
+}

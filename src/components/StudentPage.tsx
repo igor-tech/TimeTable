@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { DaysCard } from '@/components/Card/DaysCard.tsx'
-import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
+import { DEFAULT_GROUP_ID } from '@/components/config.ts'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
 import { ICouple, ITimeTable } from '@/types/types.ts'
 import { Box, LoadingOverlay, Select, Text } from '@mantine/core'
@@ -11,27 +11,33 @@ type Props = {
   timeTable: ITimeTable
 }
 
-export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
+export const StudentPage: FC<Props> = ({ setTimeTable, timeTable }) => {
   const [data, setData] = useState<ICouple[][]>()
   const [loading, setLoading] = useState<boolean>(true)
 
-  const handleUpdateTeacherId = (teacherId: string) => {
+  const handleUpdateGroupId = (groupId: string) => {
+    setLoading(true)
     if (Object.keys(timeTable).length) {
-      setTimeTable({ ...timeTable, teacherId })
+      setTimeTable({ ...timeTable, groupId })
     }
+
+    setLoading(false)
   }
 
   useEffect(() => {
     setLoading(true)
-    if (Object.keys(timeTable).length) {
-      const filteredData = timeTable.couple.filter(couple =>
-        couple.teacherName.includes(timeTable.teacherId)
-      )
+    if (!Object.keys(timeTable).length) {
+      setLoading(false)
 
-      if (filteredData) {
-        setData(divideArrayByNumberDay(filteredData))
-      }
+      return
     }
+
+    const filteredData = timeTable.couple.filter(couple => couple.groupName === timeTable.groupId)
+
+    if (filteredData) {
+      setData(divideArrayByNumberDay(filteredData))
+    }
+
     setLoading(false)
   }, [timeTable])
 
@@ -40,30 +46,25 @@ export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
       <LoadingOverlay overlayProps={{ blur: 2, radius: 'sm' }} visible={loading} zIndex={1000} />
     )
   }
-
-  const { teacherId, teacherList } = timeTable
-
-  const teacherName = data && data?.[0]?.[0]?.teacherName
+  const { groupId, groupList } = timeTable
+  const groupName = data && data?.[0]?.[0]?.groupName
 
   return (
     <Box>
       <Select
         checkIconPosition={'right'}
-        data={teacherList ?? [DEFAULT_TEACHER_ID]}
-        defaultValue={teacherId}
-        label={'Преподаватель:'}
+        data={groupList ?? [DEFAULT_GROUP_ID]}
+        defaultValue={groupId}
+        label={'Группа:'}
         maxDropdownHeight={'350px'}
-        onChange={value => handleUpdateTeacherId(value!)}
-        placeholder={'Выберите перподавателя'}
-        value={teacherId}
+        onChange={value => handleUpdateGroupId(value!)}
+        placeholder={'Выберите группу'}
+        value={groupId}
       />
 
       {data && data.length > 0 && (
         <Text fz={'18px'} mt={'15px'}>
-          Расписание для преподавателя {teacherName}
-          <Text>
-            (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
-          </Text>
+          Группа {groupName} (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
         </Text>
       )}
 
@@ -71,7 +72,7 @@ export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
 
       {!data?.length && (
         <Text fw={'200'} fz={'25px'} mt={'150px'} ta={'center'}>
-          Введите имя преподавателя
+          Выберите группу
         </Text>
       )}
     </Box>

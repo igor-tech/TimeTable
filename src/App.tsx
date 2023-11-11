@@ -1,4 +1,4 @@
-import { TabsList } from '@/components/TabsList'
+import { TabsList } from '@/components/TabsList.tsx'
 import { AppShell, BackgroundImage, Center, Image, Text, UnstyledButton } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 

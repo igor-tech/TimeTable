@@ -1,5 +1,5 @@
-import { compareDates } from '@/helpers/compareDates'
-import { ICouple } from '@/types/types'
+import { compareDates } from '@/helpers/compareDates.ts'
+import { ICouple } from '@/types/types.ts'
 
 export const divideArrayByNumberDay = (array: ICouple[]) => {
   const sortedArrByDay = array.sort((a, b) => compareDates(a.numberDay, b.numberDay))
