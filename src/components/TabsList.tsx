@@ -16,11 +16,19 @@ export const TabsList = () => {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
+    const handleScroll = () => {
+      window.scrollTo({
+        behavior: 'smooth',
+        top: 300,
+      })
+    }
+
     const fetchData = async () => {
       setLoading(true)
 
       try {
         if (Object.keys(timeTable).length) {
+          handleScroll()
           setLoading(false)
           getData().then(data => {
             if (data) {

@@ -1,4 +1,4 @@
-import { FC, Fragment, useState } from 'react'
+import { FC, Fragment, memo, useEffect, useState } from 'react'
 
 import { DayCard } from '@/components/Card/DayCard.tsx'
 import { ICouple } from '@/types/types.ts'
@@ -7,17 +7,31 @@ import { Checkbox, Flex } from '@mantine/core'
 type Props = {
   data: ICouple[][]
 }
-export const DaysCard: FC<Props> = ({ data }) => {
+export const DaysCard: FC<Props> = memo(({ data }) => {
   const [hidePrevDay, setHidePrevDay] = useState<boolean>(true)
+  const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsAnyDayHidden(
+      data?.some(day => {
+        const currentDay = new Date().getDate()
+        const isShow = currentDay <= +day[0]?.numberDay.slice(0, 2).trim()
+
+        return !isShow
+      })
+    )
+  }, [data, hidePrevDay])
 
   return (
     <>
-      <Checkbox
-        defaultChecked
-        label={'Спрятать прошедшие дни'}
-        mt={'10px'}
-        onClick={() => setHidePrevDay(!hidePrevDay)}
-      />
+      {isAnyDayHidden && (
+        <Checkbox
+          defaultChecked
+          label={'Спрятать прошедшие дни'}
+          mt={'10px'}
+          onClick={() => setHidePrevDay(!hidePrevDay)}
+        />
+      )}
 
       <Flex gap={'20px'} justify={'center'} mt={'2px'} w={'100%'} wrap={'wrap'}>
         {data?.map((day, i) => {
@@ -30,4 +44,4 @@ export const DaysCard: FC<Props> = ({ data }) => {
       </Flex>
     </>
   )
-}
+})
