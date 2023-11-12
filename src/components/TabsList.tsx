@@ -16,46 +16,58 @@ export const TabsList = () => {
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    setLoading(true)
+    const fetchData = async () => {
+      setLoading(true)
 
-    if (Object.keys(timeTable).length) {
-      setLoading(false)
-      getData().then(data => {
-        if (data) {
-          const localDataString = JSON.stringify(timeTable.couple)
-          const remoteDataString = JSON.stringify(data)
+      try {
+        if (Object.keys(timeTable).length) {
+          setLoading(false)
+          getData().then(data => {
+            if (data) {
+              const localDataString = JSON.stringify(timeTable.couple)
+              const remoteDataString = JSON.stringify(data)
 
-          if (localDataString !== remoteDataString) {
+              if (localDataString !== remoteDataString) {
+                setTimeTable(getTimeTableData(data))
+
+                notifications.show({
+                  color: 'green',
+                  message: 'Расписание успешно обновилсь ✅',
+                  title: 'Обновление расписания',
+                })
+              }
+            }
+          })
+        } else {
+          const data = await getData()
+
+          if (data) {
             setTimeTable(getTimeTableData(data))
-
-            notifications.show({
-              color: 'green',
-              message: 'Расписание успешно обновилсь ✅',
-              title: 'Обновление расписания',
-            })
           }
         }
-      })
-
-      return
-    }
-
-    getData()
-      .then(data => {
-        if (!data) {
-          return
-        }
-        setTimeTable(getTimeTableData(data))
-      })
-      .catch(e => {
+      } catch (error) {
         notifications.show({
           color: 'red',
-          message: e instanceof Error ? e.message : 'Error',
-          title: 'Упс, возникала ошибка 🤥',
+          message: error instanceof Error ? error.message : 'Error',
+          title: 'Упс, возникла ошибка 🤥',
         })
-      })
-      .finally(() => setLoading(false))
-  }, [setTimeTable, timeTable])
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchData()
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [setTimeTable])
 
   if (loading) {
     return (
