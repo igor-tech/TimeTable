@@ -7,7 +7,7 @@ import '@mantine/core/styles.css'
 function App() {
   return (
     <>
-      <AppShell header={{ height: 60 }} m={'0 auto'} maw={'1200px'}>
+      <AppShell header={{ height: 60 }} m={'0 auto'} maw={'1400px'}>
         <Notifications
           autoClose={6000}
           style={{ position: 'fixed', right: 0, top: '80px', width: '300px', zIndex: '10' }}

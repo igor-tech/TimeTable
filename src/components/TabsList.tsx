@@ -19,6 +19,7 @@ export const TabsList = () => {
     setLoading(true)
 
     if (Object.keys(timeTable).length) {
+      setLoading(false)
       getData().then(data => {
         if (data) {
           const localDataString = JSON.stringify(timeTable.couple)
@@ -35,7 +36,6 @@ export const TabsList = () => {
           }
         }
       })
-      setLoading(false)
 
       return
     }
