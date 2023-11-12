@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 
 import { StudentPage } from '@/components/StudentPage.tsx'
 import { TeacherPage } from '@/components/TeacherPage.tsx'
@@ -14,13 +14,16 @@ import { PiStudentBold } from 'react-icons/pi'
 export const TabsList = () => {
   const [timeTable, setTimeTable] = useLocalStorage<ITimeTable>('UKSAP', {} as ITimeTable)
   const [loading, setLoading] = useState<boolean>(true)
+  const sectionRef = useRef<HTMLDivElement | null>(null)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleScroll = () => {
-      window.scrollTo({
-        behavior: 'smooth',
-        top: 300,
-      })
+      setTimeout(() => {
+        window.scrollTo({
+          behavior: 'smooth',
+          top: 300,
+        })
+      }, 500)
     }
 
     const fetchData = async () => {
@@ -28,8 +31,8 @@ export const TabsList = () => {
 
       try {
         if (Object.keys(timeTable).length) {
-          handleScroll()
           setLoading(false)
+          handleScroll()
           getData().then(data => {
             if (data) {
               const localDataString = JSON.stringify(timeTable.couple)
@@ -84,7 +87,7 @@ export const TabsList = () => {
   }
 
   return (
-    <Tabs defaultValue={'student'} mt={'20px'}>
+    <Tabs defaultValue={'student'} mt={'20px'} ref={sectionRef}>
       <Tabs.List mb={'20px'}>
         <Tabs.Tab leftSection={<PiStudentBold />} value={'student'} w={'50%'}>
           Студентам
