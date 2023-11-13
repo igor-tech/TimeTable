@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react'
 
 import { StudentPage } from '@/components/StudentPage.tsx'
 import { TeacherPage } from '@/components/TeacherPage.tsx'
+import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID, LOCAL_STORAGE_KEY } from '@/components/config.ts'
 import { getData } from '@/data/getData.ts'
 import { getTimeTableData } from '@/helpers/GetTimeTableData.ts'
 import { useLocalStorage } from '@/hooks/useLocalStorage.tsx'
@@ -12,7 +13,7 @@ import { FaChalkboardTeacher } from 'react-icons/fa'
 import { PiStudentBold } from 'react-icons/pi'
 
 export const TabsList = () => {
-  const [timeTable, setTimeTable] = useLocalStorage<ITimeTable>('UKSAP', {} as ITimeTable)
+  const [timeTable, setTimeTable] = useLocalStorage<ITimeTable>(LOCAL_STORAGE_KEY, {} as ITimeTable)
   const [loading, setLoading] = useState<boolean>(true)
   const sectionRef = useRef<HTMLDivElement | null>(null)
 
@@ -39,7 +40,7 @@ export const TabsList = () => {
               const remoteDataString = JSON.stringify(data)
 
               if (localDataString !== remoteDataString) {
-                setTimeTable(getTimeTableData(data))
+                setTimeTable(getTimeTableData(data, timeTable?.groupId, timeTable?.teacherId))
 
                 notifications.show({
                   color: 'green',
@@ -53,7 +54,7 @@ export const TabsList = () => {
           const data = await getData()
 
           if (data) {
-            setTimeTable(getTimeTableData(data))
+            setTimeTable(getTimeTableData(data, DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID))
           }
         }
       } catch (error) {

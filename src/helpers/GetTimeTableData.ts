@@ -1,7 +1,11 @@
 import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID } from '@/components/config.ts'
 import { ICouple, ITimeTable } from '@/types/types.ts'
 
-export const getTimeTableData = (data: ICouple[]): ITimeTable => {
+export const getTimeTableData = (
+  data: ICouple[],
+  groupId: string,
+  teacherId: string
+): ITimeTable => {
   const groupList = Array.from(new Set(data?.map(couple => couple.groupName)))
   const teacherList = Array.from(new Set(data?.map(couple => couple.teacherName))).sort((a, b) =>
     a.toLowerCase().charAt(0) < b.toLowerCase().charAt(0) ? -1 : 1
@@ -9,9 +13,9 @@ export const getTimeTableData = (data: ICouple[]): ITimeTable => {
 
   return {
     couple: data,
-    groupId: DEFAULT_GROUP_ID,
+    groupId: groupId ?? DEFAULT_GROUP_ID,
     groupList,
-    teacherId: DEFAULT_TEACHER_ID,
+    teacherId: teacherId ?? DEFAULT_TEACHER_ID,
     teacherList,
   }
 }
