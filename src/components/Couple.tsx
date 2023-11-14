@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { TIME_DATA } from '@/components/config.ts'
 import { ICouple } from '@/types/types.ts'
-import { Box, Divider, Flex, Text } from '@mantine/core'
+import { Badge, Box, Divider, Flex, Text } from '@mantine/core'
 
 type Props = {
   couple: ICouple
@@ -17,31 +17,34 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
 
       <Flex align={'center'} gap={'10px'} justify={'stretch'}>
         <Flex direction={'column'} ta={'center'}>
-          <Text fz={'14px'} w={'50px'}>
+          <Text fz={'md'} w={'50px'}>
             {TIME_DATA[coupleNumber][1]}
           </Text>
-          <Text fz={'14px'} w={'50px'}>
+          <Text fz={'sm'} w={'50px'}>
             |
           </Text>
-          <Text fz={'14px'} w={'50px'}>
+          <Text fz={'md'} w={'50px'}>
             {TIME_DATA[coupleNumber][2]}
           </Text>
         </Flex>
 
         <Flex direction={'column'} gap={'3px'} w={'100%'}>
-          <Text fw={700} fz={'14px'}>
+          <Text fw={500} fz={'lg'}>
             {subjectName ?? 'Название предмета не указано'}
           </Text>
 
-          <Text fz={'14px'}>Преподаватель: {teacherName}</Text>
+          <Text fz={'md'}>Преподаватель: {teacherName}</Text>
           <Flex justify={'space-between'}>
             {isTeacher && (
-              <Text fw={'400'} fz={'14px'}>
+              <Text fw={'400'} fz={'sm'}>
                 Группа: {groupName ?? 'группа не указана'}
               </Text>
             )}
-            <Text fw={'500'} fz={'12px'}>
-              Кабинет: {officeNumber ?? 'кабинет не указан'}
+            <Text fw={'500'} fz={'sm'}>
+              Кабинет:{' '}
+              <Badge color={'dark'} radius={'sm'} variant={'light'}>
+                {officeNumber ?? 'кабинет не указан'}
+              </Badge>
             </Text>
           </Flex>
         </Flex>

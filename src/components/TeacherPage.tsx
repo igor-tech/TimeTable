@@ -2,9 +2,10 @@ import { FC, useEffect, useState } from 'react'
 
 import { DaysCard } from '@/components/Card/DaysCard.tsx'
 import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
+import { Theme } from '@/constants/Theme.tsx'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
 import { ICouple, ITimeTable } from '@/types/types.ts'
-import { Box, LoadingOverlay, Select, Text } from '@mantine/core'
+import { Box, LoadingOverlay, Select, Text, rem } from '@mantine/core'
 
 type Props = {
   setTimeTable: (value: ITimeTable) => void
@@ -52,25 +53,30 @@ export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
         data={teacherList ?? [DEFAULT_TEACHER_ID]}
         defaultValue={teacherId}
         label={'Преподаватель:'}
-        maxDropdownHeight={'350px'}
+        maw={'700px'}
+        maxDropdownHeight={rem(450)}
         onChange={value => handleUpdateTeacherId(value!)}
         placeholder={'Выберите перподавателя'}
+        styles={{
+          dropdown: { boxShadow: '4px 4px 4px var(--mantine-color-gray-4)' },
+          input: { fontSize: `${Theme.fontSizes.md}` },
+          label: { fontSize: `${Theme.fontSizes.md}` },
+          option: { fontSize: `${Theme.fontSizes.md}` },
+        }}
         value={teacherId}
       />
 
       {data && data.length > 0 && (
-        <Text fz={'18px'} mt={'15px'}>
-          Расписание для преподавателя {teacherName}
-          <Text>
-            (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
-          </Text>
+        <Text fz={'lg'} mt={'15px'}>
+          Расписание для преподавателя {teacherName} (с {data[0][0].numberDay} по{' '}
+          {data[data.length - 1][0].numberDay})
         </Text>
       )}
 
       {data && data.length > 0 && <DaysCard data={data} />}
 
       {!data?.length && (
-        <Text fw={'200'} fz={'25px'} mt={'150px'} ta={'center'}>
+        <Text fw={'200'} fz={'xxxl'} mt={'150px'} ta={'center'}>
           Введите имя преподавателя
         </Text>
       )}

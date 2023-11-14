@@ -7,3 +7,15 @@
   --react-international-phone-background-color: #f8f9fa;
   --react-international-phone-text-color: black;
 }
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  html {
+    font-size: 13px;
+  }
+}

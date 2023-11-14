@@ -7,7 +7,7 @@ import { getData } from '@/data/getData.ts'
 import { getTimeTableData } from '@/helpers/GetTimeTableData.ts'
 import { useLocalStorage } from '@/hooks/useLocalStorage.tsx'
 import { ITimeTable } from '@/types/types.ts'
-import { LoadingOverlay, Tabs } from '@mantine/core'
+import { LoadingOverlay, Tabs, Text } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { PiStudentBold } from 'react-icons/pi'
@@ -20,10 +20,9 @@ export const TabsList = () => {
   useLayoutEffect(() => {
     const handleScroll = () => {
       setTimeout(() => {
-        window.scrollTo({
-          behavior: 'smooth',
-          top: 300,
-        })
+        if (sectionRef && sectionRef.current) {
+          sectionRef.current.scrollIntoView({ behavior: 'smooth' })
+        }
       }, 500)
     }
 
@@ -90,15 +89,14 @@ export const TabsList = () => {
   return (
     <Tabs defaultValue={'student'} mt={'20px'} ref={sectionRef}>
       <Tabs.List mb={'20px'}>
-        <Tabs.Tab leftSection={<PiStudentBold />} value={'student'} w={'50%'}>
-          Студентам
+        <Tabs.Tab leftSection={<PiStudentBold size={20} />} value={'student'} w={'50%'}>
+          <Text fz={'lg'}>Студентам</Text>
         </Tabs.Tab>
 
-        <Tabs.Tab leftSection={<FaChalkboardTeacher />} value={'teacher'} w={'50%'}>
-          Преподавателям
+        <Tabs.Tab leftSection={<FaChalkboardTeacher size={20} />} value={'teacher'} w={'50%'}>
+          <Text fz={'lg'}>Преподавателям</Text>
         </Tabs.Tab>
       </Tabs.List>
-
       <Tabs.Panel value={'student'}>
         <StudentPage setTimeTable={setTimeTable} timeTable={timeTable} />
       </Tabs.Panel>

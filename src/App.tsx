@@ -7,7 +7,7 @@ import '@mantine/core/styles.css'
 function App() {
   return (
     <>
-      <AppShell header={{ height: 60 }} m={'0 auto'} maw={'1400px'}>
+      <AppShell header={{ height: 60 }} m={'0 auto'} maw={'1800px'}>
         <Notifications
           autoClose={6000}
           style={{ position: 'fixed', right: 0, top: '80px', width: '300px', zIndex: '10' }}
@@ -30,7 +30,7 @@ function App() {
             style={{ backgroundPosition: '0%', objectFit: 'fill' }}
           >
             <Center p={'md'}>
-              <Text c={'white'} fz={'35px'}>
+              <Text c={'white'} fz={'xxxl'}>
                 Расписание
               </Text>
             </Center>

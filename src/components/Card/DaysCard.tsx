@@ -1,6 +1,7 @@
 import { FC, Fragment, memo, useEffect, useState } from 'react'
 
 import { DayCard } from '@/components/Card/DayCard.tsx'
+import { Theme } from '@/constants/Theme.tsx'
 import { ICouple } from '@/types/types.ts'
 import { Checkbox, Flex } from '@mantine/core'
 
@@ -30,6 +31,7 @@ export const DaysCard: FC<Props> = memo(({ data }) => {
           label={'Спрятать прошедшие дни'}
           mt={'10px'}
           onClick={() => setHidePrevDay(!hidePrevDay)}
+          styles={{ label: { fontSize: `${Theme.fontSizes.md}` } }}
         />
       )}
 

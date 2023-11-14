@@ -14,7 +14,7 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
   const currentDay = new Date().getDate()
 
   const isToday = currentDay === +day[0]?.numberDay.slice(0, 2).trim()
-  const matches = useMediaQuery('(min-width: 1000px)')
+  const matches = useMediaQuery('(min-width: 1400px)')
 
   return (
     <Card
@@ -23,16 +23,16 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
       radius={'md'}
       shadow={'sm'}
       style={{ flex: '1 0 auto' }}
-      w={'500px'}
+      w={'700px'}
       withBorder
     >
       <Group justify={'space-between'} mb={'xs'} mt={'md'}>
-        <Text fw={500}>
+        <Text fw={500} fz={'lg'}>
           {day[0].dayOfTheWeek}, {day[0].numberDay}
         </Text>
 
         {isToday && (
-          <Badge color={'green'} variant={'light'}>
+          <Badge color={'green'} fz={'xs'} variant={'light'}>
             Сегодня
           </Badge>
         )}
