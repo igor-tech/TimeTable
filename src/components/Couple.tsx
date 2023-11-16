@@ -24,7 +24,7 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
     TIME_DATA[coupleNumber][1],
     TIME_DATA[coupleNumber][2]
   )
-  const isNextCouple = isOneHourBefore(TIME_DATA[coupleNumber][1])
+  const isNextCouple = isOneHourBefore(TIME_DATA[coupleNumber][1]) && !isCurrentCouple
 
   const randomIndex = randomInteger(4)
 
