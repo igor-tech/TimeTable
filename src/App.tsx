@@ -1,10 +1,29 @@
 import { TabsList } from '@/components/TabsList.tsx'
-import { AppShell, BackgroundImage, Center, Image, Text, UnstyledButton } from '@mantine/core'
+import { HeaderThemeToggler } from '@/components/ThemeSwitch.tsx'
+import { ColorScheme } from '@/constants/colorShceme.ts'
+import {
+  AppShell,
+  BackgroundImage,
+  Center,
+  Flex,
+  Image,
+  Text,
+  UnstyledButton,
+  useMantineColorScheme,
+} from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 
 import '@mantine/core/styles.css'
 
 function App() {
+  const { colorScheme } = useMantineColorScheme()
+
+  const logoDarkUrl =
+    'https://moodle.uksap.ru/pluginfile.php/1/theme_eguru/logo/1663748986/uksap-logo-inverse-500x135px.png'
+  const logoLightUrl = 'https://www.uksap.ru/wp-content/uploads/2023/02/uksap-logo_gs-2.png'
+
+  const logoUrl = colorScheme === ColorScheme.Dark ? logoDarkUrl : logoLightUrl
+
   return (
     <>
       <AppShell header={{ height: 60 }} m={'0 auto'} maw={'1800px'}>
@@ -15,12 +34,12 @@ function App() {
         />
 
         <AppShell.Header>
-          <UnstyledButton component={'a'} href={'https://www.uksap.ru/'}>
-            <Image
-              src={'https://www.uksap.ru/wp-content/uploads/2023/02/uksap-logo_gs-2.png'}
-              w={'150px'}
-            />
-          </UnstyledButton>
+          <Flex align={'center'} h={'60px'} justify={'space-between'} pl={'10px'} pr={'10px'}>
+            <UnstyledButton component={'a'} href={'https://www.uksap.ru/'}>
+              <Image src={logoUrl} w={'150px'} />
+            </UnstyledButton>
+            <HeaderThemeToggler />
+          </Flex>
         </AppShell.Header>
         <AppShell.Main mt={'60px'} p={10}>
           <BackgroundImage

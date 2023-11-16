@@ -1,11 +1,12 @@
 import { FC } from 'react'
 
 import { TIME_DATA, currentCouple, nextCouple } from '@/components/config.ts'
+import { ColorScheme } from '@/constants/colorShceme.ts'
 import { checkTimeInInterval } from '@/helpers/CheckTimeInInterval.tsx'
 import { isOneHourBefore } from '@/helpers/IsOneHourBefore.tsx'
 import { randomInteger } from '@/helpers/RandomInteger.tsx'
 import { ICouple } from '@/types/types.ts'
-import { Badge, Card, Flex, Group, Text } from '@mantine/core'
+import { Badge, Card, Flex, Group, Text, useMantineColorScheme } from '@mantine/core'
 import { FiMinus } from 'react-icons/fi'
 
 type Props = {
@@ -14,6 +15,10 @@ type Props = {
 }
 export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
   const { coupleNumber, groupName, officeNumber, subjectName, teacherName } = couple
+
+  const { colorScheme } = useMantineColorScheme()
+
+  const isDarkTheme = ColorScheme.Dark === colorScheme
 
   const isCurrentCouple = checkTimeInInterval(
     TIME_DATA[coupleNumber][1],
@@ -83,7 +88,15 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
         <Flex justify={'space-between'} mt={'10px'}>
           <Text fw={'500'} fz={'sm'}>
             Кабинет:
-            <Badge color={'dark'} fz={'xs'} ml={'10px'} radius={'sm'} size={'md'} variant={'light'}>
+            <Badge
+              color={'green'}
+              component={'p'}
+              fz={'xs'}
+              ml={'10px'}
+              radius={'sm'}
+              size={'md'}
+              variant={isDarkTheme ? 'filled' : 'light'}
+            >
               {officeNumber ?? 'кабинет не указан'}
             </Badge>
           </Text>
@@ -91,12 +104,13 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
             <Text fw={'500'} fz={'sm'}>
               Группа:
               <Badge
-                color={'dark'}
+                color={'blue'}
+                component={'p'}
                 fz={'xs'}
                 ml={'10px'}
                 radius={'sm'}
                 size={'md'}
-                variant={'light'}
+                variant={isDarkTheme ? 'filled' : 'light'}
               >
                 {groupName ?? 'группа не указана'}
               </Badge>
