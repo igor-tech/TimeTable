@@ -8,6 +8,23 @@ export const TIME_DATA: Record<string, Record<string, string>> = {
 } as const
 
 export const DEFAULT_GROUP_ID = 'А-123/9'
+
 export const DEFAULT_TEACHER_ID = 'Михайлова'
 
 export const LOCAL_STORAGE_KEY = 'UKSAP'
+
+export const currentCouple = [
+  'Активная пара',
+  'В полном разгаре',
+  'Текущая пара',
+  'На данный момент',
+  'Текущая лекция',
+]
+
+export const nextCouple = [
+  'Следующая пара',
+  'На очереди',
+  'Следующий вызов',
+  'В ближайшее время',
+  'Встречайте новую пару',
+]

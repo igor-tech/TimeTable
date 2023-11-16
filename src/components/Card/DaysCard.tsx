@@ -7,8 +7,9 @@ import { Checkbox, Flex } from '@mantine/core'
 
 type Props = {
   data: ICouple[][]
+  isTeacher?: boolean
 }
-export const DaysCard: FC<Props> = memo(({ data }) => {
+export const DaysCard: FC<Props> = memo(({ data, isTeacher }) => {
   const [hidePrevDay, setHidePrevDay] = useState<boolean>(true)
   const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
 
@@ -41,7 +42,9 @@ export const DaysCard: FC<Props> = memo(({ data }) => {
 
           const isShow = hidePrevDay ? currentDay <= +day[0]?.numberDay.slice(0, 2).trim() : true
 
-          return <Fragment key={i}>{isShow && <DayCard day={day} />}</Fragment>
+          return (
+            <Fragment key={i}>{isShow && <DayCard day={day} isTeacher={isTeacher} />}</Fragment>
+          )
         })}
       </Flex>
     </>

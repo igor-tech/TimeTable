@@ -2,8 +2,9 @@ import { FC } from 'react'
 
 import { Couple } from '@/components/Couple.tsx'
 import { ICouple } from '@/types/types.ts'
-import { Badge, Card, Group, Text } from '@mantine/core'
+import { Badge, Card, Flex, Group, Text } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
+import { TiPinOutline } from 'react-icons/ti'
 
 type Props = {
   day: ICouple[]
@@ -23,22 +24,36 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
       radius={'md'}
       shadow={'sm'}
       style={{ flex: '1 0 auto' }}
-      w={'700px'}
+      w={'450px'}
       withBorder
     >
-      <Group justify={'space-between'} mb={'xs'} mt={'md'}>
-        <Text fw={500} fz={'lg'}>
-          {day[0].dayOfTheWeek}, {day[0].numberDay}
-        </Text>
+      <Card.Section inheritPadding py={'xs'} withBorder>
+        <Group justify={'space-between'} mb={'xs'} mt={'md'}>
+          <Text fw={500} fz={'lg'}>
+            {day[0].dayOfTheWeek}, {day[0].numberDay}
+          </Text>
 
-        {isToday && (
-          <Badge color={'green'} fz={'xs'} variant={'light'}>
-            Сегодня
-          </Badge>
-        )}
-      </Group>
+          {isToday && (
+            <Badge
+              color={'green'}
+              fz={'xs'}
+              rightSection={<TiPinOutline size={22} />}
+              size={'xl'}
+              variant={'light'}
+            >
+              Сегодня
+            </Badge>
+          )}
+        </Group>
+      </Card.Section>
 
-      {day?.map((couple, i) => <Couple couple={couple} isTeacher={isTeacher} key={i} />)}
+      <Card.Section inheritPadding p={'md'} py={'md'}>
+        <Flex direction={'column'} gap={'10px'}>
+          {day?.map((couple, i) => {
+            return <Couple couple={couple} isTeacher={isTeacher} key={i} />
+          })}
+        </Flex>
+      </Card.Section>
     </Card>
   )
 }

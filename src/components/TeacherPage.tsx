@@ -73,7 +73,7 @@ export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
         </Text>
       )}
 
-      {data && data.length > 0 && <DaysCard data={data} />}
+      {data && data.length > 0 && <DaysCard data={data} isTeacher />}
 
       {!data?.length && (
         <Text fw={'200'} fz={'xxxl'} mt={'150px'} ta={'center'}>
