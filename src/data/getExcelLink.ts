@@ -44,7 +44,7 @@ const filterWorksheetData = (worksheet: WorkSheet): WorkSheet => {
 const getLastKey = (data: WorkSheet): string => {
   const keys = Object.keys(data)
 
-  return keys[keys.length - 1]
+  return keys[keys.length - 2]
 }
 
 const generateExportLink = (target: Record<string, Record<string, string>>): string => {
