@@ -12,6 +12,7 @@ import {
   useMantineColorScheme,
 } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
+import { Analytics } from '@vercel/analytics/react'
 
 import '@mantine/core/styles.css'
 
@@ -56,6 +57,7 @@ function App() {
           </BackgroundImage>
 
           <TabsList />
+          <Analytics />
         </AppShell.Main>
       </AppShell>
     </>
