@@ -16,15 +16,16 @@ type Props = {
 export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
   const { coupleNumber, groupName, officeNumber, subjectName, teacherName } = couple
 
+  const currentDay = new Date().getDate()
+  const isToday = currentDay === +couple.numberDay.slice(0, 2).trim()
+
   const { colorScheme } = useMantineColorScheme()
 
   const isDarkTheme = ColorScheme.Dark === colorScheme
 
-  const isCurrentCouple = checkTimeInInterval(
-    TIME_DATA[coupleNumber][1],
-    TIME_DATA[coupleNumber][2]
-  )
-  const isNextCouple = isOneHourBefore(TIME_DATA[coupleNumber][1]) && !isCurrentCouple
+  const isCurrentCouple =
+    checkTimeInInterval(TIME_DATA[coupleNumber][1], TIME_DATA[coupleNumber][2]) && isToday
+  const isNextCouple = isOneHourBefore(TIME_DATA[coupleNumber][1]) && !isCurrentCouple && isToday
 
   const randomIndex = randomInteger(4)
 
