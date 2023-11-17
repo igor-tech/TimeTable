@@ -27,7 +27,7 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
     checkTimeInInterval(TIME_DATA[coupleNumber][1], TIME_DATA[coupleNumber][2]) && isToday
   const isNextCouple = isOneHourBefore(TIME_DATA[coupleNumber][1]) && !isCurrentCouple && isToday
 
-  const randomIndex = randomInteger(4)
+  const randomIndex = randomInteger(3)
 
   return (
     <Card

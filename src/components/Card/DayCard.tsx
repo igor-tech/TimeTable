@@ -21,6 +21,7 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
     <Card
       maw={matches ? '50%' : '100%'}
       mt={'20px'}
+      pb={'40px'}
       radius={'md'}
       shadow={'sm'}
       style={{ flex: '1 0 auto' }}
