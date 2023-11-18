@@ -7,9 +7,9 @@ export const getTimeTableData = (
   teacherId: string
 ): ITimeTable => {
   const groupList = Array.from(new Set(data?.map(couple => couple.groupName)))
-  const teacherList = Array.from(new Set(data?.map(couple => couple.teacherName))).sort((a, b) =>
-    a.toLowerCase().charAt(0) < b.toLowerCase().charAt(0) ? -1 : 1
-  )
+  const teacherList: string[] = Array.from(
+    new Set(data?.flatMap(val => val.teacherName).flat())
+  ).sort((a, b) => (a.toLowerCase().charAt(0) < b.toLowerCase().charAt(0) ? -1 : 1))
 
   return {
     couple: data,

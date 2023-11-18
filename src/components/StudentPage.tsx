@@ -15,13 +15,11 @@ type Props = {
 export const StudentPage: FC<Props> = ({ setTimeTable, timeTable }) => {
   const [data, setData] = useState<ICouple[][]>()
   const [loading, setLoading] = useState<boolean>(true)
-
   const handleUpdateGroupId = (groupId: string) => {
     setLoading(true)
     if (Object.keys(timeTable).length) {
       setTimeTable({ ...timeTable, groupId })
     }
-
     setLoading(false)
   }
 
@@ -76,7 +74,7 @@ export const StudentPage: FC<Props> = ({ setTimeTable, timeTable }) => {
         </Text>
       )}
 
-      {data && data.length > 0 && <DaysCard data={data} />}
+      {data && data.length > 0 && <DaysCard data={data} groupId={groupId} />}
 
       {!data?.length && (
         <Text fw={'200'} fz={'xxxl'} mt={'150px'} ta={'center'}>

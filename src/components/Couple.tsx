@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, Fragment } from 'react'
 
 import { TIME_DATA, currentCouple, nextCouple } from '@/components/config.ts'
 import { ColorScheme } from '@/constants/colorShceme.ts'
@@ -11,9 +11,10 @@ import { FiMinus } from 'react-icons/fi'
 
 type Props = {
   couple: ICouple
+  groupId?: string
   isTeacher?: boolean
 }
-export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
+export const Couple: FC<Props> = ({ couple, groupId, isTeacher = false }) => {
   const { coupleNumber, groupName, officeNumber, subjectName, teacherName } = couple
 
   const currentDay = new Date().getDate()
@@ -28,6 +29,8 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
   const isNextCouple = isOneHourBefore(TIME_DATA[coupleNumber][1]) && !isCurrentCouple && isToday
 
   const randomIndex = randomInteger(3)
+
+  const isAlex = teacherName?.[0] === 'Гобова Г.П.' && (groupId ?? 's') === 'А-33\n (А-321/9)'
 
   return (
     <Card
@@ -84,7 +87,16 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
             {subjectName ?? 'Название предмета не указано'}
           </Text>
 
-          <Text fz={'md'}>Преподаватель: {teacherName}</Text>
+          <Text fz={'md'}>
+            Преподаватель:{' '}
+            {teacherName.map((teacher, i) => {
+              return (
+                <Fragment key={i}>
+                  {teacher} {teacherName.length !== i + 1 && '/ '}
+                </Fragment>
+              )
+            })}
+          </Text>
         </Flex>
         <Flex justify={'space-between'} mt={'10px'}>
           <Text fw={'500'} fz={'sm'}>
@@ -101,6 +113,21 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
               {officeNumber ?? 'кабинет не указан'}
             </Badge>
           </Text>
+          {isAlex && (
+            <Text fw={'500'} fz={'sm'}>
+              <Badge
+                color={'red'}
+                component={'p'}
+                fz={'xs'}
+                ml={'10px'}
+                radius={'sm'}
+                size={'md'}
+                variant={isDarkTheme ? 'filled' : 'light'}
+              >
+                {'Леша где макеты!!!!'}
+              </Badge>
+            </Text>
+          )}
           {isTeacher && (
             <Text fw={'500'} fz={'sm'}>
               Группа:

@@ -1,4 +1,5 @@
 import { getExcelLink } from '@/data/getExcelLink.ts'
+import { extractNamesAndRemoveSlash } from '@/helpers/extractNamesAndRemoveSlash/extractNamesAndRemoveSlash.ts'
 import { DayOfWeek, ICouple } from '@/types/types.ts'
 import { notifications } from '@mantine/notifications'
 import { read, utils } from 'xlsx'
@@ -17,9 +18,6 @@ export const getData = async () => {
       .map((_, i) => `${i + 1}`)
     const data: Row[] = utils.sheet_to_json<Row>(worksheet, { defval: null, header: data_headers })
 
-    const regexTeacherName = /^["'«“‘’]*[^\n]*\n\s*/
-    const regexSubjectName = /^(.*?)\n/
-
     const courseNames = getCourseNamesArr(data)
 
     const groupNames = getGroupNamesArr(data, courseNames)
@@ -37,19 +35,21 @@ export const getData = async () => {
         const { coupleValue, currentRawNumIndex, rawNum } = coupleNum[j]
 
         if (data?.[rawNum]?.[colNum] !== null) {
+          const { practiceType, subjectTitleWithoutSurname, surNames } = extractNamesAndRemoveSlash(
+            data?.[rawNum]?.[colNum]
+          )
+
+          if (!subjectTitleWithoutSurname) {
+            continue
+          }
+
           const dayOfTheWeek = columnDays[currentRawNumIndex].dayOfTheWeek as DayOfWeek
 
           const numberDay = columnDays[currentRawNumIndex].numberDay
 
-          const teacherName =
-            data?.[rawNum]?.[colNum]
-              ?.toString()
-              .replace(/"/g, ' ')
-              .replace(regexTeacherName, ' ')
-              .trim() ?? 'Not found'
+          const teacherName = surNames
 
-          const subjectName =
-            data?.[rawNum]?.[colNum]?.toString().match(regexSubjectName)?.[1].trim() ?? teacherName
+          const subjectName = subjectTitleWithoutSurname
 
           result.push({
             coupleNumber: coupleValue ?? 1,
@@ -58,6 +58,7 @@ export const getData = async () => {
             groupName,
             numberDay,
             officeNumber: data?.[rawNum]?.[colNum + 1],
+            practiceType,
             subjectName,
             teacherName,
           })

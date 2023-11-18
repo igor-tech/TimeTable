@@ -68,7 +68,7 @@ export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
 
       {data && data.length > 0 && (
         <Text fz={'lg'} mt={'15px'}>
-          Расписание для преподавателя {teacherName} (с {data[0][0].numberDay} по{' '}
+          Расписание для преподавателя {teacherName?.[0]} (с {data[0][0].numberDay} по{' '}
           {data[data.length - 1][0].numberDay})
         </Text>
       )}

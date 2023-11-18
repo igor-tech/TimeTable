@@ -14,8 +14,9 @@ export interface ICouple {
   groupName: string
   numberDay: string
   officeNumber: string
+  practiceType: PracticeTypeValues
   subjectName: string
-  teacherName: string
+  teacherName: string[]
 }
 
 export interface ITimeTable {
@@ -25,3 +26,11 @@ export interface ITimeTable {
   teacherId: string
   teacherList: string[]
 }
+
+export const PracticeValues = {
+  EDUCATIONAL: 'Educational',
+  INTERNSHIP: 'Internship',
+  NULL: null,
+} as const
+
+export type PracticeTypeValues = (typeof PracticeValues)[keyof typeof PracticeValues]
