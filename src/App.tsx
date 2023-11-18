@@ -46,7 +46,7 @@ function App() {
           <BackgroundImage
             p={'30px'}
             radius={'md'}
-            src={'//https://www.uksap.ru/wp-content/uploads/2021/08/header-bg-02-1920x800.png'}
+            src={'https://www.uksap.ru/wp-content/uploads/2021/08/header-bg-02-1920x800.png'}
             style={{ backgroundPosition: '0%', objectFit: 'fill' }}
           >
             <Center p={'md'}>
