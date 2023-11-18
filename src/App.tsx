@@ -26,7 +26,6 @@ function App() {
 
   const logoUrl = colorScheme === ColorScheme.Dark ? logoDarkUrl : logoLightUrl
 
-  //https://www.uksap.ru/wp-content/uploads/2021/08/header-bg-02-1920x800.png
   return (
     <ErrorBoundary>
       <AppShell header={{ height: 60 }} m={'0 auto'} maw={'1800px'}>
@@ -47,7 +46,7 @@ function App() {
           <BackgroundImage
             p={'30px'}
             radius={'md'}
-            src={'./src/assets/header.png'}
+            src={'//https://www.uksap.ru/wp-content/uploads/2021/08/header-bg-02-1920x800.png'}
             style={{ backgroundPosition: '0%', objectFit: 'fill' }}
           >
             <Center p={'md'}>
