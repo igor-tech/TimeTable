@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Couple } from '@/components/Couple.tsx'
+import { Couple } from '@/components/Card/Couple/Couple.tsx'
 import { ICouple } from '@/types/types.ts'
 import { Badge, Card, Flex, Group, Text } from '@mantine/core'
 import { useMediaQuery } from '@mantine/hooks'
