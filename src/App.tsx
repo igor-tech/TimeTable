@@ -1,3 +1,4 @@
+import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary.tsx'
 import { TabsList } from '@/components/TabsList.tsx'
 import { HeaderThemeToggler } from '@/components/ThemeSwitch.tsx'
 import { ColorScheme } from '@/constants/colorShceme.ts'
@@ -25,15 +26,15 @@ function App() {
 
   const logoUrl = colorScheme === ColorScheme.Dark ? logoDarkUrl : logoLightUrl
 
+  //https://www.uksap.ru/wp-content/uploads/2021/08/header-bg-02-1920x800.png
   return (
-    <>
+    <ErrorBoundary>
       <AppShell header={{ height: 60 }} m={'0 auto'} maw={'1800px'}>
         <Notifications
           autoClose={6000}
           style={{ position: 'fixed', right: 0, top: '80px', width: '300px', zIndex: '10' }}
           withinPortal={false}
         />
-
         <AppShell.Header>
           <Flex align={'center'} h={'60px'} justify={'space-between'} pl={'10px'} pr={'10px'}>
             <UnstyledButton component={'a'} href={'https://www.uksap.ru/'}>
@@ -46,7 +47,7 @@ function App() {
           <BackgroundImage
             p={'30px'}
             radius={'md'}
-            src={'https://www.uksap.ru/wp-content/uploads/2021/08/header-bg-02-1920x800.png'}
+            src={'./src/assets/header.png'}
             style={{ backgroundPosition: '0%', objectFit: 'fill' }}
           >
             <Center p={'md'}>
@@ -60,7 +61,7 @@ function App() {
           <Analytics />
         </AppShell.Main>
       </AppShell>
-    </>
+    </ErrorBoundary>
   )
 }
 

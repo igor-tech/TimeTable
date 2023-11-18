@@ -50,7 +50,6 @@ export const Couple: FC<Props> = ({ couple, groupId, isTeacher = false }) => {
       <Card.Section py={'sm'} withBorder>
         <Group justify={'space-between'}>
           <Text fw={500}>{coupleNumber} пара</Text>
-
           {isCurrentCouple && (
             <Badge color={'green'} fz={'xs'} radius={'xs'} size={'md'} variant={'light'}>
               {currentCouple[randomIndex]}

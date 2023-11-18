@@ -5,7 +5,4 @@ module.exports = {
     'import/extensions': ['error', 'always', { js: 'never' }],
   },
   plugins: ['jest'],
-  env: {
-    "jest/globals": true
-  }
 };
