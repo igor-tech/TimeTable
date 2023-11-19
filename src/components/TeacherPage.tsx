@@ -1,18 +1,19 @@
 import { FC, useEffect, useState } from 'react'
 
 import { DaysCard } from '@/components/Card/DaysCard.tsx'
+import { CustomSelect } from '@/components/CustomSelect.tsx'
 import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
-import { Theme } from '@/constants/Theme.tsx'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
 import { ICouple, ITimeTable } from '@/types/types.ts'
-import { Box, LoadingOverlay, Select, Text, rem } from '@mantine/core'
+import { Box, LoadingOverlay, Text } from '@mantine/core'
 
 type Props = {
+  onChangeDate: (date: Date) => void
   setTimeTable: (value: ITimeTable) => void
   timeTable: ITimeTable
 }
 
-export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
+export const TeacherPage: FC<Props> = ({ onChangeDate, setTimeTable, timeTable }) => {
   const [data, setData] = useState<ICouple[][]>()
   const [loading, setLoading] = useState<boolean>(true)
 
@@ -46,23 +47,18 @@ export const TeacherPage: FC<Props> = ({ setTimeTable, timeTable }) => {
 
   const teacherName = data && data?.[0]?.[0]?.teacherName
 
+  const firstDayOfTheWeek = new Date(timeTable.firstDayOfWeek)
+
   return (
     <Box>
-      <Select
-        checkIconPosition={'right'}
-        data={teacherList ?? [DEFAULT_TEACHER_ID]}
-        defaultValue={teacherId}
+      <CustomSelect
+        data={teacherList}
+        defaultData={DEFAULT_TEACHER_ID}
+        firstDayOfTheWeek={firstDayOfTheWeek}
         label={'Преподаватель:'}
-        maw={'700px'}
-        maxDropdownHeight={rem(450)}
-        onChange={value => handleUpdateTeacherId(value!)}
+        onChangeDate={onChangeDate}
+        onChangeSelect={handleUpdateTeacherId}
         placeholder={'Выберите перподавателя'}
-        styles={{
-          dropdown: { boxShadow: '4px 4px 4px var(--mantine-color-gray-4)' },
-          input: { fontSize: `${Theme.fontSizes.md}` },
-          label: { fontSize: `${Theme.fontSizes.md}` },
-          option: { fontSize: `${Theme.fontSizes.md}` },
-        }}
         value={teacherId}
       />
 

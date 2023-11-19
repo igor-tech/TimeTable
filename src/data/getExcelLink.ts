@@ -6,7 +6,11 @@ type WorkSheet = Record<string, Record<string, Record<string, string>>>
 const groupExcelLink =
   'https://docs.google.com/spreadsheets/d/1jrJfOegmc_OPvbWoMxUlXU2ujxqdFiRKuRQ_YiaxxOA/export?format=xlsx'
 
-export const getExcelLink = async (): Promise<string> => {
+type Props = {
+  firstDay: Date
+}
+
+export const getExcelLink = async ({ firstDay }: Props): Promise<string> => {
   try {
     const response = await fetch(groupExcelLink)
     const arrayBuffer = await response.arrayBuffer()
@@ -14,8 +18,8 @@ export const getExcelLink = async (): Promise<string> => {
     const worksheet = wb.Sheets[wb.SheetNames[0]]
 
     const filteredData = filterWorksheetData(worksheet)
-    const lastKey = getLastKey(filteredData)
-    const link = generateExportLink(filteredData[lastKey])
+    const linkObject = getLastKey(filteredData, firstDay)
+    const link = generateExportLink(linkObject, filteredData)
 
     return link
   } catch (error) {
@@ -24,6 +28,7 @@ export const getExcelLink = async (): Promise<string> => {
       message: error instanceof Error ? error.message : 'Error',
       title: 'Упс, возникала ошибка 🤥',
     })
+    console.error(error)
 
     return 'https://docs.google.com/spreadsheets/d/1YUqQG8y6cQzhuZ72ggdKLTMR3mvoYzaZ/export?format=xlsx'
   }
@@ -41,14 +46,80 @@ const filterWorksheetData = (worksheet: WorkSheet): WorkSheet => {
   return filteredData
 }
 
-const getLastKey = (data: WorkSheet): string => {
-  const keys = Object.keys(data)
+const getLastKey = (data: WorkSheet, firstDay: Date) => {
+  const result = filterObjectByDate(data, firstDay)
 
-  return keys[keys.length - 1]
+  return result
 }
 
-const generateExportLink = (target: Record<string, Record<string, string>>): string => {
-  const baseUrl = target.l.Target.match(/.*\//)?.[0]
+const generateExportLink = (
+  target: Record<string, Record<string, string>>,
+  data: WorkSheet
+): string => {
+  const getBaseUrl = (url: string) => {
+    const baseUrlRegex = /.*\//
+    const matches = url.match(baseUrlRegex)
 
-  return `${baseUrl}export?format=xlsx`
+    return matches?.[0]
+  }
+
+  try {
+    const baseUrl = getBaseUrl(target.l.Target)
+
+    return `${baseUrl}export?format=xlsx`
+  } catch (error) {
+    const lastKeyData = Object.keys(data).length
+    const lastData = data[`A${lastKeyData}`]
+
+    notifications.show({
+      color: 'red',
+      message: 'Выберите правильную дату',
+      title: 'Упс, возникла ошибка 🤥',
+    })
+    debugger
+
+    return getBaseUrl(lastData.l.Target) + 'export?format=xlsx'
+  }
+}
+
+const filterObjectByDate = (worksheet: Record<string, any>, firstDay: Date): any | null => {
+  let filteredObject: any | null = null
+
+  for (const key in worksheet) {
+    const object = worksheet[key]
+    const dateString = object.v?.match(/\d{2}\.\d{2}\.\d{4}/)?.[0]
+
+    if (dateString && firstDay) {
+      const objectDate = convertStringToDate(dateString)
+
+      if (objectDate && objectDate.getTime() === firstDay.getTime()) {
+        filteredObject = object
+        break
+      }
+    }
+  }
+
+  return filteredObject
+}
+
+function convertStringToDate(dateString: string): Date | null {
+  const parts = dateString.split('.')
+
+  if (parts.length !== 3) {
+    // Если строка не соответствует ожидаемому формату, возвращаем null
+    return null
+  }
+
+  const day = parseInt(parts[0], 10)
+  const month = parseInt(parts[1], 10) - 1
+  const year = parseInt(parts[2], 10)
+
+  const date = new Date(year, month, day)
+
+  if (isNaN(date.getTime())) {
+    // Если дата некорректна (например, 30 февраля), возвращаем null
+    return null
+  }
+
+  return date
 }

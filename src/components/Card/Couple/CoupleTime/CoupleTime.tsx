@@ -10,7 +10,7 @@ type Props = {
 }
 export const CoupleTime: FC<Props> = ({ coupleNumber, isPractice }) => {
   const startCouple = isPractice ? '9:00' : TIME_DATA[coupleNumber][1]
-  const endCouple = isPractice ? '9:00' : TIME_DATA[coupleNumber][1]
+  const endCouple = isPractice ? '14:00' : TIME_DATA[coupleNumber][2]
 
   return (
     <Flex align={'center'} ta={'center'}>

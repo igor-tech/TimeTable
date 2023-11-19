@@ -4,6 +4,7 @@ import { StudentPage } from '@/components/StudentPage.tsx'
 import { TeacherPage } from '@/components/TeacherPage.tsx'
 import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID, LOCAL_STORAGE_KEY } from '@/components/config.ts'
 import { getData } from '@/data/getData.ts'
+import { getFirstDayOfTheWeek } from '@/helpers/GetFirstDayOfTheWeek.tsx'
 import { getTimeTableData } from '@/helpers/GetTimeTableData.ts'
 import { useLocalStorage } from '@/hooks/useLocalStorage.tsx'
 import { ITimeTable } from '@/types/types.ts'
@@ -16,6 +17,12 @@ export const TabsList = () => {
   const [timeTable, setTimeTable] = useLocalStorage<ITimeTable>(LOCAL_STORAGE_KEY, {} as ITimeTable)
   const [loading, setLoading] = useState<boolean>(true)
   const sectionRef = useRef<HTMLDivElement | null>(null)
+  const initialDay =
+    timeTable.firstDayOfWeek === undefined
+      ? getFirstDayOfTheWeek(new Date())
+      : new Date(timeTable.firstDayOfWeek)
+
+  const [firstDay, setFirstDay] = useState<Date>(initialDay)
 
   useLayoutEffect(() => {
     const handleScroll = () => {
@@ -32,14 +39,18 @@ export const TabsList = () => {
       try {
         if (Object.keys(timeTable).length) {
           setLoading(false)
+
           handleScroll()
-          getData().then(data => {
+
+          getData(new Date(firstDay)).then(data => {
             if (data) {
               const localDataString = JSON.stringify(timeTable.couple)
               const remoteDataString = JSON.stringify(data)
 
               if (localDataString !== remoteDataString) {
-                setTimeTable(getTimeTableData(data, timeTable?.groupId, timeTable?.teacherId))
+                setTimeTable(
+                  getTimeTableData(data, timeTable?.groupId, timeTable?.teacherId, firstDay)
+                )
 
                 notifications.show({
                   color: 'green',
@@ -50,10 +61,10 @@ export const TabsList = () => {
             }
           })
         } else {
-          const data = await getData()
+          const data = await getData(firstDay)
 
           if (data) {
-            setTimeTable(getTimeTableData(data, DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID))
+            setTimeTable(getTimeTableData(data, DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID, firstDay))
           }
         }
       } catch (error) {
@@ -62,6 +73,7 @@ export const TabsList = () => {
           message: error instanceof Error ? error.message : 'Error',
           title: 'Упс, возникла ошибка 🤥',
         })
+        console.error(error)
       } finally {
         setLoading(false)
       }
@@ -78,12 +90,15 @@ export const TabsList = () => {
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
-  }, [setTimeTable])
+  }, [setTimeTable, firstDay])
 
   if (loading) {
     return (
       <LoadingOverlay overlayProps={{ blur: 2, radius: 'sm' }} visible={loading} zIndex={1000} />
     )
+  }
+  const onChangeDate = (date: Date) => {
+    setFirstDay(date)
   }
 
   return (
@@ -97,12 +112,21 @@ export const TabsList = () => {
           <Text fz={'lg'}>Преподавателям</Text>
         </Tabs.Tab>
       </Tabs.List>
+
       <Tabs.Panel value={'student'}>
-        <StudentPage setTimeTable={setTimeTable} timeTable={timeTable} />
+        <StudentPage
+          onChangeDate={onChangeDate}
+          setTimeTable={setTimeTable}
+          timeTable={timeTable}
+        />
       </Tabs.Panel>
 
       <Tabs.Panel value={'teacher'}>
-        <TeacherPage setTimeTable={setTimeTable} timeTable={timeTable} />
+        <TeacherPage
+          onChangeDate={onChangeDate}
+          setTimeTable={setTimeTable}
+          timeTable={timeTable}
+        />
       </Tabs.Panel>
     </Tabs>
   )

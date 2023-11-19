@@ -6,9 +6,9 @@ import { read, utils } from 'xlsx'
 
 type Row = Record<string, string>
 
-export const getData = async () => {
+export const getData = async (firstDay: Date) => {
   try {
-    const excelLink = await getExcelLink()
+    const excelLink = await getExcelLink({ firstDay: firstDay })
     const response = await fetch(excelLink)
     const arrayBuffer = await response.arrayBuffer()
     const wb = read(arrayBuffer)
@@ -73,6 +73,7 @@ export const getData = async () => {
       message: error instanceof Error ? error.message : 'Error',
       title: 'Упс, возникала ошибка 🤥',
     })
+    console.error(error)
   }
 }
 

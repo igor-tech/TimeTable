@@ -4,7 +4,8 @@ import { ICouple, ITimeTable } from '@/types/types.ts'
 export const getTimeTableData = (
   data: ICouple[],
   groupId: string,
-  teacherId: string
+  teacherId: string,
+  firstDay: Date
 ): ITimeTable => {
   const groupList = Array.from(new Set(data?.map(couple => couple.groupName)))
   const teacherList: string[] = Array.from(
@@ -13,6 +14,7 @@ export const getTimeTableData = (
 
   return {
     couple: data,
+    firstDayOfWeek: firstDay.getTime(),
     groupId: groupId ?? DEFAULT_GROUP_ID,
     groupList,
     teacherId: teacherId ?? DEFAULT_TEACHER_ID,

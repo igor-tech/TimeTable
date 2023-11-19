@@ -3,7 +3,7 @@ import { FC, Fragment, memo, useEffect, useState } from 'react'
 import { DayCard } from '@/components/Card/DayCard.tsx'
 import { Theme } from '@/constants/Theme.tsx'
 import { ICouple } from '@/types/types.ts'
-import { Checkbox, Flex } from '@mantine/core'
+import { Checkbox, Flex, Text } from '@mantine/core'
 
 type Props = {
   data: ICouple[][]
@@ -25,6 +25,15 @@ export const DaysCard: FC<Props> = memo(({ data, groupId, isTeacher }) => {
     )
   }, [data, hidePrevDay])
 
+  const areAllDaysHidden =
+    isAnyDayHidden &&
+    data?.every(day => {
+      const currentDay = new Date().getDate()
+      const isShow = hidePrevDay ? currentDay <= +day[0]?.numberDay.slice(0, 2).trim() : true
+
+      return !isShow
+    })
+
   return (
     <>
       {isAnyDayHidden && (
@@ -35,6 +44,14 @@ export const DaysCard: FC<Props> = memo(({ data, groupId, isTeacher }) => {
           onClick={() => setHidePrevDay(!hidePrevDay)}
           styles={{ label: { fontSize: `${Theme.fontSizes.md}` } }}
         />
+      )}
+
+      {areAllDaysHidden && (
+        <Flex justify={'center'} pt={'calc(100vh / 5)'}>
+          <Text fw={'400'} fz={'lg'}>
+            Нет отображаемых дней
+          </Text>
+        </Flex>
       )}
 
       <Flex gap={'20px'} justify={'center'} mt={'2px'} w={'100%'} wrap={'wrap'}>

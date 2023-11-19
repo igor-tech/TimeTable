@@ -21,6 +21,7 @@ export interface ICouple {
 
 export interface ITimeTable {
   couple: ICouple[]
+  firstDayOfWeek: number
   groupId: string
   groupList: string[]
   teacherId: string
