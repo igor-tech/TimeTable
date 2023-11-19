@@ -4,7 +4,7 @@ import { getFirstDayOfTheWeek } from '@/helpers/GetFirstDayOfTheWeek.tsx'
 import { Flex } from '@mantine/core'
 import { Calendar } from '@mantine/dates'
 import { modals } from '@mantine/modals'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 type Props = {
   firstDayOfTheWeek: Date
