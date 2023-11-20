@@ -69,6 +69,7 @@ const generateExportLink = (
     return `${baseUrl}export?format=xlsx`
   } catch (error) {
     const lastKeyData = Object.keys(data).length
+
     const lastData = data[`A${lastKeyData}`]
 
     notifications.show({
@@ -76,7 +77,6 @@ const generateExportLink = (
       message: 'Выберите правильную дату',
       title: 'Упс, возникла ошибка 🤥',
     })
-    debugger
 
     return getBaseUrl(lastData.l.Target) + 'export?format=xlsx'
   }

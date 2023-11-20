@@ -13,16 +13,28 @@ import { notifications } from '@mantine/notifications'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { PiStudentBold } from 'react-icons/pi'
 
+type TabsPage = 'student' | 'teacher'
+
 export const TabsList = () => {
   const [timeTable, setTimeTable] = useLocalStorage<ITimeTable>(LOCAL_STORAGE_KEY, {} as ITimeTable)
+  const [tabsPage, setTabsPage] = useLocalStorage<TabsPage>('tabs-page', 'student')
   const [loading, setLoading] = useState<boolean>(true)
+
   const sectionRef = useRef<HTMLDivElement | null>(null)
-  const initialDay =
-    timeTable.firstDayOfWeek === undefined
-      ? getFirstDayOfTheWeek(new Date())
-      : new Date(timeTable.firstDayOfWeek)
+
+  const initialDay = timeTable.firstDayOfWeek
+    ? new Date(timeTable.firstDayOfWeek)
+    : getFirstDayOfTheWeek(new Date())
 
   const [firstDay, setFirstDay] = useState<Date>(initialDay)
+
+  const handleFirstDayChange = (date: Date) => {
+    setFirstDay(date)
+  }
+
+  const handleTabsPageChange = (value: TabsPage) => {
+    setTabsPage(value)
+  }
 
   useLayoutEffect(() => {
     const handleScroll = () => {
@@ -73,6 +85,7 @@ export const TabsList = () => {
           message: error instanceof Error ? error.message : 'Error',
           title: 'Упс, возникла ошибка 🤥',
         })
+
         console.error(error)
       } finally {
         setLoading(false)
@@ -97,12 +110,14 @@ export const TabsList = () => {
       <LoadingOverlay overlayProps={{ blur: 2, radius: 'sm' }} visible={loading} zIndex={1000} />
     )
   }
-  const onChangeDate = (date: Date) => {
-    setFirstDay(date)
-  }
 
   return (
-    <Tabs defaultValue={'student'} mt={'20px'} ref={sectionRef}>
+    <Tabs
+      defaultValue={tabsPage}
+      mt={'20px'}
+      onChange={value => handleTabsPageChange(value as TabsPage)}
+      ref={sectionRef}
+    >
       <Tabs.List mb={'20px'}>
         <Tabs.Tab leftSection={<PiStudentBold size={20} />} value={'student'} w={'50%'}>
           <Text fz={'lg'}>Студентам</Text>
@@ -115,7 +130,7 @@ export const TabsList = () => {
 
       <Tabs.Panel value={'student'}>
         <StudentPage
-          onChangeDate={onChangeDate}
+          onChangeDate={handleFirstDayChange}
           setTimeTable={setTimeTable}
           timeTable={timeTable}
         />
@@ -123,7 +138,7 @@ export const TabsList = () => {
 
       <Tabs.Panel value={'teacher'}>
         <TeacherPage
-          onChangeDate={onChangeDate}
+          onChangeDate={handleFirstDayChange}
           setTimeTable={setTimeTable}
           timeTable={timeTable}
         />

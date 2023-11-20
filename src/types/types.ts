@@ -1,3 +1,5 @@
+import { GROUP_NAME } from '@/components/config.ts'
+
 export type DayOfWeek =
   | 'Воскресенье'
   | 'Вторник'
@@ -35,3 +37,5 @@ export const PracticeValues = {
 } as const
 
 export type PracticeTypeValues = (typeof PracticeValues)[keyof typeof PracticeValues]
+
+export type KeysGroupName = keyof typeof GROUP_NAME

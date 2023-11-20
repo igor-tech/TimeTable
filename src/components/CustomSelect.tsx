@@ -1,9 +1,10 @@
 import { FC } from 'react'
 
-import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
+import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID } from '@/components/config.ts'
 import { ModalDatePicker } from '@/components/modal/ModalDatePicker.tsx'
 import { Theme } from '@/constants/Theme.tsx'
 import { isDayInCurrentWeek } from '@/helpers/IsDayInCurrentWeek.tsx'
+import { getGroupNameDataSelect } from '@/helpers/getGroupNameDataSelect.ts'
 import { isMobileDeviceByWidth } from '@/helpers/isMobileDevice.ts'
 import { ActionIcon, Flex, Indicator, Select, rem } from '@mantine/core'
 import { modals } from '@mantine/modals'
@@ -39,19 +40,24 @@ export const CustomSelect: FC<CustomSelectProps> = ({
 
   const isSearchable = defaultData === DEFAULT_TEACHER_ID && !isMobileDeviceByWidth()
 
+  const isStudent = defaultData === DEFAULT_GROUP_ID
+
+  const dataSelect = isStudent ? getGroupNameDataSelect(data) : data
+
   return (
     <Flex align={'end'} gap={20} justify={'space-between'} maw={'700px'}>
       <Select
         checkIconPosition={'right'}
-        data={data ?? [defaultData]}
+        data={dataSelect ?? [defaultData]}
         maxDropdownHeight={rem(450)}
         onChange={value => onChangeSelect(value!)}
         searchable={isSearchable}
         styles={{
           dropdown: { boxShadow: '4px 4px 4px var(--mantine-color-gray-4)' },
+          groupLabel: { fontSize: `${Theme.fontSizes.md}` },
           input: { fontSize: `${Theme.fontSizes.md}` },
           label: { fontSize: `${Theme.fontSizes.md}` },
-          option: { fontSize: `${Theme.fontSizes.md}` },
+          option: { fontSize: `${Theme.fontSizes.md}`, marginLeft: '5px' },
         }}
         w={'100%'}
         {...rest}
