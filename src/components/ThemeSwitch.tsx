@@ -1,13 +1,47 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 import { ColorScheme } from '@/constants/colorShceme.ts'
-import { Group, Switch, useMantineColorScheme, useMantineTheme } from '@mantine/core'
+import {
+  Group,
+  MantineColorScheme,
+  Switch,
+  useMantineColorScheme,
+  useMantineTheme,
+} from '@mantine/core'
 import { BiSun } from 'react-icons/bi'
 import { RiMoonFill } from 'react-icons/ri'
 
 export const HeaderThemeToggler: FC = () => {
   const theme = useMantineTheme()
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme()
+  const { colorScheme, setColorScheme, toggleColorScheme } = useMantineColorScheme()
+
+  useEffect(() => {
+    const colorSchemeLocalStorage = localStorage.getItem('mantine-color-scheme-value')
+
+    if (colorSchemeLocalStorage) {
+      setColorScheme(colorSchemeLocalStorage as MantineColorScheme)
+
+      return
+    }
+
+    const getSystemTheme = () => {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setColorScheme('dark')
+      } else {
+        setColorScheme('light')
+      }
+    }
+
+    getSystemTheme()
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', getSystemTheme)
+
+    return () => {
+      window
+        .matchMedia('(prefers-color-scheme: dark)')
+        .removeEventListener('change', getSystemTheme)
+    }
+  }, [])
 
   const isDarkTheme = colorScheme === ColorScheme.Dark
 

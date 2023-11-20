@@ -1,8 +1,10 @@
 import { FC } from 'react'
 
+import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
 import { ModalDatePicker } from '@/components/modal/ModalDatePicker.tsx'
 import { Theme } from '@/constants/Theme.tsx'
 import { isDayInCurrentWeek } from '@/helpers/IsDayInCurrentWeek.tsx'
+import { isMobileDeviceByWidth } from '@/helpers/isMobileDevice.ts'
 import { ActionIcon, Flex, Indicator, Select, rem } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { CiCalendarDate } from 'react-icons/ci'
@@ -35,6 +37,8 @@ export const CustomSelect: FC<CustomSelectProps> = ({
 
   const isOnIndicator = !isDayInCurrentWeek(firstDayOfTheWeek)
 
+  const isSearchable = defaultData === DEFAULT_TEACHER_ID && !isMobileDeviceByWidth()
+
   return (
     <Flex align={'end'} gap={20} justify={'space-between'} maw={'700px'}>
       <Select
@@ -42,6 +46,7 @@ export const CustomSelect: FC<CustomSelectProps> = ({
         data={data ?? [defaultData]}
         maxDropdownHeight={rem(450)}
         onChange={value => onChangeSelect(value!)}
+        searchable={isSearchable}
         styles={{
           dropdown: { boxShadow: '4px 4px 4px var(--mantine-color-gray-4)' },
           input: { fontSize: `${Theme.fontSizes.md}` },
