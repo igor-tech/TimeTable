@@ -36,7 +36,7 @@ export const CustomSelect: FC<CustomSelectProps> = ({
       title: 'Выберите неделю',
     })
 
-  const isOnIndicator = !isDayInCurrentWeek(firstDayOfTheWeek)
+  const isOnIndicator = isDayInCurrentWeek(firstDayOfTheWeek)
 
   const isSearchable = defaultData === DEFAULT_TEACHER_ID && !isMobileDeviceByWidth()
 
@@ -62,7 +62,14 @@ export const CustomSelect: FC<CustomSelectProps> = ({
         w={'100%'}
         {...rest}
       />
-      <Indicator disabled={isOnIndicator} h={'36px'} position={'top-end'} w={'36px'}>
+      <Indicator
+        disabled={isOnIndicator}
+        h={'36px'}
+        position={'top-end'}
+        processing
+        w={'36px'}
+        withBorder
+      >
         <ActionIcon m={0} onClick={openModal} p={0} size={35} variant={'light'}>
           <CiCalendarDate size={35} />
         </ActionIcon>

@@ -1,9 +1,22 @@
 export function isDayInCurrentWeek(day: Date): boolean {
   const today = new Date()
-  const currentDayOfWeek = today.getDay()
-  const mondayOffset = currentDayOfWeek > 0 ? currentDayOfWeek - 1 : 7
-  const currentWeekStart = new Date(today.setDate(today.getDate() - mondayOffset))
-  const currentWeekEnd = new Date(today.setDate(today.getDate() + 6))
+
+  const currentWeekStart = new Date(
+    today.getUTCFullYear(),
+    today.getUTCMonth(),
+    today.getUTCDate(),
+    0,
+    0,
+    0
+  )
+  const currentWeekEnd = new Date(
+    currentWeekStart.getUTCFullYear(),
+    currentWeekStart.getUTCMonth(),
+    currentWeekStart.getUTCDate() + 6,
+    23,
+    59,
+    59
+  )
 
   return day >= currentWeekStart && day <= currentWeekEnd
 }
