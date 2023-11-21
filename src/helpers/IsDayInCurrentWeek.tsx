@@ -1,22 +1,16 @@
-export function isDayInCurrentWeek(day: Date): boolean {
-  const today = new Date()
+import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
 
-  const currentWeekStart = new Date(
-    today.getUTCFullYear(),
-    today.getUTCMonth(),
-    today.getUTCDate(),
-    0,
-    0,
-    0
-  )
+export function isDayInCurrentWeek(day: Date): boolean {
+  const firstDayOfWeek = getFirstDayOfTheWeek(new Date())
+
   const currentWeekEnd = new Date(
-    currentWeekStart.getUTCFullYear(),
-    currentWeekStart.getUTCMonth(),
-    currentWeekStart.getUTCDate() + 6,
+    firstDayOfWeek.getUTCFullYear(),
+    firstDayOfWeek.getUTCMonth(),
+    firstDayOfWeek.getUTCDate() + 7,
     23,
     59,
     59
   )
 
-  return day >= currentWeekStart && day <= currentWeekEnd
+  return day >= firstDayOfWeek && day <= currentWeekEnd
 }

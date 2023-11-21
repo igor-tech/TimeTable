@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { getFirstDayOfTheWeek } from '@/helpers/GetFirstDayOfTheWeek.tsx'
+import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
 import { Flex } from '@mantine/core'
 import { Calendar } from '@mantine/dates'
 import { modals } from '@mantine/modals'
