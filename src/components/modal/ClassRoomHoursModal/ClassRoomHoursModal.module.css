@@ -1,5 +1,5 @@
 .thead {
-    border-radius: 15px;
+    border-radius: var(--mantine-font-size-sm);
     box-shadow: 4px 4px 5px 1px rgba(0, 0, 0, 0.15);
     font-size: var(--mantine-font-size-md)
 }
@@ -14,5 +14,6 @@
 }
 
 .th {
-    text-align: center
+    text-align: center;
+    white-space: nowrap;
 }
