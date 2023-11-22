@@ -54,7 +54,7 @@ export const DaysCard: FC<Props> = memo(({ data, groupId, isTeacher }) => {
         </Flex>
       )}
 
-      <Flex gap={'20px'} justify={'center'} mt={'2px'} w={'100%'} wrap={'wrap'}>
+      <Flex gap={'20px'} justify={'flex-start'} mt={'2px'} w={'100%'} wrap={'wrap'}>
         {data?.map((day, i) => {
           const currentDay = new Date().getDate()
 
