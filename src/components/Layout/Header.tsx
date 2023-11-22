@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { HeaderThemeToggler } from '@/components/ThemeSwitch.tsx'
+import { HeaderThemeToggler } from '@/components/Layout/ThemeSwitch.tsx'
 import { ColorScheme } from '@/constants/colorShceme.ts'
 import { Flex, Image, UnstyledButton, useMantineColorScheme } from '@mantine/core'
 

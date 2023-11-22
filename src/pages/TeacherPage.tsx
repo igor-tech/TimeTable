@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 
 import { DaysCard } from '@/components/Card/DaysCard.tsx'
-import { CustomSelect } from '@/components/CustomSelect.tsx'
-import { DEFAULT_GROUP_ID } from '@/components/config.ts'
+import { CustomSelect } from '@/components/Shared/CustomSelect.tsx'
+import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
 import { ICouple, ITimeTable } from '@/types/types.ts'
 import { Box, LoadingOverlay, Text } from '@mantine/core'
@@ -13,32 +13,27 @@ type Props = {
   timeTable: ITimeTable
 }
 
-export const StudentPage: FC<Props> = ({ onChangeDate, setTimeTable, timeTable }) => {
+export const TeacherPage: FC<Props> = ({ onChangeDate, setTimeTable, timeTable }) => {
   const [data, setData] = useState<ICouple[][]>()
   const [loading, setLoading] = useState<boolean>(true)
 
-  const handleUpdateGroupId = (groupId: string) => {
-    setLoading(true)
+  const handleUpdateTeacherId = (teacherId: string) => {
     if (Object.keys(timeTable).length) {
-      setTimeTable({ ...timeTable, groupId })
+      setTimeTable({ ...timeTable, teacherId })
     }
-    setLoading(false)
   }
 
   useEffect(() => {
     setLoading(true)
-    if (!Object.keys(timeTable).length) {
-      setLoading(false)
+    if (Object.keys(timeTable).length) {
+      const filteredData = timeTable.couple.filter(couple =>
+        couple.teacherName.includes(timeTable.teacherId)
+      )
 
-      return
+      if (filteredData) {
+        setData(divideArrayByNumberDay(filteredData))
+      }
     }
-
-    const filteredData = timeTable.couple.filter(couple => couple.groupName === timeTable.groupId)
-
-    if (filteredData) {
-      setData(divideArrayByNumberDay(filteredData))
-    }
-
     setLoading(false)
   }, [timeTable])
 
@@ -48,35 +43,37 @@ export const StudentPage: FC<Props> = ({ onChangeDate, setTimeTable, timeTable }
     )
   }
 
-  const { groupId, groupList } = timeTable
+  const { teacherId, teacherList } = timeTable
 
-  const groupName = data && data?.[0]?.[0]?.groupName
+  const teacherName = data && data?.[0]?.[0]?.teacherName
 
   const firstDayOfTheWeek = new Date(timeTable.firstDayOfWeek)
 
   return (
     <Box>
       <CustomSelect
-        data={groupList}
-        defaultData={DEFAULT_GROUP_ID}
+        data={teacherList}
+        defaultData={DEFAULT_TEACHER_ID}
         firstDayOfTheWeek={firstDayOfTheWeek}
-        label={'Группа:'}
+        label={'Преподаватель:'}
         onChangeDate={onChangeDate}
-        onChangeSelect={handleUpdateGroupId}
-        placeholder={'Выберите группу'}
-        value={groupId}
+        onChangeSelect={handleUpdateTeacherId}
+        placeholder={'Выберите перподавателя'}
+        value={teacherId}
       />
+
       {data && data.length > 0 && (
         <Text fz={'lg'} mt={'15px'}>
-          Группа {groupName} (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
+          Расписание для преподавателя {teacherName?.[0]} (с {data[0][0].numberDay} по{' '}
+          {data[data.length - 1][0].numberDay})
         </Text>
       )}
 
-      {data && data.length > 0 && <DaysCard data={data} groupId={groupId} />}
+      {data && data.length > 0 && <DaysCard data={data} isTeacher />}
 
       {!data?.length && (
         <Text fw={'200'} fz={'xxxl'} mt={'150px'} ta={'center'}>
-          Выберите группу
+          Введите имя преподавателя
         </Text>
       )}
     </Box>

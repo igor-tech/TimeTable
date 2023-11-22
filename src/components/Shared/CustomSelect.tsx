@@ -1,14 +1,12 @@
 import { FC } from 'react'
 
+import { SelectWeekButton } from '@/components/Shared/SelectWeekButton/SelectWeekButton.tsx'
+import { StudyTimeButton } from '@/components/Shared/StudyTimeButton/StudyTimeButton.tsx'
 import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID } from '@/components/config.ts'
-import { ModalDatePicker } from '@/components/modal/ModalDatePicker.tsx'
 import { Theme } from '@/constants/Theme.tsx'
-import { isDayInCurrentWeek } from '@/helpers/IsDayInCurrentWeek.tsx'
 import { getGroupNameDataSelect } from '@/helpers/getGroupNameDataSelect.ts'
 import { isMobileDeviceByWidth } from '@/helpers/isMobileDevice.ts'
-import { ActionIcon, Flex, Indicator, Select, rem } from '@mantine/core'
-import { modals } from '@mantine/modals'
-import { CiCalendarDate } from 'react-icons/ci'
+import { Flex, Select, rem } from '@mantine/core'
 
 type CustomSelectProps = {
   data: string[]
@@ -28,16 +26,6 @@ export const CustomSelect: FC<CustomSelectProps> = ({
   onChangeSelect,
   ...rest
 }) => {
-  const openModal = () =>
-    modals.open({
-      children: (
-        <ModalDatePicker firstDayOfTheWeek={firstDayOfTheWeek} onChangeDate={onChangeDate} />
-      ),
-      title: 'Выберите неделю',
-    })
-
-  const isOnIndicator = isDayInCurrentWeek(firstDayOfTheWeek)
-
   const isSearchable = defaultData === DEFAULT_TEACHER_ID && !isMobileDeviceByWidth()
 
   const isStudent = defaultData === DEFAULT_GROUP_ID
@@ -62,18 +50,10 @@ export const CustomSelect: FC<CustomSelectProps> = ({
         w={'100%'}
         {...rest}
       />
-      <Indicator
-        disabled={isOnIndicator}
-        h={'36px'}
-        position={'top-end'}
-        processing
-        w={'36px'}
-        withBorder
-      >
-        <ActionIcon m={0} onClick={openModal} p={0} size={35} variant={'light'}>
-          <CiCalendarDate size={35} />
-        </ActionIcon>
-      </Indicator>
+
+      <SelectWeekButton firstDayOfTheWeek={firstDayOfTheWeek} onChangeDate={onChangeDate} />
+
+      <StudyTimeButton />
     </Flex>
   )
 }

@@ -1,5 +1,5 @@
-import { Header } from '@/components/Header.tsx'
-import { TabsList } from '@/components/TabsList.tsx'
+import { Header } from '@/components/Layout/Header.tsx'
+import { TabsList } from '@/pages/TabsList.tsx'
 import { AppShell, BackgroundImage, Center, Text } from '@mantine/core'
 import { Notifications } from '@mantine/notifications'
 import { Analytics } from '@vercel/analytics/react'
@@ -26,7 +26,10 @@ function App() {
           style={{ backgroundPosition: '0%', objectFit: 'fill' }}
         >
           <Center p={'md'}>
-            <Text c={'white'} fz={'xxxl'}>
+            <Text c={'white'} component={'h1'} fz={'xxxl'} hidden>
+              Расписание УКСАП
+            </Text>
+            <Text c={'white'} component={'h2'} fz={'xxxl'}>
               Расписание
             </Text>
           </Center>

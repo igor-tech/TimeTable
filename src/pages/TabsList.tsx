@@ -1,12 +1,12 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 
-import { StudentPage } from '@/components/StudentPage.tsx'
-import { TeacherPage } from '@/components/TeacherPage.tsx'
 import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID, LOCAL_STORAGE_KEY } from '@/components/config.ts'
 import { getData } from '@/data/getData.ts'
 import { getTimeTableData } from '@/helpers/GetTimeTableData.ts'
 import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
 import { useLocalStorage } from '@/hooks/useLocalStorage.tsx'
+import { StudentPage } from '@/pages/StudentPage.tsx'
+import { TeacherPage } from '@/pages/TeacherPage.tsx'
 import { ITimeTable } from '@/types/types.ts'
 import { LoadingOverlay, Tabs, Text } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
@@ -127,7 +127,6 @@ export const TabsList = () => {
           <Text fz={'lg'}>Преподавателям</Text>
         </Tabs.Tab>
       </Tabs.List>
-
       <Tabs.Panel value={'student'}>
         <StudentPage
           onChangeDate={handleFirstDayChange}
