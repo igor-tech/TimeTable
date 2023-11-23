@@ -45,7 +45,7 @@ export const Couple: FC<Props> = ({ couple, groupId, isTeacher = false }) => {
         </Flex>
         <Flex justify={'space-between'} mt={'10px'}>
           <CoupleBadgeWithText color={'green'} text={' Кабинет:'}>
-            {officeNumber ?? 'кабинет не указан'}
+            {officeNumber ?? 'не указан'}
           </CoupleBadgeWithText>
 
           {isAlex && (

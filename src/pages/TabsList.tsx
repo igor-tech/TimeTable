@@ -29,6 +29,7 @@ export const TabsList = () => {
   const [firstDay, setFirstDay] = useState<Date>(initialDay)
 
   const handleFirstDayChange = (date: Date) => {
+    setTimeTable({ ...timeTable, firstDayOfWeek: date.getTime() })
     setFirstDay(date)
   }
 
@@ -53,15 +54,19 @@ export const TabsList = () => {
           setLoading(false)
 
           handleScroll()
-
-          getData(new Date(firstDay)).then(data => {
+          getData(firstDay).then(data => {
             if (data) {
               const localDataString = JSON.stringify(timeTable.couple)
               const remoteDataString = JSON.stringify(data)
 
               if (localDataString !== remoteDataString) {
                 setTimeTable(
-                  getTimeTableData(data, timeTable?.groupId, timeTable?.teacherId, firstDay)
+                  getTimeTableData(
+                    data,
+                    timeTable?.groupId,
+                    timeTable?.teacherId,
+                    new Date(timeTable.firstDayOfWeek)
+                  )
                 )
 
                 notifications.show({
@@ -103,7 +108,7 @@ export const TabsList = () => {
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
-  }, [setTimeTable, firstDay])
+  }, [setTimeTable, timeTable, firstDay])
 
   if (loading) {
     return (

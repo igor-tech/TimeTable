@@ -13,6 +13,9 @@ export const StudyTimeButton: FC = () => {
       children: <ClassRoomHoursModal />,
       classNames: { root: styles.root, title: styles.title },
       size: '800px',
+      styles: {
+        title: { fontSize: 'var(--mantine-font-size-lg)', fontWeight: '700', textAlign: 'center' },
+      },
       title: 'Время проведения аудиторных занятий',
     })
 

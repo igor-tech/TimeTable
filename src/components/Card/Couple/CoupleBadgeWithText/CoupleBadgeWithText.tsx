@@ -14,7 +14,7 @@ export const CoupleBadgeWithText: FC<Props> = ({ children, color, text }) => {
   const isDarkTheme = ColorScheme.Dark === colorScheme
 
   return (
-    <Text fw={'500'} fz={'sm'}>
+    <Text fw={'500'} fz={'sm'} style={{ whiteSpace: 'break-spaces' }}>
       {text}
       <Badge
         color={color}

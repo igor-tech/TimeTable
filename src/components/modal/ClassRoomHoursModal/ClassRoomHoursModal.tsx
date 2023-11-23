@@ -6,9 +6,9 @@ import { CSSProperties, Table } from '@mantine/core'
 import styles from './ClassRoomHoursModal.module.css'
 
 export const ClassRoomHoursModal: FC = () => {
-  const TheadStyles = { th: { textAlign: 'center', whiteSpace: 'nowrap' } } as Partial<
-    Record<'th', CSSProperties>
-  >
+  const TheadStyles = {
+    th: { fontSize: 'var(--mantine-font-size-lg)', textAlign: 'center', whiteSpace: 'nowrap' },
+  } as Partial<Record<'th', CSSProperties>>
 
   return (
     <>
