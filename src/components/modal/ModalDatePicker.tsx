@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 
 import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
+import { useTimeTable } from '@/store/store.ts'
 import { Flex } from '@mantine/core'
 import { Calendar } from '@mantine/dates'
 import { modals } from '@mantine/modals'
 import dayjs from 'dayjs'
 
-type Props = {
-  firstDayOfTheWeek: Date
-  onChangeDate: (date: Date) => void
-}
-export const ModalDatePicker = ({ firstDayOfTheWeek, onChangeDate }: Props) => {
+export const ModalDatePicker = () => {
+  const { firstDayOfWeek, setFirstDayOfWeek } = useTimeTable()
   const [hovered, setHovered] = useState<Date | null>(null)
   const [value, setValue] = useState<Date | null>(null)
   const [startWeek, setStartWeek] = useState<Date | null>(null)
@@ -38,15 +36,16 @@ export const ModalDatePicker = ({ firstDayOfTheWeek, onChangeDate }: Props) => {
   }
 
   useEffect(() => {
-    setValue(firstDayOfTheWeek)
-  }, [firstDayOfTheWeek])
+    setValue(new Date(firstDayOfWeek))
+  }, [firstDayOfWeek])
 
   useEffect(() => {
     if (startWeek !== null) {
-      onChangeDate(startWeek)
-      modals.closeAll()
+      setFirstDayOfWeek(startWeek)
+
+      modals.close('setWeekModal')
     }
-  }, [onChangeDate, startWeek])
+  }, [setFirstDayOfWeek, startWeek])
 
   return (
     <Flex justify={'center'}>

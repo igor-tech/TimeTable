@@ -1,26 +1,22 @@
 import { FC } from 'react'
 
 import { ModalDatePicker } from '@/components/modal/ModalDatePicker.tsx'
-import { isDayInCurrentWeek } from '@/helpers/IsDayInCurrentWeek.tsx'
+import { hasWeekPassed } from '@/helpers/HasWeekPassed.tsx'
+import { useTimeTable } from '@/store/store.ts'
 import { ActionIcon, Indicator, Tooltip } from '@mantine/core'
 import { modals } from '@mantine/modals'
 import { CiCalendarDate } from 'react-icons/ci'
 
-type Props = {
-  firstDayOfTheWeek: Date
-  onChangeDate: (date: Date) => void
-}
-
-export const SelectWeekButton: FC<Props> = ({ firstDayOfTheWeek, onChangeDate }) => {
+export const SelectWeekButton: FC = () => {
+  const { firstDayOfWeek } = useTimeTable()
   const openDateModal = () =>
     modals.open({
-      children: (
-        <ModalDatePicker firstDayOfTheWeek={firstDayOfTheWeek} onChangeDate={onChangeDate} />
-      ),
+      children: <ModalDatePicker />,
       title: 'Выберите неделю',
+      modalId: 'setWeekModal',
     })
 
-  const isOnIndicator = isDayInCurrentWeek(firstDayOfTheWeek)
+  const isOnIndicator = hasWeekPassed(new Date(firstDayOfWeek))
 
   return (
     <Indicator

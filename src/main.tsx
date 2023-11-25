@@ -1,18 +1,19 @@
+import { BrowserRouter } from 'react-router-dom'
+
 import App from '@/App.tsx'
 import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary.tsx'
 import { Theme } from '@/constants/Theme.tsx'
 import { MantineProvider } from '@mantine/core'
-import { ModalsProvider } from '@mantine/modals'
 import ReactDOM from 'react-dom/client'
 
 import './main.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <ErrorBoundary>
-    <MantineProvider theme={Theme}>
-      <ModalsProvider>
+    <BrowserRouter>
+      <MantineProvider theme={Theme}>
         <App />
-      </ModalsProvider>
-    </MantineProvider>
+      </MantineProvider>
+    </BrowserRouter>
   </ErrorBoundary>
 )

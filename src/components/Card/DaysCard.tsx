@@ -1,41 +1,53 @@
-import { FC, Fragment, memo, useEffect, useState } from 'react'
+import { FC, Fragment, useEffect, useState } from 'react'
 
 import { DayCard } from '@/components/Card/DayCard.tsx'
+import { TIME_DATA } from '@/components/config.ts'
 import { Theme } from '@/constants/Theme.tsx'
+import { convertStringToDate } from '@/helpers/ConvertStringToDate.tsx'
+import { hasWeekPassed } from '@/helpers/HasWeekPassed.tsx'
 import { ICouple } from '@/types/types.ts'
-import { Checkbox, Flex, Text } from '@mantine/core'
+import { Box, Checkbox, Flex, Text } from '@mantine/core'
 
 type Props = {
   data: ICouple[][]
   groupId?: string
   isTeacher?: boolean
 }
-export const DaysCard: FC<Props> = memo(({ data, groupId, isTeacher }) => {
+export const DaysCard: FC<Props> = ({ data, groupId, isTeacher }) => {
   const [hidePrevDay, setHidePrevDay] = useState<boolean>(true)
   const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
+
+  const shouldShowDay = (day: ICouple[]): boolean => {
+    const currentDay = new Date().getTime()
+    const isWeekPassed = !hasWeekPassed(convertStringToDate(day[0]?.numberDay))
+    const lastCoupleHours = 2 + parseInt(TIME_DATA[day[0].coupleNumber][2].slice(0, 2))
+    const isShow = hidePrevDay
+      ? currentDay <= convertStringToDate(day[0]?.numberDay, lastCoupleHours).getTime()
+      : true
+
+    return isWeekPassed || isShow
+  }
 
   useEffect(() => {
     setIsAnyDayHidden(
       data?.some(day => {
-        const currentDay = new Date().getDate()
-        const isShow = currentDay <= +day[0]?.numberDay.slice(0, 2).trim()
+        const lastCoupleHours = 2 + parseInt(TIME_DATA[day[0].coupleNumber][2].slice(0, 2))
+        const currentDay = new Date().getTime()
+        const isShow =
+          currentDay <= convertStringToDate(day[0]?.numberDay, lastCoupleHours).getTime()
+        const isWeekPassed = !hasWeekPassed(convertStringToDate(day[0]?.numberDay))
 
-        return !isShow
+        return !isShow && !isWeekPassed
       })
     )
   }, [data, hidePrevDay])
 
-  const areAllDaysHidden =
-    isAnyDayHidden &&
-    data?.every(day => {
-      const currentDay = new Date().getDate()
-      const isShow = hidePrevDay ? currentDay <= +day[0]?.numberDay.slice(0, 2).trim() : true
-
-      return !isShow
-    })
+  const areAllDaysHidden = data?.every(day => {
+    return !shouldShowDay(day)
+  })
 
   return (
-    <>
+    <Box>
       {isAnyDayHidden && (
         <Checkbox
           defaultChecked
@@ -56,9 +68,7 @@ export const DaysCard: FC<Props> = memo(({ data, groupId, isTeacher }) => {
 
       <Flex gap={'20px'} justify={'flex-start'} mt={'2px'} w={'100%'} wrap={'wrap'}>
         {data?.map((day, i) => {
-          const currentDay = new Date().getDate()
-
-          const isShow = hidePrevDay ? currentDay <= +day[0]?.numberDay.slice(0, 2).trim() : true
+          const isShow = shouldShowDay(day)
 
           return (
             <Fragment key={i}>
@@ -67,6 +77,6 @@ export const DaysCard: FC<Props> = memo(({ data, groupId, isTeacher }) => {
           )
         })}
       </Flex>
-    </>
+    </Box>
   )
-})
+}

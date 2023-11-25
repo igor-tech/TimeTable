@@ -1,4 +1,3 @@
-import { LOCAL_STORAGE_KEY } from '@/components/config.ts'
 import { notifications } from '@mantine/notifications'
 import { read } from 'xlsx'
 
@@ -66,10 +65,7 @@ const getLastKey = (data: WorkSheet, firstDay: Date) => {
   return result
 }
 
-const generateExportLink = (
-  target: Record<string, Record<string, string>>,
-  data: WorkSheet
-): string => {
+const generateExportLink = (target: Record<string, Record<string, string>>, data: WorkSheet) => {
   const getBaseUrl = (url: string) => {
     const baseUrlRegex = /.*\//
     const matches = url.match(baseUrlRegex)
@@ -86,18 +82,9 @@ const generateExportLink = (
 
     const lastData = data[`A${lastKeyData}`]
 
-    const newDate = extractFirstDateFromString(lastData.w)?.getTime()
-
-    const localStorageData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)!)
-
-    localStorage.setItem(
-      LOCAL_STORAGE_KEY,
-      JSON.stringify({ ...localStorageData, firstDayOfWeek: newDate })
-    )
-
     notifications.show({
       color: 'red',
-      message: 'Выберите правильную дату',
+      message: 'Нет расписания на эту неделю, выберите другую неделю',
       title: 'Упс, возникла ошибка 🤥',
     })
 
@@ -146,27 +133,3 @@ function convertStringToDate(dateString: string): Date | null {
 
   return date
 }
-
-function extractFirstDateFromString(str: string) {
-  // Регулярное выражение для поиска даты в формате dd.mm.yyyy
-  const dateRegex = /\b(\d{1,2})\.(\d{1,2})\.(\d{4})\b/
-
-  // Ищем первую дату в строке
-  const match = str.match(dateRegex)
-
-  if (match) {
-    // Извлекаем значения компонентов даты из регулярного выражения
-    const day = parseInt(match[1], 10)
-    const month = parseInt(match[2], 10) - 1 // Месяцы в JavaScript начинаются с 0
-    const year = parseInt(match[3], 10)
-
-    // Создаем объект Date с извлеченной датой
-    const date = new Date(year, month, day)
-
-    return date
-  }
-
-  return null // Если дата не найдена, возвращаем null или другое значение по вашему выбору
-}
-
-console.log(extractFirstDateFromString('C 20.11.2023 по 25.11.2023'), 'dddd')

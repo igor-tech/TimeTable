@@ -8,6 +8,10 @@
   --react-international-phone-text-color: black;
 }
 
+html {
+  scrollbar-gutter: stable
+}
+
 @media (max-width: 768px) {
   html {
     font-size: 14px;

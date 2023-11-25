@@ -11,7 +11,7 @@ export const DEFAULT_GROUP_ID = 'А-123/9'
 
 export const DEFAULT_TEACHER_ID = 'Михайлова'
 
-export const LOCAL_STORAGE_KEY = 'UKSAP'
+export const LOCAL_STORAGE_KEY = 'uksap-time-table'
 
 export const currentCouple = [
   'В полном разгаре',

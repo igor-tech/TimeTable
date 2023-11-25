@@ -11,9 +11,7 @@ import { Flex, Select, rem } from '@mantine/core'
 type CustomSelectProps = {
   data: string[]
   defaultData: string
-  firstDayOfTheWeek: Date
   label: string
-  onChangeDate: (date: Date) => void
   onChangeSelect: (groupId: string) => void
   placeholder: string
   value: string
@@ -21,8 +19,6 @@ type CustomSelectProps = {
 export const CustomSelect: FC<CustomSelectProps> = ({
   data,
   defaultData,
-  firstDayOfTheWeek,
-  onChangeDate,
   onChangeSelect,
   ...rest
 }) => {
@@ -51,7 +47,7 @@ export const CustomSelect: FC<CustomSelectProps> = ({
         {...rest}
       />
 
-      <SelectWeekButton firstDayOfTheWeek={firstDayOfTheWeek} onChangeDate={onChangeDate} />
+      <SelectWeekButton />
 
       <StudyTimeButton />
     </Flex>

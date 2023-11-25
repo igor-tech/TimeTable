@@ -20,7 +20,7 @@ export const DayCard: FC<Props> = ({ day, groupId, isTeacher }) => {
 
   return (
     <Card
-      maw={matches ? '32%' : '100%'}
+      maw={matches ? '33%' : '100%'}
       mt={'20px'}
       pb={'40px'}
       radius={'md'}

@@ -14,6 +14,7 @@ export const StudyTimeButton: FC = () => {
       classNames: { root: styles.root, title: styles.title },
       size: '800px',
       styles: {
+        root: { scrollbarGutter: 'unset', overflow: 'hidden' },
         title: { fontSize: 'var(--mantine-font-size-lg)', fontWeight: '700', textAlign: 'center' },
       },
       title: 'Время проведения аудиторных занятий',

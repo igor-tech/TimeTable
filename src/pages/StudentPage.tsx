@@ -1,71 +1,59 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 
 import { DaysCard } from '@/components/Card/DaysCard.tsx'
 import { CustomSelect } from '@/components/Shared/CustomSelect.tsx'
+import { OverlayLoader } from '@/components/Shared/OverlayLoader.tsx'
 import { DEFAULT_GROUP_ID } from '@/components/config.ts'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
-import { ICouple, ITimeTable } from '@/types/types.ts'
-import { Box, LoadingOverlay, Text } from '@mantine/core'
+import { CURRENT_ROLE } from '@/store/slices/initSlice.ts'
+import { useTimeTable } from '@/store/store.ts'
+import { ICouple } from '@/types/types.ts'
+import { Box, Text } from '@mantine/core'
 
-type Props = {
-  onChangeDate: (date: Date) => void
-  setTimeTable: (value: ITimeTable) => void
-  timeTable: ITimeTable
-}
-
-export const StudentPage: FC<Props> = ({ onChangeDate, setTimeTable, timeTable }) => {
+export const StudentPage: FC = memo(() => {
+  const { couple, groupId, groupList, setGroupId, currentRole } = useTimeTable()
   const [data, setData] = useState<ICouple[][]>()
-  const [loading, setLoading] = useState<boolean>(true)
+  const [loading, setLoading] = useState(true)
 
   const handleUpdateGroupId = (groupId: string) => {
-    setLoading(true)
-    if (Object.keys(timeTable).length) {
-      setTimeTable({ ...timeTable, groupId })
-    }
-    setLoading(false)
+    setGroupId(groupId, CURRENT_ROLE.STUDENT)
   }
 
   useEffect(() => {
     setLoading(true)
-    if (!Object.keys(timeTable).length) {
+    if (couple) {
+      const filteredData = couple.filter(couple => couple.groupName === groupId)
+
+      if (filteredData) {
+        setData(divideArrayByNumberDay(filteredData))
+      }
+    }
+    setTimeout(() => {
       setLoading(false)
-
-      return
-    }
-
-    const filteredData = timeTable.couple.filter(couple => couple.groupName === timeTable.groupId)
-
-    if (filteredData) {
-      setData(divideArrayByNumberDay(filteredData))
-    }
-
-    setLoading(false)
-  }, [timeTable])
+    }, 200)
+  }, [couple, groupId, currentRole])
 
   if (loading) {
-    return (
-      <LoadingOverlay overlayProps={{ blur: 2, radius: 'sm' }} visible={loading} zIndex={1000} />
-    )
+    return <OverlayLoader />
   }
-
-  const { groupId, groupList } = timeTable
 
   const groupName = data && data?.[0]?.[0]?.groupName
 
-  const firstDayOfTheWeek = new Date(timeTable.firstDayOfWeek)
-
   return (
-    <Box>
+    <Box
+      mih={'100vh'}
+      pos={'relative'}
+      style={{ overflow: 'hidden', transition: '0.66s ease-out' }}
+    >
       <CustomSelect
         data={groupList}
         defaultData={DEFAULT_GROUP_ID}
-        firstDayOfTheWeek={firstDayOfTheWeek}
         label={'Группа:'}
-        onChangeDate={onChangeDate}
         onChangeSelect={handleUpdateGroupId}
         placeholder={'Выберите группу'}
         value={groupId}
       />
+
       {data && data.length > 0 && (
         <Text fz={'lg'} mt={'15px'}>
           Группа {groupName} (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
@@ -81,4 +69,4 @@ export const StudentPage: FC<Props> = ({ onChangeDate, setTimeTable, timeTable }
       )}
     </Box>
   )
-}
+})

@@ -2,61 +2,49 @@ import { FC, useEffect, useState } from 'react'
 
 import { DaysCard } from '@/components/Card/DaysCard.tsx'
 import { CustomSelect } from '@/components/Shared/CustomSelect.tsx'
+import { OverlayLoader } from '@/components/Shared/OverlayLoader.tsx'
 import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
-import { ICouple, ITimeTable } from '@/types/types.ts'
-import { Box, LoadingOverlay, Text } from '@mantine/core'
+import { CURRENT_ROLE } from '@/store/slices/initSlice.ts'
+import { useTimeTable } from '@/store/store.ts'
+import { ICouple } from '@/types/types.ts'
+import { Box, Text } from '@mantine/core'
 
-type Props = {
-  onChangeDate: (date: Date) => void
-  setTimeTable: (value: ITimeTable) => void
-  timeTable: ITimeTable
-}
-
-export const TeacherPage: FC<Props> = ({ onChangeDate, setTimeTable, timeTable }) => {
+export const TeacherPage: FC = () => {
+  const { couple, teacherId, teacherList, setGroupId } = useTimeTable()
   const [data, setData] = useState<ICouple[][]>()
-  const [loading, setLoading] = useState<boolean>(true)
-
+  const [loading, setLoading] = useState(true)
   const handleUpdateTeacherId = (teacherId: string) => {
-    if (Object.keys(timeTable).length) {
-      setTimeTable({ ...timeTable, teacherId })
-    }
+    setGroupId(teacherId, CURRENT_ROLE.TEACHER)
   }
 
   useEffect(() => {
     setLoading(true)
-    if (Object.keys(timeTable).length) {
-      const filteredData = timeTable.couple.filter(couple =>
-        couple.teacherName.includes(timeTable.teacherId)
-      )
+
+    if (couple) {
+      const filteredData = couple.filter(couple => couple.teacherName.includes(teacherId))
 
       if (filteredData) {
         setData(divideArrayByNumberDay(filteredData))
       }
     }
-    setLoading(false)
-  }, [timeTable])
+    setTimeout(() => {
+      setLoading(false)
+    }, 200)
+  }, [couple, teacherId])
 
   if (loading) {
-    return (
-      <LoadingOverlay overlayProps={{ blur: 2, radius: 'sm' }} visible={loading} zIndex={1000} />
-    )
+    return <OverlayLoader />
   }
-
-  const { teacherId, teacherList } = timeTable
 
   const teacherName = data && data?.[0]?.[0]?.teacherName
 
-  const firstDayOfTheWeek = new Date(timeTable.firstDayOfWeek)
-
   return (
-    <Box>
+    <Box mih={'100vh'}>
       <CustomSelect
         data={teacherList}
         defaultData={DEFAULT_TEACHER_ID}
-        firstDayOfTheWeek={firstDayOfTheWeek}
         label={'Преподаватель:'}
-        onChangeDate={onChangeDate}
         onChangeSelect={handleUpdateTeacherId}
         placeholder={'Выберите перподавателя'}
         value={teacherId}

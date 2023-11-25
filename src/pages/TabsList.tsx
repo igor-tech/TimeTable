@@ -1,126 +1,50 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef } from 'react'
 
-import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID, LOCAL_STORAGE_KEY } from '@/components/config.ts'
-import { getData } from '@/data/getData.ts'
-import { getTimeTableData } from '@/helpers/GetTimeTableData.ts'
-import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
-import { useLocalStorage } from '@/hooks/useLocalStorage.tsx'
 import { StudentPage } from '@/pages/StudentPage.tsx'
 import { TeacherPage } from '@/pages/TeacherPage.tsx'
-import { ITimeTable } from '@/types/types.ts'
+import { CurrentRole, REQUEST_STATUS } from '@/store/slices/initSlice.ts'
+import { useTimeTable } from '@/store/store.ts'
 import { LoadingOverlay, Tabs, Text } from '@mantine/core'
-import { notifications } from '@mantine/notifications'
 import { FaChalkboardTeacher } from 'react-icons/fa'
 import { PiStudentBold } from 'react-icons/pi'
 
-type TabsPage = 'student' | 'teacher'
-
 export const TabsList = () => {
-  const [timeTable, setTimeTable] = useLocalStorage<ITimeTable>(LOCAL_STORAGE_KEY, {} as ITimeTable)
-  const [tabsPage, setTabsPage] = useLocalStorage<TabsPage>('tabs-page', 'student')
-  const [loading, setLoading] = useState<boolean>(true)
+  const { status, currentRole, couple, setCurrentRole, getScheduleInBackground } = useTimeTable()
 
   const sectionRef = useRef<HTMLDivElement | null>(null)
 
-  const initialDay = timeTable.firstDayOfWeek
-    ? new Date(timeTable.firstDayOfWeek)
-    : getFirstDayOfTheWeek(new Date())
-
-  const [firstDay, setFirstDay] = useState<Date>(initialDay)
-
-  const handleFirstDayChange = (date: Date) => {
-    setTimeTable({ ...timeTable, firstDayOfWeek: date.getTime() })
-    setFirstDay(date)
-  }
-
-  const handleTabsPageChange = (value: TabsPage) => {
-    setTabsPage(value)
+  const handleScroll = () => {
+    setTimeout(() => {
+      if (sectionRef.current) {
+        sectionRef.current.scrollIntoView({ behavior: 'smooth' })
+      }
+    }, 500)
   }
 
   useLayoutEffect(() => {
-    const handleScroll = () => {
-      setTimeout(() => {
-        if (sectionRef && sectionRef.current) {
-          sectionRef.current.scrollIntoView({ behavior: 'smooth' })
-        }
-      }, 500)
-    }
-
-    const fetchData = async () => {
-      setLoading(true)
-
-      try {
-        if (Object.keys(timeTable).length) {
-          setLoading(false)
-
-          handleScroll()
-          getData(firstDay).then(data => {
-            if (data) {
-              const localDataString = JSON.stringify(timeTable.couple)
-              const remoteDataString = JSON.stringify(data)
-
-              if (localDataString !== remoteDataString) {
-                setTimeTable(
-                  getTimeTableData(
-                    data,
-                    timeTable?.groupId,
-                    timeTable?.teacherId,
-                    new Date(timeTable.firstDayOfWeek)
-                  )
-                )
-
-                notifications.show({
-                  color: 'green',
-                  message: 'Расписание успешно обновилсь ✅',
-                  title: 'Обновление расписания',
-                })
-              }
-            }
-          })
-        } else {
-          const data = await getData(firstDay)
-
-          if (data) {
-            setTimeTable(getTimeTableData(data, DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID, firstDay))
-          }
-        }
-      } catch (error) {
-        notifications.show({
-          color: 'red',
-          message: error instanceof Error ? error.message : 'Error',
-          title: 'Упс, возникла ошибка 🤥',
-        })
-
-        console.error(error)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        fetchData()
+        handleScroll()
+        getScheduleInBackground()
       }
     }
 
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
-  }, [setTimeTable, timeTable, firstDay])
+  }, [getScheduleInBackground])
 
-  if (loading) {
-    return (
-      <LoadingOverlay overlayProps={{ blur: 2, radius: 'sm' }} visible={loading} zIndex={1000} />
-    )
+  const isLoading = status === REQUEST_STATUS.LOADING || !couple || couple.length === 0
+
+  if (isLoading) {
+    return <LoadingOverlay overlayProps={{ blur: 2, radius: 'sm' }} visible zIndex={1000} />
   }
 
   return (
     <Tabs
-      defaultValue={tabsPage}
+      defaultValue={currentRole}
       mt={'20px'}
-      onChange={value => handleTabsPageChange(value as TabsPage)}
+      onChange={value => setCurrentRole(value as CurrentRole)}
       ref={sectionRef}
     >
       <Tabs.List mb={'20px'}>
@@ -133,19 +57,11 @@ export const TabsList = () => {
         </Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value={'student'}>
-        <StudentPage
-          onChangeDate={handleFirstDayChange}
-          setTimeTable={setTimeTable}
-          timeTable={timeTable}
-        />
+        <StudentPage />
       </Tabs.Panel>
 
       <Tabs.Panel value={'teacher'}>
-        <TeacherPage
-          onChangeDate={handleFirstDayChange}
-          setTimeTable={setTimeTable}
-          timeTable={timeTable}
-        />
+        <TeacherPage />
       </Tabs.Panel>
     </Tabs>
   )

@@ -13,7 +13,7 @@ export const Header: FC = () => {
   const logoUrl = colorScheme === ColorScheme.Dark ? logoDarkUrl : logoLightUrl
 
   return (
-    <Flex align={'center'} h={'60px'} justify={'space-between'} pl={'10px'} pr={'10px'}>
+    <Flex align={'center'} h={'60px'} justify={'space-between'} pl={'20px'} pr={'20px'}>
       <UnstyledButton component={'a'} href={'https://www.uksap.ru/'}>
         <Image src={logoUrl} w={'150px'} />
       </UnstyledButton>
