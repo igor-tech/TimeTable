@@ -1,5 +1,5 @@
 import { Suspense, useEffect } from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import { Header } from '@/components/Layout/Header.tsx'
 import { Layout } from '@/components/Layout/Layout.tsx'
@@ -19,7 +19,7 @@ import '@mantine/core/styles/global.css'
 import '@mantine/dates/styles.css'
 
 function App() {
-  const { isInitialized, initializeApp, visitStatus } = useTimeTable()
+  const { isInitialized, initializeApp, visitStatus, currentRole } = useTimeTable()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -47,6 +47,7 @@ function App() {
         <AppShell.Main p={15} pt={'70px'}>
           <Suspense fallback={<OverlayLoader />}>
             <Routes>
+              <Route element={<Navigate to={`/${currentRole}`} />} path={'/'} />
               <Route element={<Layout />} path={'/'}>
                 {outletRoutes.map(route => (
                   <Route element={route.element} key={route.path} path={route.path} />

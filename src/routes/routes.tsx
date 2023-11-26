@@ -26,10 +26,6 @@ export const outletRoutes: IRoutes[] = [
 
 export const routes: IRoutes[] = [
   {
-    path: PATHS.TIMETABLE,
-    element: <Navigate to={PATHS.HOME} />,
-  },
-  {
     path: PATHS.HOME,
     element: <HeroPage />,
   },
