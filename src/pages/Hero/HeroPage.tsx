@@ -74,7 +74,7 @@ export default function HeroPage() {
               className={classes.control}
               onClick={onClickButtonHandler}
               radius={'xl'}
-              size={'md'}
+              size={'xl'}
             >
               Начать использовать
             </Button>
