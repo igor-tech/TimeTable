@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { PATHS } from '@/constants/PATHS.ts'
@@ -9,7 +10,12 @@ import classes from './HeroPage.module.css'
 
 export default function HeroPage() {
   const { setVisitStatus } = useTimeTable()
+  const [imageSrc, setImageSrc] = useState('src/assets/hero-page.png')
   const navigate = useNavigate()
+
+  const handleImageError = () => {
+    setImageSrc('https://ui.mantine.dev/_next/static/media/image.9a65bd94.svg')
+  }
 
   const onClickButtonHandler = () => {
     setVisitStatus()
@@ -83,10 +89,10 @@ export default function HeroPage() {
           </Group>
         </div>
         <Image
-          alt={'girl sitting at the table'}
           className={classes.image}
           loading={'lazy'}
-          src={'src/assets/hero-page.png'}
+          onError={handleImageError}
+          src={imageSrc}
         />
       </div>
     </Container>
