@@ -83,7 +83,6 @@ export const initSlice: GenericStateCreator<BoundStore> = (set, get) => ({
           state.status = REQUEST_STATUS.LOADING
         })
       )
-
       const isFirstVisit = get().visitStatus === VISIT_STATUS.NO_VISITED
 
       if (isFirstVisit) {
@@ -100,13 +99,15 @@ export const initSlice: GenericStateCreator<BoundStore> = (set, get) => ({
 
         return
       }
+      const firstDayOfWeek = get().firstDayOfWeek
 
-      const isBetween = isDateBetweenWeek()
+      const isBetween =
+        firstDayOfWeek < getFirstDayOfTheWeek(new Date()).getTime() || !isDateBetweenWeek()
 
-      if (!isBetween) {
+      if (isBetween) {
         set(
           produce((state: BoundStore) => {
-            state.firstDayOfWeek = getNextMonday().getTime()
+            state.firstDayOfWeek = getNextMonday(firstDayOfWeek).getTime()
           })
         )
       }
