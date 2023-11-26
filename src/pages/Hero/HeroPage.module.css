@@ -20,9 +20,9 @@
   font-weight: 900;
 }
 
-.image {
-  max-width: 700px;
-  width: 100%;
+
+.image  {
+  width: 30rem;
   aspect-ratio: 1;
 }
 
@@ -39,10 +39,13 @@
     margin-right: 10px;
   }
 
-  .image {
-    width: 25rem;
-    height: 25rem;
+  .inner {
+    flex-direction: column-reverse;
   }
+  .image {
+    margin-bottom: 20px;
+  }
+
 }
 
 @media (max-width: 990px) {
@@ -78,6 +81,7 @@
   .image {
     width: 25rem;
     height: 25rem;
+
   }
 
   .title {

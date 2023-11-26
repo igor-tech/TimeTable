@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { PATHS } from '@/constants/PATHS.ts'
 import { useTimeTable } from '@/store/store.ts'
-import { Box, Button, Container, Group, Image, List, Text, ThemeIcon, rem } from '@mantine/core'
+import { Button, Container, Group, Image, List, Text, ThemeIcon, rem } from '@mantine/core'
 import { FaCheck } from 'react-icons/fa'
 
 import classes from './HeroPage.module.css'
@@ -80,13 +80,12 @@ export default function HeroPage() {
             </Button>
           </Group>
         </div>
-        <Box className={classes.image}>
-          <Image
-            alt={'girl sitting at the table'}
-            loading={'lazy'}
-            src={'https://ui.mantine.dev/_next/static/media/image.9a65bd94.svg'}
-          />
-        </Box>
+        <Image
+          alt={'girl sitting at the table'}
+          className={classes.image}
+          loading={'lazy'}
+          src={'src/assets/hero-page.png'}
+        />
       </div>
     </Container>
   )
