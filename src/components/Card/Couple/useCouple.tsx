@@ -5,19 +5,17 @@ import { CSSProperties, CardStylesNames } from '@mantine/core'
 
 type Props = {
   couple: ICouple
-  groupId: string | undefined
 }
 
 type ReturnUseCouple = {
-  isAlex: boolean
   isCurrentCouple: boolean
   isPractice: boolean
   styles: Partial<Record<CardStylesNames, CSSProperties>>
   title: string
 }
 
-export const useCouple = ({ couple, groupId }: Props): ReturnUseCouple => {
-  const { coupleNumber, numberDay, teacherName } = couple
+export const useCouple = ({ couple }: Props): ReturnUseCouple => {
+  const { coupleNumber, numberDay } = couple
 
   const isPractice =
     couple.practiceType === PracticeValues.INTERNSHIP ||
@@ -33,8 +31,6 @@ export const useCouple = ({ couple, groupId }: Props): ReturnUseCouple => {
       isPractice ? '14:00' : TIME_DATA[coupleNumber][2]
     ) && isToday
 
-  const isAlex = teacherName?.[0] === 'Гобова Г.П.' && (groupId ?? 's') === 'А-33\n (А-321/9)'
-
   const title = isPractice ? 'Практика' : `${coupleNumber} пара`
 
   const styles = {
@@ -47,5 +43,5 @@ export const useCouple = ({ couple, groupId }: Props): ReturnUseCouple => {
     section: isCurrentCouple ? { borderColor: 'var(--mantine-color-green-2)' } : {},
   }
 
-  return { isAlex, isCurrentCouple, isPractice, styles, title }
+  return { isCurrentCouple, isPractice, styles, title }
 }

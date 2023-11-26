@@ -8,11 +8,10 @@ import { TiPinOutline } from 'react-icons/ti'
 
 type Props = {
   day: ICouple[]
-  groupId?: string
   isTeacher?: boolean
 }
 
-export const DayCard: FC<Props> = ({ day, groupId, isTeacher }) => {
+export const DayCard: FC<Props> = ({ day, isTeacher }) => {
   const currentDay = new Date().getDate()
 
   const isToday = currentDay === +day[0]?.numberDay.slice(0, 2).trim()
@@ -52,7 +51,7 @@ export const DayCard: FC<Props> = ({ day, groupId, isTeacher }) => {
       <Card.Section inheritPadding p={'md'} py={'md'}>
         <Flex direction={'column'} gap={'10px'}>
           {day?.map((couple, i) => {
-            return <Couple couple={couple} groupId={groupId} isTeacher={isTeacher} key={i} />
+            return <Couple couple={couple} isTeacher={isTeacher} key={i} />
           })}
         </Flex>
       </Card.Section>

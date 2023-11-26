@@ -1,47 +1,35 @@
-import { FC, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { DaysCard } from '@/components/Card/DaysCard.tsx'
-import { CustomSelect } from '@/components/Shared/CustomSelect.tsx'
-import { OverlayLoader } from '@/components/Shared/OverlayLoader.tsx'
+import { ButtonMenu } from '@/components/Shared/ButtonMenu.tsx'
 import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
-import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
 import { CURRENT_ROLE } from '@/store/slices/initSlice.ts'
 import { useTimeTable } from '@/store/store.ts'
-import { ICouple } from '@/types/types.ts'
 import { Box, Text } from '@mantine/core'
 
-export const TeacherPage: FC = () => {
-  const { couple, teacherId, teacherList, setGroupId } = useTimeTable()
-  const [data, setData] = useState<ICouple[][]>()
-  const [loading, setLoading] = useState(true)
+export default function TeacherPage() {
+  const {
+    couple,
+    teacherId,
+    teacherList,
+    setGroupId,
+    filteredCoupleByGroupId,
+    teacherCouple: data,
+  } = useTimeTable()
+
   const handleUpdateTeacherId = (teacherId: string) => {
     setGroupId(teacherId, CURRENT_ROLE.TEACHER)
   }
 
   useEffect(() => {
-    setLoading(true)
-
-    if (couple) {
-      const filteredData = couple.filter(couple => couple.teacherName.includes(teacherId))
-
-      if (filteredData) {
-        setData(divideArrayByNumberDay(filteredData))
-      }
-    }
-    setTimeout(() => {
-      setLoading(false)
-    }, 200)
-  }, [couple, teacherId])
-
-  if (loading) {
-    return <OverlayLoader />
-  }
+    filteredCoupleByGroupId(CURRENT_ROLE.TEACHER)
+  }, [couple, filteredCoupleByGroupId, teacherId])
 
   const teacherName = data && data?.[0]?.[0]?.teacherName
 
   return (
-    <Box mih={'100vh'}>
-      <CustomSelect
+    <Box>
+      <ButtonMenu
         data={teacherList}
         defaultData={DEFAULT_TEACHER_ID}
         label={'Преподаватель:'}
@@ -52,8 +40,10 @@ export const TeacherPage: FC = () => {
 
       {data && data.length > 0 && (
         <Text fz={'lg'} mt={'15px'}>
-          Расписание для преподавателя {teacherName?.[0]} (с {data[0][0].numberDay} по{' '}
-          {data[data.length - 1][0].numberDay})
+          Расписание для преподавателя{' '}
+          <Text fz={'lg'}>
+            {teacherName?.[0]} (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
+          </Text>
         </Text>
       )}
 

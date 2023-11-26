@@ -9,7 +9,7 @@
 }
 
 html {
-  scrollbar-gutter: stable
+  scrollbar-gutter: stable;
 }
 
 @media (max-width: 768px) {

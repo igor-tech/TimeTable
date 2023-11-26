@@ -9,12 +9,11 @@ import { Card, Flex, Group, Text } from '@mantine/core'
 
 type Props = {
   couple: ICouple
-  groupId?: string
   isTeacher?: boolean
 }
-export const Couple: FC<Props> = ({ couple, groupId, isTeacher = false }) => {
+export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
   const { coupleNumber, groupName, officeNumber, subjectName, teacherName } = couple
-  const { isAlex, isCurrentCouple, isPractice, styles, title } = useCouple({ couple, groupId })
+  const { isCurrentCouple, isPractice, styles, title } = useCouple({ couple })
 
   return (
     <Card radius={'md'} shadow={'xl'} styles={styles} withBorder>
@@ -47,10 +46,6 @@ export const Couple: FC<Props> = ({ couple, groupId, isTeacher = false }) => {
           <CoupleBadgeWithText color={'green'} text={' Кабинет:'}>
             {officeNumber ?? 'не указан'}
           </CoupleBadgeWithText>
-
-          {isAlex && (
-            <CoupleBadgeWithText color={'red'}>{'Леша где макеты!!!!'}</CoupleBadgeWithText>
-          )}
 
           {isTeacher && (
             <CoupleBadgeWithText color={'blue'} text={'Группа:'}>

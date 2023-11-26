@@ -41,7 +41,7 @@ export const HeaderThemeToggler: FC = () => {
         .matchMedia('(prefers-color-scheme: dark)')
         .removeEventListener('change', getSystemTheme)
     }
-  }, [])
+  }, [setColorScheme])
 
   const isDarkTheme = colorScheme === ColorScheme.Dark
 

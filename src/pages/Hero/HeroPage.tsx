@@ -1,20 +1,19 @@
-import { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Paths } from '@/constants/paths.ts'
+import { PATHS } from '@/constants/PATHS.ts'
 import { useTimeTable } from '@/store/store.ts'
 import { Box, Button, Container, Group, Image, List, Text, ThemeIcon, rem } from '@mantine/core'
 import { FaCheck } from 'react-icons/fa'
 
 import classes from './HeroPage.module.css'
 
-export const HeroPage: FC = () => {
+export default function HeroPage() {
   const { setVisitStatus } = useTimeTable()
   const navigate = useNavigate()
 
   const onClickButtonHandler = () => {
     setVisitStatus()
-    navigate(Paths.student)
+    navigate(PATHS.STUDENT)
   }
 
   return (
@@ -84,6 +83,7 @@ export const HeroPage: FC = () => {
         <Box className={classes.image}>
           <Image
             alt={'girl sitting at the table'}
+            loading={'lazy'}
             src={'https://ui.mantine.dev/_next/static/media/image.9a65bd94.svg'}
           />
         </Box>

@@ -10,10 +10,9 @@ import { Box, Checkbox, Flex, Text } from '@mantine/core'
 
 type Props = {
   data: ICouple[][]
-  groupId?: string
   isTeacher?: boolean
 }
-export const DaysCard: FC<Props> = ({ data, groupId, isTeacher }) => {
+export const DaysCard: FC<Props> = ({ data, isTeacher }) => {
   const [hidePrevDay, setHidePrevDay] = useState<boolean>(true)
   const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
 
@@ -71,9 +70,7 @@ export const DaysCard: FC<Props> = ({ data, groupId, isTeacher }) => {
           const isShow = shouldShowDay(day)
 
           return (
-            <Fragment key={i}>
-              {isShow && <DayCard day={day} groupId={groupId} isTeacher={isTeacher} />}
-            </Fragment>
+            <Fragment key={i}>{isShow && <DayCard day={day} isTeacher={isTeacher} />}</Fragment>
           )
         })}
       </Flex>
