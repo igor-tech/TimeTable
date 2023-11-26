@@ -12,8 +12,8 @@ export const CarouselStudentsGroup = () => {
       slideGap={150}
       styles={{
         root: { display: 'flex' },
-        indicators: { top: 50 },
-        indicator: { backgroundColor: 'var(--mantine-color-dark-3' },
+        indicators: { top: 40 },
+        indicator: { backgroundColor: 'var(--mantine-color-green-5' },
         viewport: { height: '100%' },
       }}
       withControls={false}
