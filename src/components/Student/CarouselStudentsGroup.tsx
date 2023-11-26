@@ -9,6 +9,7 @@ export const CarouselStudentsGroup = () => {
   return (
     <Carousel
       align={'start'}
+      draggable={studentsGroupsCouple.length > 1}
       slideGap={150}
       styles={{
         root: { display: 'flex' },
