@@ -5,7 +5,7 @@ import { CarouselStudentsGroup } from '@/components/Student/CarouselStudentsGrou
 import { DEFAULT_GROUP_ID } from '@/components/config.ts'
 import { CURRENT_ROLE } from '@/store/slices/initSlice.ts'
 import { useTimeTable } from '@/store/store.ts'
-import { Box, Text } from '@mantine/core'
+import { Box, LoadingOverlay, Text } from '@mantine/core'
 
 export default function StudentPage() {
   const { couple, studentsGroupsCouple, groupList, setGroupId, filteredCoupleByGroupId } =
@@ -18,6 +18,10 @@ export default function StudentPage() {
   useEffect(() => {
     filteredCoupleByGroupId()
   }, [couple, filteredCoupleByGroupId])
+
+  if (!studentsGroupsCouple) {
+    return <LoadingOverlay />
+  }
 
   return (
     <Box>

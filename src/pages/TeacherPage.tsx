@@ -5,7 +5,7 @@ import { ButtonMenu } from '@/components/Shared/ButtonMenu.tsx'
 import { DEFAULT_TEACHER_ID } from '@/components/config.ts'
 import { CURRENT_ROLE } from '@/store/slices/initSlice.ts'
 import { useTimeTable } from '@/store/store.ts'
-import { Box, Text } from '@mantine/core'
+import { Box, LoadingOverlay, Text } from '@mantine/core'
 
 export default function TeacherPage() {
   const {
@@ -26,6 +26,10 @@ export default function TeacherPage() {
   }, [couple, filteredCoupleByGroupId, teacherId])
 
   const teacherName = data && data?.[0]?.[0]?.teacherName
+
+  if (!data) {
+    return <LoadingOverlay />
+  }
 
   return (
     <Box>
