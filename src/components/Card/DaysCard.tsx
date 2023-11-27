@@ -16,10 +16,12 @@ export const DaysCard: FC<Props> = ({ data, isTeacher }) => {
   const [hidePrevDay, setHidePrevDay] = useState<boolean>(true)
   const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
 
+  const currentDay = new Date().getTime()
+
   const shouldShowDay = (day: ICouple[]): boolean => {
-    const currentDay = new Date().getTime()
     const isWeekPassed = !hasWeekPassed(convertStringToDate(day[0]?.numberDay))
-    const lastCoupleHours = 2 + parseInt(TIME_DATA[day[0].coupleNumber][2].slice(0, 2))
+    const lastCoupleHours = 3 + parseInt(TIME_DATA[day.length][2].slice(0, 2))
+
     const isShow = hidePrevDay
       ? currentDay <= convertStringToDate(day[0]?.numberDay, lastCoupleHours).getTime()
       : true
@@ -30,8 +32,7 @@ export const DaysCard: FC<Props> = ({ data, isTeacher }) => {
   useEffect(() => {
     setIsAnyDayHidden(
       data?.some(day => {
-        const lastCoupleHours = 2 + parseInt(TIME_DATA[day[0].coupleNumber][2].slice(0, 2))
-        const currentDay = new Date().getTime()
+        const lastCoupleHours = 3 + parseInt(TIME_DATA[day.length][2].slice(0, 2))
         const isShow =
           currentDay <= convertStringToDate(day[0]?.numberDay, lastCoupleHours).getTime()
         const isWeekPassed = !hasWeekPassed(convertStringToDate(day[0]?.numberDay))
