@@ -34,7 +34,11 @@ export const Layout: FC = () => {
         handleScroll()
         getScheduleInBackground()
       }
+
+      return
     }
+
+    handleScroll()
 
     document.addEventListener('visibilitychange', handleVisibilityChange)
 
