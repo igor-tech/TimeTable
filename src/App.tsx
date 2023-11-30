@@ -26,6 +26,8 @@ function App() {
     initializeApp()
     if (visitStatus === VISIT_STATUS.NO_VISITED) {
       navigate(PATHS.HOME)
+    } else {
+      navigate(`/${currentRole}`)
     }
   }, [initializeApp, navigate, visitStatus])
 
