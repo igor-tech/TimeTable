@@ -1,7 +1,5 @@
 import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID } from '@/components/config.ts'
-import { isDateBetweenWeek } from '@/helpers/IsDateBetweenWeek.tsx'
 import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
-import { getNextMonday } from '@/helpers/getNextMonday.ts'
 import { handleCatchError } from '@/helpers/handleCatchError.ts'
 import { BoundStore } from '@/store/store.ts'
 import { GenericStateCreator } from '@/store/types.ts'
@@ -99,18 +97,18 @@ export const initSlice: GenericStateCreator<BoundStore> = (set, get) => ({
 
         return
       }
-      const firstDayOfWeek = get().firstDayOfWeek
-
-      const isBetween =
-        firstDayOfWeek < getFirstDayOfTheWeek(new Date()).getTime() || !isDateBetweenWeek()
-
-      if (isBetween) {
-        set(
-          produce((state: BoundStore) => {
-            state.firstDayOfWeek = getNextMonday(firstDayOfWeek).getTime()
-          })
-        )
-      }
+      // const firstDayOfWeek = get().firstDayOfWeek
+      //
+      // const isBetween =
+      //   firstDayOfWeek < getFirstDayOfTheWeek(new Date()).getTime() || !isDateBetweenWeek()
+      //
+      // if (isBetween) {
+      //   set(
+      //     produce((state: BoundStore) => {
+      //       state.firstDayOfWeek = getNextMonday(firstDayOfWeek).getTime()
+      //     })
+      //   )
+      // }
     } catch (e) {
       handleCatchError(e, 'Загрузка приложения')
     } finally {
