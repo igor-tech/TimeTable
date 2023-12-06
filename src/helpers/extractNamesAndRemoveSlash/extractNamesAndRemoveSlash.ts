@@ -1,13 +1,21 @@
+import { ObjWorkSheet } from '@/data/getExcelLink.ts'
 import { PracticeTypeValues } from '@/types/types.ts'
 
 export type ExtractedData = {
+  link: null | string
   practiceType: PracticeTypeValues
   subjectTitleWithoutSurname: string
   surNames: string[]
 }
 
-export const extractNamesAndRemoveSlash = (str: string): ExtractedData => {
-  const clearSlashN = str.replace(/\n/g, '')
+export const extractNamesAndRemoveSlash = (obj: ObjWorkSheet): ExtractedData => {
+  const clearSlashN = obj.v.replace(/\n/g, '')
+
+  let link = null
+
+  if (obj?.l) {
+    link = obj.l?.Target ?? null
+  }
 
   const nameRegex = /([А-ЯЁ][а-яё]+)\s?([А-ЯЁ]\.[А-ЯЁ]\.)/g
   const slashAndCommaRegex = /[/,]/g
@@ -24,11 +32,11 @@ export const extractNamesAndRemoveSlash = (str: string): ExtractedData => {
 
   let practiceType: PracticeTypeValues = null
 
-  if (str.includes('Учебная практика')) {
+  if (obj.v.includes('Учебная практика')) {
     practiceType = 'Educational'
-  } else if (str.includes('Производственная практика')) {
+  } else if (obj.v.includes('Производственная практика')) {
     practiceType = 'Internship'
   }
 
-  return { practiceType, subjectTitleWithoutSurname, surNames }
+  return { practiceType, subjectTitleWithoutSurname, surNames, link }
 }

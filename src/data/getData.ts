@@ -13,10 +13,8 @@ export const getData = async (firstDay: Date) => {
     const arrayBuffer = await response.arrayBuffer()
     const wb = read(arrayBuffer)
     const worksheet = wb.Sheets[wb.SheetNames[0]]
-    const data_headers = Array(200)
-      .fill(0)
-      .map((_, i) => `${i + 1}`)
-    const data: Row[] = utils.sheet_to_json<Row>(worksheet, { defval: null, header: data_headers })
+
+    const data: Row[] = utils.sheet_to_json<Row>(worksheet, { defval: null, header: 'A' })
 
     const courseNames = getCourseNamesArr(data)
 
@@ -33,11 +31,11 @@ export const getData = async (firstDay: Date) => {
 
       for (let j = 0; j < coupleNum.length; j++) {
         const { coupleValue, currentRawNumIndex, rawNum } = coupleNum[j]
+        const nameCell = `${colNum}${rawNum}`
 
-        if (data?.[rawNum]?.[colNum] !== null) {
-          const { practiceType, subjectTitleWithoutSurname, surNames } = extractNamesAndRemoveSlash(
-            data?.[rawNum]?.[colNum]
-          )
+        if (worksheet?.[nameCell]) {
+          const { practiceType, subjectTitleWithoutSurname, surNames, link } =
+            extractNamesAndRemoveSlash(worksheet?.[nameCell])
 
           if (!subjectTitleWithoutSurname) {
             continue
@@ -51,16 +49,19 @@ export const getData = async (firstDay: Date) => {
 
           const subjectName = subjectTitleWithoutSurname
 
+          const nextColumn = getNextColumn(colNum)
+
           result.push({
             coupleNumber: coupleValue ?? 1,
             courseNumber: courseIndex + 1,
             dayOfTheWeek,
             groupName,
             numberDay,
-            officeNumber: data?.[rawNum]?.[colNum + 1],
+            officeNumber: data?.[rawNum]?.[nextColumn],
             practiceType,
             subjectName,
             teacherName,
+            link,
           })
         }
       }
@@ -89,7 +90,7 @@ interface IColumnDays {
 }
 
 interface GroupNames {
-  colNum: number
+  colNum: string
   courseIndex: number
   groupName: string
 }
@@ -134,7 +135,7 @@ const getGroupNamesArr = (data: Row[], courseNames: ICourseNames[]): GroupNames[
     const isGroup = regex.test(value)
 
     if (isGroup) {
-      groupNames.push({ colNum: +key, courseIndex: currentCourseIndex, groupName: value })
+      groupNames.push({ colNum: key, courseIndex: currentCourseIndex, groupName: value })
     }
 
     if (courseName.colNum === key && currentCourseIndex + 2 < courseNames.length) {
@@ -150,7 +151,7 @@ const getDaysNamesArr = (data: Row[]): IColumnDays[] => {
   const columnDays = []
 
   for (let i = 0; i < data.length; i++) {
-    const value = data[i][1]
+    const value = data[i]['A']
 
     if (value === null) {
       continue
@@ -187,7 +188,7 @@ const getNumberCoupleArr = (data: Row[], columnDays: IColumnDays[]): INumberCoup
   ])
 
   for (let i = columnDays[0].rawNum; i < data.length; i++) {
-    const value = data[i][2]
+    const value = data[i]['B']
 
     if (value === null) {
       continue
@@ -203,10 +204,46 @@ const getNumberCoupleArr = (data: Row[], columnDays: IColumnDays[]): INumberCoup
       coupleNum.push({
         coupleValue: mapNumerals.get(value),
         currentRawNumIndex: columnDaysIndex,
-        rawNum: i,
+        rawNum: i + 1,
       })
     }
   }
 
   return coupleNum
+}
+
+function getNextColumn(currentColumn: string): string {
+  const lastCharCode = 'Z'.charCodeAt(0)
+  const charCodeA = 'A'.charCodeAt(0)
+  const base = lastCharCode - charCodeA + 1
+
+  const column = currentColumn.toUpperCase()
+  let carry = 0
+  let result = ''
+
+  for (let i = column.length - 1; i >= 0; i--) {
+    const char = column[i]
+    let charCode = char.charCodeAt(0)
+
+    if (i === column.length - 1) {
+      charCode += 1
+    }
+
+    charCode += carry
+
+    if (charCode > lastCharCode) {
+      charCode = charCode - base
+      carry = 1
+    } else {
+      carry = 0
+    }
+
+    result = String.fromCharCode(charCode) + result
+  }
+
+  if (carry === 1) {
+    result = 'A' + result
+  }
+
+  return result
 }

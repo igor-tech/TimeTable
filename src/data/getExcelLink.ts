@@ -1,7 +1,7 @@
 import { notifications } from '@mantine/notifications'
 import { read } from 'xlsx'
 
-type Obj = {
+export type ObjWorkSheet = {
   h: string
   l: {
     Target: string
@@ -14,7 +14,7 @@ type Obj = {
   w: string
 }
 
-type WorkSheet = Record<string, Obj>
+type WorkSheet = Record<string, ObjWorkSheet>
 
 const groupExcelLink =
   'https://docs.google.com/spreadsheets/d/1jrJfOegmc_OPvbWoMxUlXU2ujxqdFiRKuRQ_YiaxxOA/export?format=xlsx'

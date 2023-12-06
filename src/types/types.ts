@@ -19,6 +19,7 @@ export interface ICouple {
   practiceType: PracticeTypeValues
   subjectName: string
   teacherName: string[]
+  link: null | string
 }
 
 export interface ITimeTable {
