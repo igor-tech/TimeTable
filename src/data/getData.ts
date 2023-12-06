@@ -57,7 +57,7 @@ export const getData = async (firstDay: Date) => {
             dayOfTheWeek,
             groupName,
             numberDay,
-            officeNumber: data?.[rawNum]?.[nextColumn],
+            officeNumber: data?.[rawNum - 1]?.[nextColumn],
             practiceType,
             subjectName,
             teacherName,
