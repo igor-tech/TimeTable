@@ -36,6 +36,8 @@ export const extractNamesAndRemoveSlash = (obj: ObjWorkSheet): ExtractedData => 
     practiceType = 'Educational'
   } else if (obj.v.includes('Производственная практика')) {
     practiceType = 'Internship'
+  } else if (obj.v.includes('Промежуточная аттестация')) {
+    practiceType = 'Session'
   }
 
   return { practiceType, subjectTitleWithoutSurname, surNames, link }

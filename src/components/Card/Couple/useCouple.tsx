@@ -10,6 +10,7 @@ type Props = {
 type ReturnUseCouple = {
   isCurrentCouple: boolean
   isPractice: boolean
+  isSession: boolean
   styles: Partial<Record<CardStylesNames, CSSProperties>>
   title: string
 }
@@ -33,6 +34,8 @@ export const useCouple = ({ couple }: Props): ReturnUseCouple => {
 
   const title = isPractice ? 'Практика' : `${coupleNumber} пара`
 
+  const isSession = couple.practiceType === PracticeValues.SESSION
+
   const styles = {
     root: isCurrentCouple
       ? {
@@ -43,5 +46,5 @@ export const useCouple = ({ couple }: Props): ReturnUseCouple => {
     section: isCurrentCouple ? { borderColor: 'var(--mantine-color-green-2)' } : {},
   }
 
-  return { isCurrentCouple, isPractice, styles, title }
+  return { isCurrentCouple, isPractice, styles, title, isSession }
 }

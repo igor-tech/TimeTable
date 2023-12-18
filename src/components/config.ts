@@ -11,8 +11,6 @@ export const DEFAULT_GROUP_ID = 'А-123/9'
 
 export const DEFAULT_TEACHER_ID = 'Михайлова'
 
-export const LOCAL_STORAGE_KEY = 'uksap-time-table'
-
 export const currentCouple = [
   'В полном разгаре',
   'Текущая пара',
@@ -52,3 +50,11 @@ export const CLASS_ROOM_HOURS_DATA = [
   { end: '16:50 - 17:35', lesson: '😐 5 пара', start: '16:00 - 16:45' },
   { end: '18:35 - 19:20', lesson: '🙄 6 пара', start: '17:45 - 18:30' },
 ]
+
+export const SESSION_LINK_BY_COURSE: Record<string, string> = {
+  '1': 'https://drive.google.com/file/d/1x-lDkmEiZvL_sgACYp7da4HIRKlTBRgy/view?usp=sharing',
+  '2': 'https://drive.google.com/file/d/1MdRzZKlUsguGmFDt2CkfCGzS6gSk0YfT/view?usp=sharing',
+  '3': 'https://drive.google.com/file/d/15oRVwMMe5aOyV9xtzkXqHdhJjejpoRNw/view?usp=sharing',
+  '4': 'https://drive.google.com/file/d/1M4kCrqZDiV5Nr1gOg8rY1-IVWT9M25KR/view?usp=sharing',
+  '5': 'https://drive.google.com/file/d/12-4zqFc8pZQwhDvvrIyhU1Ta0TZ_I5LM/view?usp=sharing',
+}

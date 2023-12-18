@@ -34,6 +34,7 @@ export interface ITimeTable {
 export const PracticeValues = {
   EDUCATIONAL: 'Educational',
   INTERNSHIP: 'Internship',
+  SESSION: 'Session',
   NULL: null,
 } as const
 
