@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 
 import { Header } from '@/components/Layout/Header.tsx'
 import { Layout } from '@/components/Layout/Layout.tsx'
+import { ParticlesEffect } from '@/components/Partilces/ParticlesEffect.tsx'
 import { OverlayLoader } from '@/components/Shared/OverlayLoader.tsx'
 import { PATHS } from '@/constants/PATHS.ts'
 import { outletRoutes, routes } from '@/routes/routes.tsx'
@@ -47,6 +48,7 @@ function App() {
           <Header />
         </AppShell.Header>
         <AppShell.Main p={15} pt={'70px'}>
+          <ParticlesEffect />
           <Suspense fallback={<OverlayLoader />}>
             <Routes>
               <Route element={<Navigate to={`/${currentRole}`} />} path={'/'} />
