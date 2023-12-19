@@ -39,7 +39,7 @@ export const SessionCouple: FC<Props> = ({ courseNumber, couple }) => {
 
       <Flex gap={'20px'} mt={'lg'}>
         {link !== null && (
-          <Button radius={'md'} style={{ flex: 1 }}>
+          <Button component={'a'} href={link} radius={'md'} style={{ flex: 1 }} target={'_blank'}>
             Ссылка на онлайн сессию
           </Button>
         )}
