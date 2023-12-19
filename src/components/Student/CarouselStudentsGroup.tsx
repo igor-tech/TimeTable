@@ -14,7 +14,7 @@ export const CarouselStudentsGroup = () => {
       styles={{
         root: { display: 'flex' },
         indicators: { top: 40 },
-        indicator: { backgroundColor: 'var(--mantine-color-green-5' },
+        indicator: { backgroundColor: 'var(--mantine-color-blue-5' },
         viewport: { height: '100%', width: '100%' },
       }}
       withControls={false}

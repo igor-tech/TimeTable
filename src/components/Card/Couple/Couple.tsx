@@ -6,8 +6,7 @@ import { SessionCouple } from '@/components/Card/Couple/SessionCouple/SessionCou
 import { StatusCouple } from '@/components/Card/Couple/StatusCouple/StatusCouple.tsx'
 import { useCouple } from '@/components/Card/Couple/useCouple.tsx'
 import { ICouple } from '@/types/types.ts'
-import { Card, Flex, Group, Text } from '@mantine/core'
-import { FaExternalLinkAlt } from 'react-icons/fa'
+import { Button, Card, Divider, Flex, Group, Text } from '@mantine/core'
 
 type Props = {
   couple: ICouple
@@ -20,7 +19,7 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
 
   return (
     <>
-      {isSession && <SessionCouple courseNumber={courseNumber} />}
+      {isSession && <SessionCouple couple={couple} courseNumber={courseNumber} />}
       {!isSession && (
         <Card radius={'md'} shadow={'xl'} styles={styles} withBorder>
           <Card.Section py={'sm'} withBorder>
@@ -35,30 +34,9 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
 
           <Card.Section py={'lg'}>
             <Flex direction={'column'} gap={'3px'} w={'100%'}>
-              {link !== null && (
-                <Text
-                  component={'a'}
-                  fw={500}
-                  fz={'lg'}
-                  href={link}
-                  style={{
-                    color: 'var(--mantine-color-blue-5)',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    gap: '10px',
-                    alignItems: 'center',
-                  }}
-                  target={'_blank'}
-                >
-                  {subjectName}
-                  <FaExternalLinkAlt />
-                </Text>
-              )}
-              {link === null && (
-                <Text fw={500} fz={'lg'}>
-                  {subjectName ?? 'Название предмета не указано'}
-                </Text>
-              )}
+              <Text fw={500} fz={'lg'}>
+                {subjectName ?? 'Название предмета не указано'}
+              </Text>
 
               <Text fz={'md'}>
                 Преподаватель:{' '}
@@ -81,6 +59,15 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
               )}
             </Flex>
           </Card.Section>
+
+          {link !== null && (
+            <>
+              <Divider />
+              <Button component={'a'} href={link} mt={'20px'} radius={'md'} target={'_blank'}>
+                Ссылка на онлайн пару
+              </Button>
+            </>
+          )}
         </Card>
       )}
     </>

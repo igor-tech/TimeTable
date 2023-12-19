@@ -1,40 +1,60 @@
 import { FC } from 'react'
 
 import { SESSION_LINK_BY_COURSE } from '@/components/config.ts'
-import { Button, Card, Overlay, Text } from '@mantine/core'
-
-import styles from './SessionCouple.module.css'
+import { ICouple } from '@/types/types.ts'
+import { Badge, Button, Card, Divider, Flex, Image, Text } from '@mantine/core'
 
 type Props = {
+  couple: ICouple
   courseNumber: number
 }
 
-export const SessionCouple: FC<Props> = ({ courseNumber }) => {
+export const SessionCouple: FC<Props> = ({ courseNumber, couple }) => {
+  const { link, subjectName } = couple
+
+  const imageUrl =
+    'https://polinka.top/uploads/posts/2023-05/1684578025_polinka-top-p-kartinki-smeshnie-sessiya-pinterest-3.jpg'
+
   return (
-    <Card className={styles.card} radius={'md'}>
-      <Overlay opacity={0.55} zIndex={0} />
+    <Card radius={'md'} withBorder>
+      <Card.Section p={0}>
+        <Image alt={'session image'} src={imageUrl} />
+      </Card.Section>
 
-      <div className={styles.content}>
-        <Text className={styles.title} fw={700} size={'xl'}>
-          Сессия
+      <Card.Section mt={'lg'}>
+        <Flex align={'center'} gap={10} justify={'apart'}>
+          <Text fw={500} fz={'lg'}>
+            {subjectName}
+          </Text>
+          <Badge size={'md'} variant={'light'}>
+            Сессия
+          </Badge>
+        </Flex>
+        <Text fz={'md'} mb={'lg'} mt={'xs'}>
+          Если экзамен будет проходить в онлайн формате в самом низу появится синняя кнопка.
         </Text>
+      </Card.Section>
 
-        <Text className={styles.description} size={'lg'}>
-          Кнопка ведет на pdf файл с расписанием экзаменов текущего курса
-        </Text>
+      <Divider />
+
+      <Flex gap={'20px'} mt={'lg'}>
+        {link !== null && (
+          <Button radius={'md'} style={{ flex: 1 }}>
+            Ссылка на онлайн сессию
+          </Button>
+        )}
 
         <Button
-          className={styles.action}
-          color={'dark'}
           component={'a'}
           href={SESSION_LINK_BY_COURSE[courseNumber]}
-          size={'md'}
+          radius={'md'}
+          style={{ flex: 1 }}
           target={'_blank'}
-          variant={'white'}
+          variant={'outline'}
         >
-          Перейти
+          Расписание экзаменов
         </Button>
-      </div>
+      </Flex>
     </Card>
   )
 }
