@@ -37,13 +37,7 @@ export const SessionCouple: FC<Props> = ({ courseNumber, couple }) => {
 
       <Divider />
 
-      <Flex gap={'20px'} mt={'lg'}>
-        {link !== null && (
-          <Button component={'a'} href={link} radius={'md'} style={{ flex: 1 }} target={'_blank'}>
-            Ссылка на онлайн сессию
-          </Button>
-        )}
-
+      <Flex gap={'20px'} mt={'lg'} wrap={'wrap'}>
         <Button
           component={'a'}
           href={SESSION_LINK_BY_COURSE[courseNumber]}
@@ -54,6 +48,12 @@ export const SessionCouple: FC<Props> = ({ courseNumber, couple }) => {
         >
           Расписание экзаменов
         </Button>
+
+        {link !== null && (
+          <Button component={'a'} href={link} radius={'md'} style={{ flex: 1 }} target={'_blank'}>
+            Ссылка на онлайн сессию
+          </Button>
+        )}
       </Flex>
     </Card>
   )
