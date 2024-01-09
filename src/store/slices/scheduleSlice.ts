@@ -1,4 +1,3 @@
-import { getData } from '@/data/getData.ts'
 import { divideArrayByNumberDay } from '@/helpers/divideArrayByNumberDay.ts'
 import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
 import { handleCatchError } from '@/helpers/handleCatchError.ts'
@@ -40,7 +39,7 @@ export const scheduleSlice: GenericStateCreator<BoundStore> = (set, get) => ({
 
       const firstDayOfWeek = new Date(get()?.firstDayOfWeek)
 
-      const remoteData = await getData(firstDayOfWeek)
+      const remoteData = await get().getSchedule(firstDayOfWeek)
 
       const groupList = Array.from(new Set(remoteData?.map(couple => couple.groupName)))
       const teacherList: string[] = Array.from(
@@ -79,12 +78,12 @@ export const scheduleSlice: GenericStateCreator<BoundStore> = (set, get) => ({
           state.teacherList = teacherList
         })
       )
-    } catch (e) {
-      notifications.show({
-        color: 'red',
-        message: 'Расписания на эту неделю нет, выберите правильную дату ❌',
-        title: 'Обновление расписания',
-      })
+    } catch (error) {
+      handleCatchError(
+        error,
+        'Обновление расписания',
+        'Расписания на эту неделю нет, выберите правильную дату ❌'
+      )
     }
   },
 
@@ -143,7 +142,8 @@ export const scheduleSlice: GenericStateCreator<BoundStore> = (set, get) => ({
           state.status = REQUEST_STATUS.LOADING
         })
       )
-      await get().filteredCoupleByGroupId()
+
+      get().filteredCoupleByGroupId()
     } catch (e) {
       handleCatchError(e, 'Установка группы')
     } finally {
@@ -154,6 +154,7 @@ export const scheduleSlice: GenericStateCreator<BoundStore> = (set, get) => ({
       )
     }
   },
+
   filteredCoupleByGroupId: async role => {
     try {
       set(

@@ -20,8 +20,7 @@
   font-weight: 900;
 }
 
-
-.image  {
+.image {
   width: 30rem;
   aspect-ratio: 1;
 }
@@ -45,7 +44,6 @@
   .image {
     margin-bottom: 20px;
   }
-
 }
 
 @media (max-width: 990px) {
@@ -81,7 +79,6 @@
   .image {
     width: 25rem;
     height: 25rem;
-
   }
 
   .title {

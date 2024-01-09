@@ -30,7 +30,7 @@ function App() {
     } else {
       navigate(`/${currentRole}`)
     }
-  }, [initializeApp, navigate, visitStatus])
+  }, [initializeApp, visitStatus])
 
   if (!isInitialized) {
     return <OverlayLoader />

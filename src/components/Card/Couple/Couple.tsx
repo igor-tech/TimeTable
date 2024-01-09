@@ -42,7 +42,7 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
                 Преподаватель:{' '}
                 {teacherName.map((teacher, i) => (
                   <Fragment key={i}>
-                    {teacher} {teacherName.length !== i + 1 && '/ '}
+                    {teacher} {teacherName.length !== i + 1 && ' / '}
                   </Fragment>
                 ))}
               </Text>

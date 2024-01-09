@@ -1,4 +1,4 @@
-import { ObjWorkSheet } from '@/data/getExcelLink.ts'
+import { ObjWorkSheet } from '@/store/slices/getLinkToScheduleSlice.ts'
 import { PracticeTypeValues } from '@/types/types.ts'
 
 export type ExtractedData = {

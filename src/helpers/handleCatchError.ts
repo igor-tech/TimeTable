@@ -1,9 +1,9 @@
 import { notifications } from '@mantine/notifications'
 
-export function handleCatchError(error: Error | unknown, title: string) {
+export function handleCatchError(error: Error | unknown, title: string, message?: string) {
   notifications.show({
     color: 'red',
-    message: error instanceof Error ? error.message : 'Error',
+    message: message || (error instanceof Error ? error.message : 'Error'),
     title: title,
   })
 

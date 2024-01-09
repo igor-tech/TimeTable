@@ -59,7 +59,7 @@ export const initSlice: GenericStateCreator<BoundStore> = (set, get) => ({
     )
 
     try {
-      await get().setFirstVisitSettings()
+      get().setFirstVisitSettings()
 
       get().getScheduleInBackground()
     } catch (e) {
@@ -84,14 +84,11 @@ export const initSlice: GenericStateCreator<BoundStore> = (set, get) => ({
       const isFirstVisit = get().visitStatus === VISIT_STATUS.NO_VISITED
 
       if (isFirstVisit) {
-        const firstDayOfWeekNumber = getFirstDayOfTheWeek(new Date()).getTime()
-
         set(
           produce((state: BoundStore) => {
             state.groupId = [DEFAULT_GROUP_ID]
             state.teacherId = DEFAULT_TEACHER_ID
             state.currentRole = CURRENT_ROLE.STUDENT
-            state.firstDayOfWeek = firstDayOfWeekNumber
           })
         )
 
