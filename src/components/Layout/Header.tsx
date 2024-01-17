@@ -7,7 +7,7 @@ import { Flex, Image, UnstyledButton, useMantineColorScheme } from '@mantine/cor
 export const Header: FC = () => {
   const { colorScheme } = useMantineColorScheme()
   const logoDarkUrl =
-    'https://moodle.uksap.ru/pluginfile.php/1/theme_eguru/logo/1663748986/uksap-logo-inverse-500x135px.png'
+    'https://www.uksap.ru/wp-content/uploads/2019/12/uksap-logo-inverse-500x135px.png'
   const logoLightUrl = 'https://www.uksap.ru/wp-content/uploads/2023/02/uksap-logo_gs-2.png'
 
   const logoUrl = colorScheme === ColorScheme.Dark ? logoDarkUrl : logoLightUrl
