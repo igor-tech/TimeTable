@@ -1,6 +1,6 @@
 export function compareDates(date1: string, date2: string): number {
-  const [day1, month1] = date1.split(' ')
-  const [day2, month2] = date2.split(' ')
+  const [day1, month1] = date1.trim().split(' ')
+  const [day2, month2] = date2.trim().split(' ')
 
   const monthNames = [
     'января',

@@ -63,7 +63,7 @@ export const scheduleSlice: GenericStateCreator<BoundStore> = (set, get) => ({
 
           notifications.show({
             color: 'green',
-            message: 'Расписание успешно обновилсь ✅',
+            message: 'Расписание успешно обновилось ✅',
             title: 'Обновление расписания',
           })
         }

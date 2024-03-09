@@ -169,7 +169,7 @@ export const getScheduleSlice: GenericStateCreator<BoundStore> = (_set, get) => 
         continue
       }
 
-      const splitArray = value.split(', ')
+      const splitArray = value.split(',')
 
       if (splitArray.length === 2) {
         const dayOfTheWeek = splitArray[0]
