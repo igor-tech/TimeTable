@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { PATHS } from '@/constants/PATHS.ts'
 import { useTimeTable } from '@/store/store.ts'
-import { Button, Container, Group, Image, List, Text, ThemeIcon, rem } from '@mantine/core'
+import { Button, Container, Group, Image, List, Text, ThemeIcon } from '@mantine/core'
 import { FaCheck } from 'react-icons/fa'
 
 import classes from './HeroPage.module.css'
@@ -38,8 +38,8 @@ export default function HeroPage() {
 
           <List
             icon={
-              <ThemeIcon radius={'xl'} size={20}>
-                <FaCheck stroke={1.5} style={{ width: rem(12), height: rem(12) }} />
+              <ThemeIcon radius={'xl'} size={25}>
+                <FaCheck size={25} />
               </ThemeIcon>
             }
             mt={30}
