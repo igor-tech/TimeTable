@@ -30,7 +30,7 @@ export const extractNamesAndRemoveSlash = (obj: ObjWorkSheet): ExtractedData => 
       .replace(/\\/gi, '')
       .trim() ?? 'Не указано название предмета'
 
-  let practiceType: PracticeTypeValues = null
+  let practiceType: PracticeTypeValues = 'Lectures'
 
   if (obj.v.includes('Учебная практика')) {
     practiceType = 'Educational'

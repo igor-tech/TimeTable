@@ -7,6 +7,8 @@ export const TIME_DATA: Record<string, Record<string, string>> = {
   6: { 1: '17:45', 2: '19:20' },
 } as const
 
+export const THIRTY_MINUTES = 60 * 1000
+
 export const DEFAULT_GROUP_ID = 'А-123/9'
 
 export const DEFAULT_TEACHER_ID = 'Михайлова'
@@ -18,7 +20,7 @@ export const currentCouple = [
   'Текущая лекция',
 ]
 
-export const nextCouple = ['Следующая пара', 'На очереди', 'Следующий вызов', 'В ближайшее время']
+export const nextCouple = ['Следующая пара', 'На очереди', 'В ближайшее время']
 
 export const GROUP_NAME = {
   ['А']: '⛩️ Архитектура',

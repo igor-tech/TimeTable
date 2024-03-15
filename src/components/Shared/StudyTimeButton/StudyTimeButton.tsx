@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { ClassRoomHoursModal } from '@/components/modal/ClassRoomHoursModal/ClassRoomHoursModal.tsx'
 import { ActionIcon, Tooltip } from '@mantine/core'
 import { modals } from '@mantine/modals'
-import { FiAlertCircle } from 'react-icons/fi'
+import { IoTimeOutline } from 'react-icons/io5'
 
 import styles from './StudyTimeButton.module.css'
 
@@ -21,9 +21,9 @@ export const StudyTimeButton: FC = () => {
     })
 
   return (
-    <Tooltip color={'blue'} label={'Время занятий'}>
-      <ActionIcon m={0} onClick={openClassroomHoursModal} p={0} size={35} variant={'light'}>
-        <FiAlertCircle size={20} />
+    <Tooltip label={'Время занятий'}>
+      <ActionIcon onClick={openClassroomHoursModal} size={44} variant={'light'}>
+        <IoTimeOutline size={30} />
       </ActionIcon>
     </Tooltip>
   )

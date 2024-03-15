@@ -38,16 +38,21 @@ function App() {
 
   return (
     <ModalsProvider>
-      <AppShell header={{ height: 60 }} m={'auto'} maw={'1800px'}>
+      <AppShell header={{ height: 80 }} m={'auto'} maw={'1800px'}>
         <Notifications
           autoClose={6000}
-          style={{ position: 'fixed', right: 0, top: '80px', width: '300px', zIndex: '10' }}
+          style={{ position: 'fixed', right: 0, top: '100px', width: '300px', zIndex: '10' }}
           withinPortal={false}
         />
-        <AppShell.Header>
+        <AppShell.Header
+          style={{
+            border: 'none',
+            borderRadius: '0 0 var(--mantine-radius-xl) var(--mantine-radius-xl)',
+          }}
+        >
           <Header />
         </AppShell.Header>
-        <AppShell.Main p={15} pt={'70px'}>
+        <AppShell.Main p={15} pt={'100px'}>
           <ParticlesEffect />
           <Suspense fallback={<OverlayLoader />}>
             <Routes>

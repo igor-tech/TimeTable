@@ -3,18 +3,19 @@ import { useTimeTable } from '@/store/store.ts'
 import { Carousel } from '@mantine/carousel'
 import { Text } from '@mantine/core'
 
+import styles from './CarouselStudentsGroup.module.css'
+
 export const CarouselStudentsGroup = () => {
   const { studentsGroupsCouple } = useTimeTable()
 
   return (
     <Carousel
       align={'start'}
+      classNames={styles}
       draggable={studentsGroupsCouple.length > 1}
       slideGap={150}
       styles={{
         root: { display: 'flex' },
-        indicators: { top: 40 },
-        indicator: { backgroundColor: 'var(--mantine-color-blue-5' },
         viewport: { height: '100%', width: '100%' },
       }}
       withControls={false}

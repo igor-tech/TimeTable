@@ -7,6 +7,7 @@ import { StatusCouple } from '@/components/Card/Couple/StatusCouple/StatusCouple
 import { useCouple } from '@/components/Card/Couple/useCouple.tsx'
 import { ICouple } from '@/types/types.ts'
 import { Button, Card, Divider, Flex, Group, Text } from '@mantine/core'
+import { BiLogoZoom } from 'react-icons/bi'
 
 type Props = {
   couple: ICouple
@@ -63,7 +64,15 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
           {link !== null && (
             <>
               <Divider />
-              <Button component={'a'} href={link} mt={'20px'} radius={'md'} target={'_blank'}>
+              <Button
+                component={'a'}
+                fz={'md'}
+                href={link}
+                mt={'20px'}
+                radius={'md'}
+                rightSection={<BiLogoZoom size={25} />}
+                target={'_blank'}
+              >
                 Ссылка на онлайн пару
               </Button>
             </>

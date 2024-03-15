@@ -15,8 +15,15 @@ export const Layout: FC = () => {
 
   const handleScroll = () => {
     setTimeout(() => {
+      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+
       if (sectionRef.current) {
-        sectionRef.current.scrollIntoView({ behavior: 'smooth' })
+        const currentPosition = sectionRef.current.offsetTop
+
+        window.scrollTo({
+          top: currentPosition + vh * 0.08,
+          behavior: 'smooth',
+        })
       }
     }, 500)
   }

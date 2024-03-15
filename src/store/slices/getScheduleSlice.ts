@@ -1,3 +1,5 @@
+import { TIME_DATA } from '@/components/config.ts'
+import { convertTimeToTimestamp } from '@/helpers/convertTimeToTimestamp.ts'
 import { extractNamesAndRemoveSlash } from '@/helpers/extractNamesAndRemoveSlash/extractNamesAndRemoveSlash.ts'
 import { BoundStore } from '@/store/store.ts'
 import { GenericStateCreator } from '@/store/types.ts'
@@ -83,6 +85,17 @@ export const getScheduleSlice: GenericStateCreator<BoundStore> = (_set, get) => 
 
             const nextColumn = get().getNextColumn(colNum)
 
+            const ordinaryTime = practiceType === 'Lectures'
+
+            const startTime = convertTimeToTimestamp(
+              ordinaryTime ? TIME_DATA[coupleValue ?? 1]['1'] : '9:00',
+              numberDay.trim()
+            )
+            const endTime = convertTimeToTimestamp(
+              ordinaryTime ? TIME_DATA[coupleValue ?? 1]['2'] : '14:00',
+              numberDay.trim()
+            )
+
             result.push({
               coupleNumber: coupleValue ?? 1,
               courseNumber: courseIndex + 1,
@@ -94,6 +107,8 @@ export const getScheduleSlice: GenericStateCreator<BoundStore> = (_set, get) => 
               subjectName: subjectTitleWithoutSurname,
               teacherName: surNames,
               link,
+              startTime,
+              endTime,
             })
           }
         }

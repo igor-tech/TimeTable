@@ -16,22 +16,15 @@ export const SelectWeekButton: FC = () => {
       modalId: 'setWeekModal',
     })
 
-  const isOnIndicator = hasWeekPassed(new Date(firstDayOfWeek))
+  const isOnIndicator = hasWeekPassed(firstDayOfWeek)
 
   return (
-    <Indicator
-      disabled={isOnIndicator}
-      h={'36px'}
-      position={'top-end'}
-      processing
-      w={'36px'}
-      withBorder
-    >
-      <Tooltip color={'blue'} label={'Выбрать неделю'}>
-        <ActionIcon m={0} onClick={openDateModal} p={0} size={35} variant={'light'}>
-          <CiCalendarDate size={35} />
+    <Tooltip label={'Выбрать неделю'}>
+      <Indicator disabled={isOnIndicator} position={'top-end'} processing>
+        <ActionIcon onClick={openDateModal} size={44} variant={'light'}>
+          <CiCalendarDate size={30} />
         </ActionIcon>
-      </Tooltip>
-    </Indicator>
+      </Indicator>
+    </Tooltip>
   )
 }

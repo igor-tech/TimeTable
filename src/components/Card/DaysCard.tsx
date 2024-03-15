@@ -1,31 +1,27 @@
 import { FC, Fragment, useEffect, useState } from 'react'
 
 import { DayCard } from '@/components/Card/DayCard.tsx'
-import { TIME_DATA } from '@/components/config.ts'
+import { THIRTY_MINUTES } from '@/components/config.ts'
 import { Theme } from '@/constants/Theme.tsx'
-import { convertStringToDate } from '@/helpers/ConvertStringToDate.tsx'
 import { hasWeekPassed } from '@/helpers/HasWeekPassed.tsx'
 import { ICouple } from '@/types/types.ts'
-import { Box, Checkbox, Flex, Text } from '@mantine/core'
+import { Box, Chip, Flex, Text } from '@mantine/core'
 
 type Props = {
   data: ICouple[][]
   isTeacher?: boolean
 }
+
 export const DaysCard: FC<Props> = ({ data, isTeacher }) => {
   const [hidePrevDay, setHidePrevDay] = useState<boolean>(true)
   const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
 
-  const currentDay = new Date().getTime()
+  const currentDay = Date.now()
 
   const shouldShowDay = (day: ICouple[]): boolean => {
-    const isWeekPassed = !hasWeekPassed(convertStringToDate(day[0]?.numberDay))
-    const lastCoupleHours =
-      3 + parseInt(TIME_DATA[day[day.length - 1 ?? 1].coupleNumber][2].slice(0, 2))
+    const isWeekPassed = !hasWeekPassed(day[day.length - 1].endTime)
 
-    const isShow = hidePrevDay
-      ? currentDay <= convertStringToDate(day[0]?.numberDay, lastCoupleHours).getTime()
-      : true
+    const isShow = hidePrevDay ? currentDay <= day[day.length - 1].endTime + THIRTY_MINUTES : true
 
     return isWeekPassed || isShow
   }
@@ -33,11 +29,8 @@ export const DaysCard: FC<Props> = ({ data, isTeacher }) => {
   useEffect(() => {
     setIsAnyDayHidden(
       data?.some(day => {
-        const lastCoupleHours =
-          3 + parseInt(TIME_DATA[day[day.length - 1 ?? 1].coupleNumber][2].slice(0, 2))
-        const isShow =
-          currentDay <= convertStringToDate(day[0]?.numberDay, lastCoupleHours).getTime()
-        const isWeekPassed = !hasWeekPassed(convertStringToDate(day[0]?.numberDay))
+        const isShow = currentDay <= day[day.length - 1].endTime + THIRTY_MINUTES
+        const isWeekPassed = !hasWeekPassed(day[day.length - 1].endTime)
 
         return !isShow && !isWeekPassed
       })
@@ -51,13 +44,18 @@ export const DaysCard: FC<Props> = ({ data, isTeacher }) => {
   return (
     <Box>
       {isAnyDayHidden && (
-        <Checkbox
+        <Chip
+          color={'green'}
           defaultChecked
-          label={'Спрятать прошедшие дни'}
-          mt={'10px'}
+          mt={'20px'}
           onClick={() => setHidePrevDay(!hidePrevDay)}
+          radius={'md'}
+          size={'md'}
           styles={{ label: { fontSize: `${Theme.fontSizes.md}` } }}
-        />
+          variant={'light'}
+        >
+          Спрятать прошедшие дни
+        </Chip>
       )}
 
       {areAllDaysHidden && (

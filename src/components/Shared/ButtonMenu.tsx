@@ -1,7 +1,5 @@
 import { FC } from 'react'
 
-import { SelectWeekButton } from '@/components/Shared/SelectWeekButton/SelectWeekButton.tsx'
-import { StudyTimeButton } from '@/components/Shared/StudyTimeButton/StudyTimeButton.tsx'
 import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID } from '@/components/config.ts'
 import { Theme } from '@/constants/Theme.tsx'
 import { getGroupNameDataSelect } from '@/helpers/getGroupNameDataSelect.ts'
@@ -32,22 +30,24 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
   const dataSelect = isStudent ? getGroupNameDataSelect(data) : data
 
   return (
-    <Flex align={'end'} gap={20} justify={'space-between'} maw={'700px'}>
+    <Flex align={'center'} gap={20} justify={'space-between'} maw={'900px'}>
       {isStudent && (
         <MultiSelect
           checkIconPosition={'right'}
           clearable
           data={dataSelect ?? [defaultData]}
           maxDropdownHeight={rem(450)}
-          maxValues={4}
+          maxValues={6}
           onChange={value => setSelectGroupId(value)}
           searchable={isSearchable}
+          size={'lg'}
           styles={{
-            dropdown: { boxShadow: '4px 4px 4px var(--mantine-color-gray-4)' },
+            wrapper: { boxShadow: 'var(--mantine-shadow-md)' },
+            dropdown: { boxShadow: 'var(--mantine-shadow-xl)' },
             groupLabel: { fontSize: `${Theme.fontSizes.md}` },
-            input: { fontSize: `${Theme.fontSizes.md}` },
-            label: { fontSize: `${Theme.fontSizes.md}` },
-            option: { fontSize: `${Theme.fontSizes.md}`, marginLeft: '5px' },
+            input: { fontSize: `${Theme.fontSizes.lg}` },
+            label: { fontSize: `${Theme.fontSizes.lg}` },
+            option: { fontSize: `${Theme.fontSizes.lg}`, marginLeft: '5px' },
           }}
           value={groupId}
           w={'100%'}
@@ -62,22 +62,20 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
           maxDropdownHeight={rem(450)}
           onChange={value => onChangeSelect(value!)}
           searchable={isSearchable}
+          size={'lg'}
           styles={{
-            dropdown: { boxShadow: '4px 4px 4px var(--mantine-color-gray-4)' },
+            wrapper: { boxShadow: 'var(--mantine-shadow-sm)' },
+            dropdown: { boxShadow: 'var(--mantine-shadow-xl)' },
             groupLabel: { fontSize: `${Theme.fontSizes.md}` },
-            input: { fontSize: `${Theme.fontSizes.md}` },
-            label: { fontSize: `${Theme.fontSizes.md}` },
-            option: { fontSize: `${Theme.fontSizes.md}`, marginLeft: '5px' },
+            input: { fontSize: `${Theme.fontSizes.lg}` },
+            label: { fontSize: `${Theme.fontSizes.lg}` },
+            option: { fontSize: `${Theme.fontSizes.lg}`, marginLeft: '5px' },
           }}
           value={value}
           w={'100%'}
           {...rest}
         />
       )}
-
-      <SelectWeekButton />
-
-      <StudyTimeButton />
     </Flex>
   )
 }
