@@ -7,7 +7,7 @@ export function hasWeekPassed(endOfLastCoupleTimeStamp: number): boolean {
   const currentWeekEnd = new Date(
     firstDayOfWeek.getUTCFullYear(),
     firstDayOfWeek.getUTCMonth(),
-    firstDayOfWeek.getUTCDate() + 5,
+    firstDayOfWeek.getUTCDate() + 6,
     18,
     59,
     59
