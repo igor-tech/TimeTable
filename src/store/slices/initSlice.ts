@@ -1,8 +1,8 @@
 import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID } from '@/components/config.ts'
-import { getFirstDayOfTheWeek } from '@/helpers/getFirstDayOfTheWeek.tsx'
 import { handleCatchError } from '@/helpers/handleCatchError.ts'
 import { BoundStore } from '@/store/store.ts'
 import { GenericStateCreator } from '@/store/types.ts'
+import dayjs from 'dayjs'
 import { produce } from 'immer'
 
 export const REQUEST_STATUS = {
@@ -91,15 +91,27 @@ export const initSlice: GenericStateCreator<BoundStore> = (set, get) => ({
             state.currentRole = CURRENT_ROLE.STUDENT
           })
         )
-
-        return
       }
+
+      const currentDate = dayjs('2024-03-10')
+
+      const currentDayOfWeek = currentDate.day()
+
+      const isSunday = currentDayOfWeek === 0
+
+      set(
+        produce((state: BoundStore) => {
+          state.firstDayOfWeek = dayjs()
+            .startOf('week')
+            .add(isSunday ? 1 : 0, 'day')
+            .valueOf()
+        })
+      )
     } catch (e) {
       handleCatchError(e, 'Загрузка приложения')
     } finally {
       set(
         produce((state: BoundStore) => {
-          state.firstDayOfWeek = getFirstDayOfTheWeek(new Date()).getTime()
           state.status = REQUEST_STATUS.IDLE
         })
       )
