@@ -1,26 +1,53 @@
+import { FC, useEffect } from 'react'
+
+import { useTimeTable } from '@/store/store.ts'
 import { Button, CloseButton, Group, Paper, Text } from '@mantine/core'
 
-export function CookiesBanner() {
+export const CookiesBanner: FC = () => {
+  const { isShow, initializeBanner, setPassedStatus, closeBanner } = useTimeTable()
+
+  useEffect(() => {
+    initializeBanner()
+  }, [initializeBanner, isShow])
+
+  if (!isShow) {
+    return null
+  }
+
   return (
-    <Paper p={'lg'} radius={'md'} shadow={'md'} withBorder>
+    <Paper
+      bottom={30}
+      p={'lg'}
+      pos={'fixed'}
+      radius={'md'}
+      right={20}
+      shadow={'md'}
+      style={{ zIndex: 1000 }}
+      w={'450px'}
+      withBorder
+    >
       <Group justify={'space-between'} mb={'xs'}>
-        <Text fw={500} fz={'md'}>
-          Allow cookies
+        <Text fw={500} fz={'lg'}>
+          Удобство пользования расписанием
         </Text>
-        <CloseButton mr={-9} mt={-9} />
+        <CloseButton mr={-9} mt={-9} onClick={closeBanner} />
       </Group>
-      <Text c={'dimmed'} fz={'xs'}>
-        So the deal is, we want to spy on you. We would like to know what did you have for todays
-        breakfast, where do you live, how much do you earn and like 50 other things. To view our
-        landing page you will have to accept all cookies. That&apos;s all, and remember that we are
-        watching...
+      <Text c={'dimmed'} fz={'sm'}>
+        Дорогие пользователи, мы хотели бы получить вашу обратную связь относительно нашего
+        расписания для студентов и преподавателей.
       </Text>
       <Group justify={'flex-end'} mt={'md'}>
-        <Button size={'xs'} variant={'default'}>
-          Cookies preferences
+        <Button onClick={setPassedStatus} size={'sm'} variant={'default'}>
+          Уже прошел
         </Button>
-        <Button size={'xs'} variant={'outline'}>
-          Accept all
+        <Button
+          component={'a'}
+          href={'https://forms.gle/ssGmW4r5vy7PJZ2f6'}
+          size={'sm'}
+          target={'_blank'}
+          variant={'outline'}
+        >
+          Пройти опрос
         </Button>
       </Group>
     </Paper>

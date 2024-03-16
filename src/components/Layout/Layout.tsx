@@ -1,6 +1,7 @@
 import { FC, useLayoutEffect, useRef } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
+import { CookiesBanner } from '@/components/Shared/Banner/Banner.tsx'
 import { OverlayLoader } from '@/components/Shared/OverlayLoader.tsx'
 import { CurrentRole, REQUEST_STATUS } from '@/store/slices/initSlice.ts'
 import { useTimeTable } from '@/store/store.ts'
@@ -58,6 +59,8 @@ export const Layout: FC = () => {
     <>
       {isLoading && <OverlayLoader />}
 
+      <CookiesBanner />
+
       <BackgroundImage
         p={'30px'}
         radius={'md'}
@@ -73,6 +76,7 @@ export const Layout: FC = () => {
           </Text>
         </Center>
       </BackgroundImage>
+
       <Tabs defaultValue={currentRole} mt={'20px'} onChange={onChangeTabsHandler} ref={sectionRef}>
         <Tabs.List mb={'20px'}>
           <Tabs.Tab leftSection={<PiStudentBold size={20} />} value={'student'} w={'50%'}>

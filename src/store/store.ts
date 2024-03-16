@@ -1,3 +1,4 @@
+import { IBanner, bannerSlice } from '@/store/slices/bannerSlice.ts'
 import {
   IGetLinkToSchedule,
   getLinkToScheduleSlice,
@@ -9,7 +10,7 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { immer } from 'zustand/middleware/immer'
 
-export interface BoundStore extends IState, ISchedule, IGetSchedule, IGetLinkToSchedule {}
+export interface BoundStore extends IState, ISchedule, IGetSchedule, IGetLinkToSchedule, IBanner {}
 
 export const useTimeTable = create(
   persist(
@@ -19,6 +20,7 @@ export const useTimeTable = create(
         ...scheduleSlice(...a),
         ...getScheduleSlice(...a),
         ...getLinkToScheduleSlice(...a),
+        ...bannerSlice(...a),
       }))
     ),
     {

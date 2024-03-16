@@ -8,7 +8,7 @@ export function hasWeekPassed(endOfLastCoupleTimeStamp: number): boolean {
     firstDayOfWeek.getUTCFullYear(),
     firstDayOfWeek.getUTCMonth(),
     firstDayOfWeek.getUTCDate() + 6,
-    18,
+    15,
     59,
     59
   )
