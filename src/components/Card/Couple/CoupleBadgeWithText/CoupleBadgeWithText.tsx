@@ -25,6 +25,7 @@ export const CoupleBadgeWithText: FC<Props> = ({ children, color, text }) => {
         mt={0}
         radius={'md'}
         size={'lg'}
+        style={{ textTransform: 'initial' }}
         variant={isDarkTheme ? 'filled' : 'light'}
       >
         {children}
