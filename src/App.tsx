@@ -38,7 +38,7 @@ function App() {
 
   return (
     <ModalsProvider>
-      <AppShell header={{ height: 80 }} m={'auto'} maw={'1800px'}>
+      <AppShell m={'auto'} maw={'1800px'}>
         <Notifications
           autoClose={6000}
           style={{ position: 'fixed', right: 0, top: '100px', width: '300px', zIndex: '10' }}
