@@ -32,7 +32,7 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
         inheritPadding
         py={'xs'}
         style={{
-          boxShadow: 'var(--mantine-shadow-md)',
+          boxShadow: 'var(--mantine-shadow-xl)',
           borderRadius: '0 0 15px 15px',
         }}
         withBorder

@@ -14,15 +14,17 @@ export const CoupleBadgeWithText: FC<Props> = ({ children, color, text }) => {
   const isDarkTheme = ColorScheme.Dark === colorScheme
 
   return (
-    <Text fw={'500'} fz={'sm'} style={{ whiteSpace: 'break-spaces' }}>
+    <Text fw={700} fz={'md'} style={{ whiteSpace: 'nowrap' }}>
       {text}
       <Badge
         color={color}
         component={'p'}
-        fz={'xs'}
+        fz={'md'}
+        mb={0}
         ml={'10px'}
-        radius={'sm'}
-        size={'md'}
+        mt={0}
+        radius={'md'}
+        size={'lg'}
         variant={isDarkTheme ? 'filled' : 'light'}
       >
         {children}

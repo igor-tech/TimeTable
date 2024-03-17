@@ -16,13 +16,14 @@ export const Layout: FC = () => {
 
   const handleScroll = () => {
     setTimeout(() => {
-      const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
+      const selectElement = document.getElementById('select-role')
 
-      if (sectionRef.current) {
-        const currentPosition = sectionRef.current.offsetTop
+      if (selectElement) {
+        const rect = selectElement.getBoundingClientRect()
+        const scrollTop = window.scrollY || document.documentElement.scrollTop
 
         window.scrollTo({
-          top: currentPosition + vh * 0.08,
+          top: rect.top + scrollTop - 20,
           behavior: 'smooth',
         })
       }
@@ -71,7 +72,7 @@ export const Layout: FC = () => {
           <Text c={'white'} component={'h1'} fz={'xxxl'} hidden>
             Расписание УКСАП
           </Text>
-          <Text c={'white'} component={'h2'} fz={'xxxl'}>
+          <Text c={'white'} component={'h2'} fz={40}>
             Расписание
           </Text>
         </Center>

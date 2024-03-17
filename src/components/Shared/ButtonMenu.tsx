@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
-import { DEFAULT_GROUP_ID, DEFAULT_TEACHER_ID } from '@/components/config.ts'
+import { DEFAULT_GROUP_ID } from '@/components/config.ts'
 import { Theme } from '@/constants/Theme.tsx'
 import { getGroupNameDataSelect } from '@/helpers/getGroupNameDataSelect.ts'
-import { isMobileDeviceByWidth } from '@/helpers/isMobileDevice.ts'
 import { useTimeTable } from '@/store/store.ts'
 import { Flex, MultiSelect, Select, rem } from '@mantine/core'
+import { TbGhost } from 'react-icons/tb'
 
 type CustomSelectProps = {
   data: string[]
@@ -23,7 +23,8 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
   ...rest
 }) => {
   const { setSelectGroupId, groupId } = useTimeTable()
-  const isSearchable = defaultData === DEFAULT_TEACHER_ID && !isMobileDeviceByWidth()
+  // const isSearchable = (defaultData === DEFAULT_TEACHER_ID && !isMobileDeviceByWidth()) || true
+  const isSearchable = true
 
   const isStudent = defaultData === DEFAULT_GROUP_ID
 
@@ -34,11 +35,12 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
       {isStudent && (
         <MultiSelect
           checkIconPosition={'right'}
-          clearable
           data={dataSelect ?? [defaultData]}
+          id={'select-role'}
           maxDropdownHeight={rem(450)}
           maxValues={6}
           onChange={value => setSelectGroupId(value)}
+          rightSection={<TbGhost size={28} />}
           searchable={isSearchable}
           size={'lg'}
           styles={{
@@ -59,12 +61,14 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
         <Select
           checkIconPosition={'right'}
           data={dataSelect ?? [defaultData]}
+          id={'select-role'}
           maxDropdownHeight={rem(450)}
           onChange={value => onChangeSelect(value!)}
+          rightSection={<TbGhost size={28} />}
           searchable={isSearchable}
           size={'lg'}
           styles={{
-            wrapper: { boxShadow: 'var(--mantine-shadow-sm)' },
+            wrapper: { boxShadow: 'var(--mantine-shadow-md)' },
             dropdown: { boxShadow: 'var(--mantine-shadow-xl)' },
             groupLabel: { fontSize: `${Theme.fontSizes.md}` },
             input: { fontSize: `${Theme.fontSizes.lg}` },

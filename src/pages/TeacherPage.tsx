@@ -45,9 +45,10 @@ export default function TeacherPage() {
       {data && data.length > 0 && (
         <Text fz={'lg'} mt={'15px'}>
           Расписание для преподавателя{' '}
-          <Text fz={'lg'}>
-            {teacherName?.[0]} (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
-          </Text>
+          <Text display={'inline'} fw={700} fz={'lg'} style={{ whiteSpace: 'nowrap' }}>
+            {teacherName?.[0]}
+          </Text>{' '}
+          (с {data[0][0].numberDay} по {data[data.length - 1][0].numberDay})
         </Text>
       )}
 

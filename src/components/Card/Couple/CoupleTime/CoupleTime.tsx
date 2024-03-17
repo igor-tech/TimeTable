@@ -14,11 +14,11 @@ export const CoupleTime: FC<Props> = ({ coupleNumber, isPractice }) => {
 
   return (
     <Flex align={'center'} ta={'center'}>
-      <Text fz={'md'} w={'50px'}>
+      <Text fz={'lg'} w={'50px'}>
         {startCouple}
       </Text>
       <FiMinus size={15} />
-      <Text fz={'md'} w={'50px'}>
+      <Text fz={'lg'} w={'50px'}>
         {endCouple}
       </Text>
     </Flex>

@@ -27,9 +27,12 @@ export const CarouselStudentsGroup = () => {
         return (
           <Carousel.Slide key={groupName}>
             {group && group.length > 0 && (
-              <Text fz={'lg'} mt={'15px'}>
-                Группа {groupName} (с {group[0][0].numberDay} по{' '}
-                {group[group.length - 1][0].numberDay})
+              <Text fz={'lg'} id={'timetable-title'} mt={'15px'}>
+                Группа{' '}
+                <Text display={'inline'} fw={700} fz={'lg'} style={{ whiteSpace: 'nowrap' }}>
+                  {groupName}
+                </Text>{' '}
+                (с {group[0][0].numberDay} по {group[group.length - 1][0].numberDay})
               </Text>
             )}
             {group && group.length > 0 && <DaysCard data={group} />}

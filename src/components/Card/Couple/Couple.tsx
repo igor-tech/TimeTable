@@ -1,4 +1,4 @@
-import { FC, Fragment } from 'react'
+import { FC } from 'react'
 
 import { CoupleBadgeWithText } from '@/components/Card/Couple/CoupleBadgeWithText/CoupleBadgeWithText.tsx'
 import { CoupleTime } from '@/components/Card/Couple/CoupleTime/CoupleTime.tsx'
@@ -6,8 +6,8 @@ import { SessionCouple } from '@/components/Card/Couple/SessionCouple/SessionCou
 import { StatusCouple } from '@/components/Card/Couple/StatusCouple/StatusCouple.tsx'
 import { useCouple } from '@/components/Card/Couple/useCouple.tsx'
 import { ICouple } from '@/types/types.ts'
-import { Button, Card, Divider, Flex, Group, Text } from '@mantine/core'
-import { BiLogoZoom } from 'react-icons/bi'
+import { Box, Button, Card, Divider, Flex, Group, Text } from '@mantine/core'
+import { HiOutlineVideoCamera } from 'react-icons/hi'
 
 type Props = {
   couple: ICouple
@@ -25,7 +25,9 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
         <Card radius={'md'} shadow={'xl'} styles={styles} withBorder>
           <Card.Section py={'sm'} withBorder>
             <Group justify={'space-between'}>
-              <Text fw={500}>{title}</Text>
+              <Text fw={500} fz={'lg'}>
+                {title}
+              </Text>
 
               <StatusCouple couple={couple} isCurrentCouple={isCurrentCouple} />
 
@@ -42,20 +44,22 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
               <Text fz={'md'}>
                 Преподаватель:{' '}
                 {teacherName.map((teacher, i) => (
-                  <Fragment key={i}>
+                  <Text display={'inline'} fs={'italic'} fw={400} fz={'lg'} key={i}>
                     {teacher} {teacherName.length !== i + 1 && ' / '}
-                  </Fragment>
+                  </Text>
                 ))}
               </Text>
             </Flex>
-            <Flex justify={'space-between'} mt={'10px'}>
-              <CoupleBadgeWithText color={'green'} text={' Кабинет:'}>
-                {officeNumber ?? 'не указан'}
-              </CoupleBadgeWithText>
+            <Flex justify={'space-between'} mt={'12px'} rowGap={10} wrap={'wrap'}>
+              <Box mr={8}>
+                <CoupleBadgeWithText color={'green'} text={' Кабинет:'}>
+                  {officeNumber ?? 'не указан'}
+                </CoupleBadgeWithText>
+              </Box>
 
               {isTeacher && (
                 <CoupleBadgeWithText color={'blue'} text={'Группа:'}>
-                  {groupName ?? 'группа не указана'}
+                  {groupName.split(' ')?.[0] ?? 'группа не указана'}
                 </CoupleBadgeWithText>
               )}
             </Flex>
@@ -70,7 +74,8 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
                 href={link}
                 mt={'20px'}
                 radius={'md'}
-                rightSection={<BiLogoZoom size={25} />}
+                rightSection={<HiOutlineVideoCamera size={25} />}
+                size={'md'}
                 target={'_blank'}
               >
                 Ссылка на онлайн пару

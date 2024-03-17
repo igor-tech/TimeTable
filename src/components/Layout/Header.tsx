@@ -28,8 +28,8 @@ export const Header: FC = () => {
       style={{
         boxShadow:
           colorScheme === ColorScheme.Dark
-            ? '4px 4px 4px rgba(0,0,0, 0.2)'
-            : 'var(--mantine-shadow-lg)',
+            ? '0 2px 4px rgba(0, 0, 0, 0.4)'
+            : 'var(--mantine-shadow-xl)',
         borderRadius: '0 0 var(--mantine-radius-xl) var(--mantine-radius-xl)',
         border: 'calc(0.0625rem* var(--mantine-scale)) solid var(--_app-shell-border-color)',
       }}
