@@ -22,7 +22,7 @@ export const bannerSlice: GenericStateCreator<BoundStore> = (set, get) => ({
 
   initializeBanner: async () => {
     try {
-      const isDifferenceGreaterThanOneDay = dayjs(get().closeTime).diff(dayjs(), 'day') > 1
+      const isDifferenceGreaterThanOneDay = dayjs(get().closeTime).diff(dayjs(), 'day') < 0
 
       set(
         produce((state: BoundStore) => {
