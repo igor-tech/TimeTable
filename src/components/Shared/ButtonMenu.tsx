@@ -1,11 +1,11 @@
 import { FC } from 'react'
 
+import { AnimatedIcon } from '@/components/Shared/IconComponent/AnimatedIcon.tsx'
 import { DEFAULT_GROUP_ID } from '@/components/config.ts'
 import { Theme } from '@/constants/Theme.tsx'
 import { getGroupNameDataSelect } from '@/helpers/getGroupNameDataSelect.ts'
 import { useTimeTable } from '@/store/store.ts'
 import { Flex, MultiSelect, Select, rem } from '@mantine/core'
-import { TbGhost } from 'react-icons/tb'
 
 type CustomSelectProps = {
   data: string[]
@@ -40,7 +40,7 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
           maxDropdownHeight={rem(450)}
           maxValues={6}
           onChange={value => setSelectGroupId(value)}
-          rightSection={<TbGhost size={28} />}
+          rightSection={<AnimatedIcon />}
           searchable={isSearchable}
           size={'lg'}
           styles={{
@@ -64,7 +64,7 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
           id={'select-role'}
           maxDropdownHeight={rem(450)}
           onChange={value => onChangeSelect(value!)}
-          rightSection={<TbGhost size={28} />}
+          rightSection={<AnimatedIcon />}
           searchable={isSearchable}
           size={'lg'}
           styles={{
