@@ -67,19 +67,22 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
 
           {link !== null && (
             <>
-              <Divider />
-              <Button
-                component={'a'}
-                fz={'md'}
-                href={link}
-                mt={'20px'}
-                radius={'md'}
-                rightSection={<HiOutlineVideoCamera size={25} />}
-                size={'md'}
-                target={'_blank'}
-              >
-                Ссылка на онлайн пару
-              </Button>
+              <Box mt={'0.5rem'} w={'100%'}>
+                <Divider />
+                <Button
+                  component={'a'}
+                  fz={'md'}
+                  href={link}
+                  mt={'20px'}
+                  radius={'md'}
+                  rightSection={<HiOutlineVideoCamera size={25} />}
+                  size={'md'}
+                  target={'_blank'}
+                  w={'100%'}
+                >
+                  Ссылка на онлайн пару
+                </Button>
+              </Box>
             </>
           )}
         </Card>

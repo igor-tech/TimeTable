@@ -13,14 +13,10 @@ export const CoupleTime: FC<Props> = ({ coupleNumber, isPractice }) => {
   const endCouple = isPractice ? '14:00' : TIME_DATA[coupleNumber][2]
 
   return (
-    <Flex align={'center'} ta={'center'}>
-      <Text fz={'lg'} w={'50px'}>
-        {startCouple}
-      </Text>
+    <Flex align={'center'} gap={3} ta={'center'}>
+      <Text fz={'lg'}>{startCouple}</Text>
       <FiMinus size={15} />
-      <Text fz={'lg'} w={'50px'}>
-        {endCouple}
-      </Text>
+      <Text fz={'lg'}>{endCouple}</Text>
     </Flex>
   )
 }

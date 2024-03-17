@@ -3,6 +3,7 @@
     cursor: pointer;
 }
 
-.enlarged {
-    transform: scale(1.5);
+.icon.enlarged {
+    transform: scale(2.8) rotate(-5deg);
 }
+
