@@ -8,7 +8,7 @@ export interface IBanner {
   isPassed: boolean
   isShow: boolean
   validUntil: number
-  closeTime: number
+  timeToPressCloseButton: number
 
   initializeBanner: () => void
   setPassedStatus: () => void
@@ -18,11 +18,14 @@ export interface IBanner {
 export const bannerSlice: GenericStateCreator<BoundStore> = (set, get) => ({
   ...get(),
   validUntil: 1711324800000,
-  closeTime: 1711324800000,
+  timeToPressCloseButton: 0,
 
   initializeBanner: async () => {
     try {
-      const isDifferenceGreaterThanOneDay = dayjs(get().closeTime).diff(dayjs(), 'day') < 0
+      const isDifferenceGreaterThanOneDay =
+        get().timeToPressCloseButton !== 0
+          ? dayjs(get().timeToPressCloseButton).diff(dayjs(), 'hour') < 6
+          : true
 
       set(
         produce((state: BoundStore) => {
@@ -52,7 +55,7 @@ export const bannerSlice: GenericStateCreator<BoundStore> = (set, get) => ({
     try {
       set(
         produce((state: BoundStore) => {
-          state.closeTime = Date.now()
+          state.timeToPressCloseButton = Date.now()
           state.isShow = false
         })
       )
