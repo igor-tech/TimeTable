@@ -14,7 +14,7 @@ type Props = {
 export const DayCard: FC<Props> = ({ day, isTeacher }) => {
   const currentDay = new Date().getDate()
 
-  const isToday = currentDay === +day[0]?.numberDay.slice(0, 2).trim()
+  const isToday = currentDay === +day[0]?.numberDay.trim().slice(0, 2)
   const matches = useMediaQuery('(min-width: 1000px)')
 
   return (
@@ -45,7 +45,7 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
           {isToday && (
             <Badge
               color={'green'}
-              fz={'xs'}
+              fz={'sm'}
               rightSection={<TiPinOutline size={22} />}
               size={'xl'}
               variant={'light'}

@@ -4,7 +4,7 @@ import { TIME_DATA, currentCouple, nextCouple } from '@/components/config.ts'
 import { isOneHourBefore } from '@/helpers/IsOneHourBefore.tsx'
 import { randomInteger } from '@/helpers/RandomInteger.tsx'
 import { ICouple, PracticeValues } from '@/types/types.ts'
-import { Badge } from '@mantine/core'
+import { Badge, Box } from '@mantine/core'
 
 type Props = {
   couple: ICouple
@@ -27,18 +27,28 @@ export const StatusCouple: FC<Props> = ({ couple, isCurrentCouple }) => {
     isOneHourBefore(isPractice ? '9:00' : TIME_DATA[coupleNumber][1]) && !isCurrentCouple && isToday
 
   return (
-    <>
+    <Box pos={'relative'}>
       {isCurrentCouple && (
-        <Badge color={'green'} fz={'xs'} radius={'xs'} size={'md'} variant={'light'}>
+        <Badge
+          color={'green'}
+          fz={'xs'}
+          left={'50%'}
+          pos={'absolute'}
+          radius={'md'}
+          size={'lg'}
+          style={{ transform: 'translate(-50%, -50%)' }}
+          top={'50%'}
+          variant={'light'}
+        >
           {currentCouple[randomIndex]}
         </Badge>
       )}
 
       {isNextCouple && (
-        <Badge color={'orange'} fz={'xs'} ml={'10px'} radius={'lg'} size={'md'} variant={'light'}>
+        <Badge color={'orange'} fz={'xs'} ml={'10px'} radius={'md'} size={'md'} variant={'light'}>
           {nextCouple[randomIndex]}
         </Badge>
       )}
-    </>
+    </Box>
   )
 }

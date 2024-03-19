@@ -1,7 +1,8 @@
 import { TIME_DATA } from '@/components/config.ts'
+import { ColorScheme } from '@/constants/colorShceme.ts'
 import { checkTimeInInterval } from '@/helpers/CheckTimeInInterval.tsx'
 import { ICouple, PracticeValues } from '@/types/types.ts'
-import { CSSProperties, CardStylesNames } from '@mantine/core'
+import { CSSProperties, CardStylesNames, useMantineColorScheme } from '@mantine/core'
 
 type Props = {
   couple: ICouple
@@ -11,20 +12,23 @@ type ReturnUseCouple = {
   isCurrentCouple: boolean
   isPractice: boolean
   isSession: boolean
-  styles: Partial<Record<CardStylesNames, CSSProperties>>
+  isToday: boolean
+  style: Partial<Record<CardStylesNames, CSSProperties>>
   title: string
 }
 
 export const useCouple = ({ couple }: Props): ReturnUseCouple => {
   const { coupleNumber, numberDay } = couple
+  const { colorScheme } = useMantineColorScheme()
 
+  const isDark = colorScheme === ColorScheme.Dark
   const isPractice =
     couple.practiceType === PracticeValues.INTERNSHIP ||
     couple.practiceType === PracticeValues.EDUCATIONAL
 
   const currentDay = new Date().getDate()
 
-  const isToday = currentDay === +numberDay.slice(0, 2).trim()
+  const isToday = currentDay === +numberDay.trim().slice(0, 2)
 
   const isCurrentCouple =
     checkTimeInInterval(
@@ -36,15 +40,16 @@ export const useCouple = ({ couple }: Props): ReturnUseCouple => {
 
   const isSession = couple.practiceType === PracticeValues.SESSION
 
-  const styles = {
+  const style = {
     root: isCurrentCouple
       ? {
-          transform: 'scale(1.03, 1.1) translateY(10px)',
+          transform: 'scale(1.03, 1.13) translateY(13px)',
           zIndex: '1',
+          boxShadow: isDark ? '2px 2px 4px 2px rgba(0, 0, 0, 0.3)' : 'var(--mantine-shadow-xl)',
         }
       : {},
     section: isCurrentCouple ? { borderColor: 'var(--mantine-color-green-2)' } : {},
   }
 
-  return { isCurrentCouple, isPractice, styles, title, isSession }
+  return { isCurrentCouple, isPractice, style, title, isSession, isToday }
 }

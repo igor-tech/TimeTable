@@ -9,6 +9,8 @@ import { ICouple } from '@/types/types.ts'
 import { Box, Button, Card, Divider, Flex, Group, Text } from '@mantine/core'
 import { HiOutlineVideoCamera } from 'react-icons/hi'
 
+import styles from './Couple.module.css'
+
 type Props = {
   couple: ICouple
   isTeacher?: boolean
@@ -16,13 +18,19 @@ type Props = {
 export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
   const { coupleNumber, groupName, officeNumber, subjectName, teacherName, link, courseNumber } =
     couple
-  const { isCurrentCouple, isPractice, styles, title, isSession } = useCouple({ couple })
+  const { isCurrentCouple, isPractice, style, title, isSession } = useCouple({ couple })
 
   return (
     <>
       {isSession && <SessionCouple couple={couple} courseNumber={courseNumber} />}
       {!isSession && (
-        <Card radius={'md'} shadow={'xl'} styles={styles} withBorder>
+        <Card
+          className={`${isCurrentCouple && styles.runningBorder}`}
+          radius={'md'}
+          shadow={'xl'}
+          styles={style}
+          withBorder
+        >
           <Card.Section py={'sm'} withBorder>
             <Group justify={'space-between'}>
               <Text fw={500} fz={'lg'}>

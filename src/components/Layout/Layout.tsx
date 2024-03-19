@@ -23,7 +23,7 @@ export const Layout: FC = () => {
         const scrollTop = window.scrollY || document.documentElement.scrollTop
 
         window.scrollTo({
-          top: rect.top + scrollTop - 30,
+          top: rect.top + scrollTop - 25,
           behavior: 'smooth',
         })
       }
