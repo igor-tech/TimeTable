@@ -67,7 +67,7 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
 
               {isTeacher && (
                 <CoupleBadgeWithText color={'blue'} text={'Группа:'}>
-                  {groupName.split(' ')?.[0] ?? 'группа не указана'}
+                  {groupName ?? 'группа не указана'}
                 </CoupleBadgeWithText>
               )}
             </Flex>
