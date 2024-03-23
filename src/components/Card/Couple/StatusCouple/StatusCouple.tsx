@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
 import { TIME_DATA, currentCouple, nextCouple } from '@/components/config.ts'
-import { isOneHourBefore } from '@/helpers/IsOneHourBefore.tsx'
+import { isOneHourAndHalfBefore } from '@/helpers/IsOneHourAndHalfBefore.tsx'
 import { randomInteger } from '@/helpers/RandomInteger.tsx'
 import { ICouple, PracticeValues } from '@/types/types.ts'
 import { Badge, Box } from '@mantine/core'
@@ -15,7 +15,7 @@ export const StatusCouple: FC<Props> = ({ couple, isCurrentCouple }) => {
 
   const currentDay = new Date().getDate()
 
-  const isToday = currentDay === +numberDay.slice(0, 2).trim()
+  const isToday = currentDay === +numberDay.trim().slice(0, 2)
 
   const isPractice =
     couple.practiceType === PracticeValues.INTERNSHIP ||
@@ -24,7 +24,9 @@ export const StatusCouple: FC<Props> = ({ couple, isCurrentCouple }) => {
   const randomIndex = randomInteger(3)
 
   const isNextCouple =
-    isOneHourBefore(isPractice ? '9:00' : TIME_DATA[coupleNumber][1]) && !isCurrentCouple && isToday
+    isOneHourAndHalfBefore(isPractice ? '9:00' : TIME_DATA[coupleNumber][1]) &&
+    !isCurrentCouple &&
+    isToday
 
   return (
     <Box pos={'relative'}>

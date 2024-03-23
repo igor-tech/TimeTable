@@ -10,7 +10,7 @@
   top: -2px;
   height: 2px;
   border-radius: var(--mantine-radius-md);
-  background-color: var(--mantine-color-green-2);
+  background-color: var(--mantine-color-green-3);
   animation: running-border 10s ease-in-out 2;
   box-sizing: border-box;
 }

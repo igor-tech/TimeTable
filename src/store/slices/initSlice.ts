@@ -101,11 +101,14 @@ export const initSlice: GenericStateCreator<BoundStore> = (set, get) => ({
 
       const isAfterSaturday16 = currentDayOfWeek === 6 && currentHour >= 16
 
-      const daysToAdd = (currentDayOfWeek === 0 && 1) || (isAfterSaturday16 && 1) || 0
+      const daysToAdd = (currentDayOfWeek === 0 && 1) || (isAfterSaturday16 && 2) || 0
 
       set(
         produce((state: BoundStore) => {
-          state.firstDayOfWeek = dayjs().startOf('week').add(daysToAdd, 'day').valueOf()
+          state.firstDayOfWeek =
+            daysToAdd === 0
+              ? dayjs().startOf('week').valueOf()
+              : dayjs().startOf('day').add(daysToAdd, 'day').valueOf()
         })
       )
     } catch (e) {
