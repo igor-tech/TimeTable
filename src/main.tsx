@@ -1,8 +1,8 @@
 import { BrowserRouter } from 'react-router-dom'
 
-import App from '@/App.tsx'
-import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary.tsx'
-import { Theme } from '@/constants/Theme.tsx'
+import App from '@/app/App.tsx'
+import ErrorBoundary from '@/common/components/ErrorBoundary/ErrorBoundary.tsx'
+import { Theme } from '@/common/constants/theme.ts'
 import { MantineProvider } from '@mantine/core'
 import ReactDOM from 'react-dom/client'
 

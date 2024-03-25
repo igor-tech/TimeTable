@@ -1,0 +1,13 @@
+.indicator {
+    width: 12px;
+    height: 4px;
+    transition: width 450ms ease;
+    background-color: var(--mantine-color-blue-5);
+
+    &[data-active] {
+        width: 40px;
+    }
+}
+.indicators {
+    top: 35px;
+}

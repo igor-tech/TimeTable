@@ -1,0 +1,29 @@
+.root {
+  padding-top: calc(var(--mantine-spacing-xl) * 6);
+  padding-bottom: calc(var(--mantine-spacing-xl) * 6);
+}
+
+.title {
+  font-weight: 900;
+  font-size: 3rem;
+  margin-bottom: var(--mantine-spacing-md);
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+}
+
+@media (max-width: 800px) {
+  .title {
+    font-size: 3rem;
+  }
+
+  .control {
+    width: 100%;
+  }
+
+  .root {
+    padding-top: calc(var(--mantine-spacing-xl) * 1);
+    padding-bottom: calc(var(--mantine-spacing-xl) * 1);
+  }
+}
+
