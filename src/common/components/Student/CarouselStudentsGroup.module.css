@@ -9,5 +9,8 @@
     }
 }
 .indicators {
-    top: 35px;
+    display: flex;
+    justify-content: right;
+    top: 4.5rem;
+    right: 20px;
 }
