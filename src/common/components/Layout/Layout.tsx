@@ -53,7 +53,7 @@ export const Layout: FC = () => {
     return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
   }, [getScheduleInBackground])
 
-  const isLoading = status === REQUEST_STATUS.LOADING || couple.length === 0
+  const isLoading = status === REQUEST_STATUS.LOADING || !couple || couple?.length === 0
 
   return (
     <>
