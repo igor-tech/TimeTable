@@ -21,14 +21,15 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
   const { isCurrentCouple, isPractice, style, title, isSession } = useCouple({ couple })
 
   return (
-    <>
+    <Box className={`${isCurrentCouple && styles.runningBorder}`}>
       {isSession && <SessionCouple couple={couple} courseNumber={courseNumber} />}
       {!isSession && (
         <Card
-          className={`${isCurrentCouple && styles.runningBorder}`}
           radius={'lg'}
           shadow={'sm'}
+          style={{ zIndex: 2 }}
           styles={style}
+          w={'100%'}
           withBorder
         >
           <Card.Section py={'sm'} withBorder>
@@ -96,6 +97,6 @@ export const Couple: FC<Props> = ({ couple, isTeacher = false }) => {
           )}
         </Card>
       )}
-    </>
+    </Box>
   )
 }

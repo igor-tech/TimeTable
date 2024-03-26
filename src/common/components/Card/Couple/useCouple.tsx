@@ -1,8 +1,7 @@
 import { TIME_DATA } from '@/common/components/config.ts'
-import { ColorScheme } from '@/common/constants/colorShceme.ts'
 import { checkTimeInInterval } from '@/common/helpers/CheckTimeInInterval.ts'
 import { ICouple, PracticeValues } from '@/common/types/types.ts'
-import { CSSProperties, CardStylesNames, useMantineColorScheme } from '@mantine/core'
+import { CSSProperties, CardStylesNames } from '@mantine/core'
 
 type Props = {
   couple: ICouple
@@ -19,9 +18,7 @@ type ReturnUseCouple = {
 
 export const useCouple = ({ couple }: Props): ReturnUseCouple => {
   const { coupleNumber, numberDay } = couple
-  const { colorScheme } = useMantineColorScheme()
 
-  const isDark = colorScheme === ColorScheme.Dark
   const isPractice =
     couple.practiceType === PracticeValues.INTERNSHIP ||
     couple.practiceType === PracticeValues.EDUCATIONAL
@@ -41,13 +38,6 @@ export const useCouple = ({ couple }: Props): ReturnUseCouple => {
   const isSession = couple.practiceType === PracticeValues.SESSION
 
   const style = {
-    root: isCurrentCouple
-      ? {
-          transform: 'scale(1.03, 1.13) translateY(13px)',
-          zIndex: '1',
-          boxShadow: isDark ? '2px 2px 4px 2px rgba(0, 0, 0, 0.3)' : 'var(--mantine-shadow-xl)',
-        }
-      : {},
     section: isCurrentCouple ? { borderColor: 'var(--mantine-color-green-2)' } : {},
   }
 

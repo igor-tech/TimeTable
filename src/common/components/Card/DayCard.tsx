@@ -28,9 +28,10 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
       mb={10}
       mt={10}
       pb={'40px'}
+      pos={'relative'}
       radius={'xl'}
       shadow={'xl'}
-      style={{ flex: '1 0 auto' }}
+      style={{ flex: '1 0 auto', overflow: 'visible', background: 'transparent' }}
       w={'450px'}
       withBorder
     >
@@ -42,7 +43,7 @@ export const DayCard: FC<Props> = ({ day, isTeacher }) => {
             colorScheme === ColorScheme.Dark
               ? '2px 2px 6px 2px rgba(0, 0, 0, 0.2)'
               : 'var(--mantine-shadow-xl)',
-          borderRadius: '0 0 var(--mantine-radius-xl) var(--mantine-radius-xl)',
+          borderRadius: 'var(--mantine-radius-xl)',
           textAlign: 'center',
         }}
         withBorder

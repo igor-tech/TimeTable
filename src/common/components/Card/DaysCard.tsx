@@ -42,7 +42,7 @@ export const DaysCard: FC<Props> = ({ data, isTeacher }) => {
   })
 
   return (
-    <Box>
+    <Box pb={30} pl={'.2rem'} pr={'.2rem'}>
       {isAnyDayHidden && (
         <Chip
           color={'green'}

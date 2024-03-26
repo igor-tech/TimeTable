@@ -5,12 +5,12 @@
     background-color: var(--mantine-color-blue-5);
 
     &[data-active] {
-        width: 40px;
+        width: 50px;
     }
 }
 .indicators {
     display: flex;
     justify-content: right;
-    top: 4.5rem;
+    top: 4.7rem;
     right: 20px;
 }

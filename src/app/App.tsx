@@ -51,7 +51,7 @@ function App() {
         >
           <Header />
         </AppShell.Header>
-        <AppShell.Main p={15} pt={'105px'}>
+        <AppShell.Main p={'0.5rem'} pt={'105px'}>
           <Suspense fallback={<OverlayLoader />}>
             <Routes>
               <Route element={<Navigate to={`/${currentRole}`} />} path={'/'} />
