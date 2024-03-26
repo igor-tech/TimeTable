@@ -22,9 +22,20 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
   value,
   ...rest
 }) => {
+  const { setSelectGroupId, groupId } = useTimeTable()
   const [isOpen, setIsOpen] = useState(false)
 
-  const { setSelectGroupId, groupId } = useTimeTable()
+  const onChangeGroupIdHandler = (value: string[]) => {
+    setSelectGroupId(value)
+    setIsOpen(false)
+  }
+
+  const onChangeTeacherIdHandler = (value: null | string) => {
+    if (value) {
+      onChangeSelect(value)
+      setIsOpen(false)
+    }
+  }
 
   const isStudent = defaultData === DEFAULT_GROUP_ID
 
@@ -47,7 +58,7 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
           maxDropdownHeight={rem(450)}
           maxValues={6}
           onBlur={() => setIsOpen(false)}
-          onChange={value => setSelectGroupId(value)}
+          onChange={onChangeGroupIdHandler}
           onClick={() => setIsOpen(!isOpen)}
           radius={'lg'}
           rightSection={<AnimatedIcon />}
@@ -84,7 +95,7 @@ export const ButtonMenu: FC<CustomSelectProps> = ({
           dropdownOpened={isOpen}
           maxDropdownHeight={rem(450)}
           onBlur={() => setIsOpen(false)}
-          onChange={value => onChangeSelect(value!)}
+          onChange={onChangeTeacherIdHandler}
           onClick={() => setIsOpen(!isOpen)}
           radius={'lg'}
           rightSection={<AnimatedIcon />}
