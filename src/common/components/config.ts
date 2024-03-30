@@ -56,7 +56,7 @@ export const CLASS_ROOM_HOURS_DATA = [
 export const SESSION_LINK_BY_COURSE: Record<string, string> = {
   '1': 'https://drive.google.com/file/d/1x-lDkmEiZvL_sgACYp7da4HIRKlTBRgy/view?usp=sharing',
   '2': 'https://drive.google.com/file/d/1MdRzZKlUsguGmFDt2CkfCGzS6gSk0YfT/view?usp=sharing',
-  '3': 'https://drive.google.com/file/d/15oRVwMMe5aOyV9xtzkXqHdhJjejpoRNw/view?usp=sharing',
-  '4': 'https://drive.google.com/file/d/1wnqfIu7JY3OTue1UhR4-Azda4wETV8GN/view?usp=sharing',
-  '5': 'https://drive.google.com/file/d/12-4zqFc8pZQwhDvvrIyhU1Ta0TZ_I5LM/view?usp=sharing',
+  '3': 'https://drive.google.com/file/d/1g_pY5rcpZ2R2fYVxdzwKRfcBgBENrv-V/view?usp=sharing',
+  '4': 'https://drive.google.com/file/d/1O06-V9POv25ZuvO0vSeVhQrF3B_OvZGP/view?usp=sharing',
+  '5': 'https://drive.google.com/file/d/1GWTqPK6SSOIXVWr22S_mjF8OMpD97M_a/view?usp=sharing',
 }
