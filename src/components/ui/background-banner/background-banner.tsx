@@ -6,7 +6,7 @@ export const BackgroundBanner = () => {
       <BackgroundImage
         p={'30px'}
         radius={'md'}
-        src={'src/assets/images/bg-banner.png'}
+        src={'/assets/images/bg-banner.png'}
         styles={{ root: { objectFit: 'cover' } }}
       >
         <Center p={'md'}>

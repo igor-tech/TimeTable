@@ -18,7 +18,7 @@ export default function NotFound() {
         <Image
           className={styles.mobileImage}
           loading={'lazy'}
-          src={'src/assets/illustrations/not-found.svg'}
+          src={'/assets/illustrations/not-found.svg'}
         />
         <Box>
           <Title className={styles.title}>Что-то пошло не так...</Title>

@@ -10,8 +10,8 @@ import styles from './header.module.css'
 export const Header = () => {
   const { colorScheme } = useMantineColorScheme()
 
-  const logoDarkUrl = 'src/assets/logo/logo-dark.png'
-  const logoLightUrl = 'src/assets/logo/logo-light.png'
+  const logoDarkUrl = '/assets/logo/logo-dark.png'
+  const logoLightUrl = '/assets/logo/logo-light.png'
 
   const logoUrl = colorScheme === ColorScheme.Dark ? logoDarkUrl : logoLightUrl
 

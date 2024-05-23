@@ -10,7 +10,7 @@ import classes from './HeroPage.module.css'
 
 export default function HeroPage() {
   const { setVisitStatus } = useTimeTable()
-  const [imageSrc, setImageSrc] = useState('src/assets/hero-page.png')
+  const [imageSrc, setImageSrc] = useState('/assets/images/hero-page.png')
   const navigate = useNavigate()
 
   const handleImageError = () => {

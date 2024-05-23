@@ -13,7 +13,7 @@ export const SessionCouple = ({ courseNumber, couple }: Props) => {
   return (
     <Card radius={'md'} withBorder>
       <Card.Section p={0}>
-        <Image alt={'session image'} src={'src/assets/images/session-mem.jpg'} />
+        <Image alt={'session image'} src={'/assets/images/session-mem.jpg'} />
       </Card.Section>
 
       <Card.Section mt={'lg'}>
