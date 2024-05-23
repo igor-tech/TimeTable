@@ -19,8 +19,9 @@
 })(window, document, 'script', 'https://mc.yandex.ru/metrika/tag.js', 'ym')
 
 ym(95742060, 'init', {
-  clickmap: true,
+  clickmap: false,
   trackLinks: true,
   accurateTrackBounce: true,
   webvisor: true,
+  trackHash: true,
 })

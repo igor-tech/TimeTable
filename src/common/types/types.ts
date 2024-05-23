@@ -1,4 +1,4 @@
-import { GROUP_NAME } from '@/common/components/config.ts'
+import { GROUP_NAME } from '@/common/constants/config'
 
 export type DayOfWeek =
   | 'Воскресенье'
@@ -8,12 +8,6 @@ export type DayOfWeek =
   | 'Среда'
   | 'Суббота'
   | 'Четверг'
-
-export interface IDay {
-  couples: ICouple[]
-  startTime: number // Время начала пары
-  endTime: number // Время конца пары
-}
 
 // Интерфейс пары
 export interface ICouple {

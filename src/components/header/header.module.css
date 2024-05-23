@@ -1,0 +1,20 @@
+.header {
+  border-radius: 0 0 var(--mantine-radius-xl) var(--mantine-radius-xl);
+  width: 100%;
+}
+
+.header_inner {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 20px;
+  padding-block: 10px;
+  border-radius: 0 0 var(--mantine-radius-xl) var(--mantine-radius-xl);
+  border: calc(0.0625rem * var(--mantine-scale)) solid var(--_app-shell-border-color);
+}
+
+@media (min-width: 580px) {
+  .header {
+    padding-inline: 20px;
+  }
+}

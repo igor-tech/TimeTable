@@ -1,3 +1,8 @@
+html body[data-scroll-locked] {
+  --removed-body-scroll-bar-size: 0 !important;
+  margin-right: 0 !important;
+}
+
 :root[data-mantine-color-scheme='dark'] {
   --react-international-phone-background-color: #25262b;
   --react-international-phone-text-color: #c1c2c5;

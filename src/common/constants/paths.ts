@@ -1,6 +1,6 @@
-export const Paths = {
-  TIMETABLE: '/',
-  HOME: '/main',
+export const PATHS = {
+  BASE: '/',
+  ABOUT: '/about',
   NOT_FOUND: '*',
   STUDENT: '/student',
   TEACHER: '/teacher',
