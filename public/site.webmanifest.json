@@ -17,8 +17,5 @@
     "theme_color": "#fff",
     "background_color": "#fff",
     "display": "standalone",
-    "scope": "uksap.vercel.app/",
-    "start_url": "uksap.vercel.app/student",
-    "id": "uksap.vercel.app/student",
     "lang": "ru"
 }
