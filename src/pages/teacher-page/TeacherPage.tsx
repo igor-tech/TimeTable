@@ -37,7 +37,7 @@ export function TeacherPage() {
         data={teacherList}
         defaultData={DEFAULT_TEACHER_ID}
         onChangeSelect={handleUpdateTeacherId}
-        placeholder={'Выберите перподавателя'}
+        placeholder={'Выберите преподавателя'}
         value={teacherId}
       />
 

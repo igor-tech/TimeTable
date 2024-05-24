@@ -18,7 +18,14 @@ export const Couple = ({ couple, isTeacher = false }: Props) => {
 
   return (
     <Box className={`${isCurrentCouple && styles.runningBorder}`}>
-      <Card radius={'lg'} shadow={'sm'} style={{ zIndex: 2 }} styles={style} w={'100%'} withBorder>
+      <Card
+        radius={'lg'}
+        shadow={'xl'}
+        style={{ boxShadow: 'rgba(99, 99, 99, 0.12) 0px 2px 8px' }}
+        styles={style}
+        w={'100%'}
+        withBorder
+      >
         <Card.Section py={'sm'} withBorder>
           <Group justify={'space-between'}>
             <Text fw={500} fz={'lg'}>

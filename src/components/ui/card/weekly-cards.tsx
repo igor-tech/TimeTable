@@ -1,22 +1,28 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, memo, useEffect, useState } from 'react'
 
 import { SIXTY_MINUTES } from '@/common/constants/config'
 import { Theme } from '@/common/constants/theme'
 import { ICouple } from '@/common/types'
 import { hasWeekPassed } from '@/common/utils/HasWeekPassed'
 import { DayCard } from '@/components/ui/card/day-card'
-import { Box, Chip, Flex, Text } from '@mantine/core'
+import { Box, Chip, Flex, Grid, Text } from '@mantine/core'
+import { useMediaQuery } from '@mantine/hooks'
 
 type Props = {
   data: ICouple[][]
   isTeacher?: boolean
 }
 
-export const WeeklyCards = ({ data, isTeacher }: Props) => {
+export const WeeklyCards = memo(({ data, isTeacher }: Props) => {
   const [hidePrevDay, setHidePrevDay] = useState<boolean>(true)
   const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
 
   const currentDay = Date.now()
+
+  const tablet = useMediaQuery('(max-width: 1400px)')
+  const mobile = useMediaQuery('(max-width: 1000px)')
+
+  const columnsCount = (mobile && 1) || (tablet && 2) || 3
 
   const shouldShowDay = (day: ICouple[]): boolean => {
     const isWeekPassed = !hasWeekPassed(day[day.length - 1].endTime)
@@ -67,15 +73,21 @@ export const WeeklyCards = ({ data, isTeacher }: Props) => {
         </Flex>
       )}
 
-      <Flex gap={'20px'} justify={'flex-start'} mt={'2px'} w={'100%'} wrap={'wrap'}>
+      <Grid columns={columnsCount} gutter={'lg'} justify={'flex-start'} pb={2} pt={2} w={'100%'}>
         {data?.map((day, i) => {
           const isShow = shouldShowDay(day)
 
           return (
-            <Fragment key={i}>{isShow && <DayCard day={day} isTeacher={isTeacher} />}</Fragment>
+            <Fragment key={i}>
+              {isShow && (
+                <Grid.Col span={1}>
+                  <DayCard day={day} isTeacher={isTeacher} />
+                </Grid.Col>
+              )}
+            </Fragment>
           )
         })}
-      </Flex>
+      </Grid>
     </Box>
   )
-}
+})

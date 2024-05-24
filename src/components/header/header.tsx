@@ -16,7 +16,7 @@ export const Header = () => {
   const logoUrl = colorScheme === ColorScheme.Dark ? logoDarkUrl : logoLightUrl
 
   return (
-    <AppShell.Header className={styles.header} pos={'fixed'} withBorder={false}>
+    <AppShell.Header className={styles.header} h={80} pos={'fixed'} withBorder={false}>
       <Flex
         className={styles.header_inner}
         style={{
