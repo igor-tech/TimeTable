@@ -12,10 +12,12 @@
   padding-block: 10px;
   border-radius: 0 0 var(--mantine-radius-xl) var(--mantine-radius-xl);
   border: calc(0.0625rem * var(--mantine-scale)) solid var(--_app-shell-border-color);
+  border-top: none;
 }
 
-@media (min-width: 580px) {
+@media (min-width: 768px) {
   .header {
     padding-inline: 20px;
   }
 }
+
