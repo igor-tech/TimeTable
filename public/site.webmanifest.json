@@ -1,7 +1,7 @@
 {
     "name": "Расписание - УКСАП",
     "short_name": "Расписание - УКСАП",
-    "description": "",
+    "description": "Расписание учебных занятий. Посмотрите актуальное расписание лекций, пар и практических занятий.",
     "icons": [
         {
             "src": "/icons/android-chrome-96x96.png",
@@ -17,7 +17,8 @@
     "theme_color": "#fff",
     "background_color": "#fff",
     "display": "standalone",
-    "scope": "/",
-    "start_url": "/",
+    "scope": "uksap.vercel.app/",
+    "start_url": "uksap.vercel.app/student",
+    "id": "uksap.vercel.app/student",
     "lang": "ru"
 }

@@ -15,13 +15,21 @@ export const ThemeSwitch = () => {
   const theme = useMantineTheme()
   const { colorScheme, setColorScheme, toggleColorScheme } = useMantineColorScheme()
 
+  const metaBackgroundColor = document.head.querySelector('meta[name="background-color"]')
+
+  const metaThemeColor = document.head.querySelector('meta[name="theme-color"]')
+
   const isDarkTheme = colorScheme === ColorScheme.Dark
 
   const getSystemTheme = useCallback(() => {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       setColorScheme(ColorScheme.Dark)
+      metaBackgroundColor?.setAttribute('content', '#1a1b1e')
+      metaThemeColor?.setAttribute('content', '#1a1b1e')
     } else {
       setColorScheme(ColorScheme.Light)
+      metaBackgroundColor?.setAttribute('content', '#fff')
+      metaThemeColor?.setAttribute('content', '#fff')
     }
   }, [setColorScheme])
 
@@ -30,6 +38,9 @@ export const ThemeSwitch = () => {
 
     if (colorSchemeLocalStorage) {
       setColorScheme(colorSchemeLocalStorage as MantineColorScheme)
+
+      metaBackgroundColor?.setAttribute('content', isDarkTheme ? '#1a1b1e' : '#fff')
+      metaThemeColor?.setAttribute('content', isDarkTheme ? '#1a1b1e' : '#fff')
 
       return
     }
