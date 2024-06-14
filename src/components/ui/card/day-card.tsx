@@ -25,6 +25,7 @@ export const DayCard: FC<Props> = memo(({ day, isTeacher }) => {
 
   return (
     <Card
+      h={'fit-content'}
       mb={40}
       mt={10}
       pb={'40px'}

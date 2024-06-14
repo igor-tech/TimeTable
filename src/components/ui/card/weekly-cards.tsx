@@ -5,8 +5,9 @@ import { Theme } from '@/common/constants/theme'
 import { ICouple } from '@/common/types'
 import { hasWeekPassed } from '@/common/utils/HasWeekPassed'
 import { DayCard } from '@/components/ui/card/day-card'
-import { Box, Chip, Flex, Grid, Text } from '@mantine/core'
-import { useMediaQuery } from '@mantine/hooks'
+import { Box, Chip, Flex, Text } from '@mantine/core'
+
+import styles from './weekly-cards.module.css'
 
 type Props = {
   data: ICouple[][]
@@ -18,11 +19,6 @@ export const WeeklyCards = memo(({ data, isTeacher }: Props) => {
   const [isAnyDayHidden, setIsAnyDayHidden] = useState<boolean>(false)
 
   const currentDay = Date.now()
-
-  const tablet = useMediaQuery('(max-width: 1400px)')
-  const mobile = useMediaQuery('(max-width: 1000px)')
-
-  const columnsCount = (mobile && 1) || (tablet && 2) || 3
 
   const shouldShowDay = (day: ICouple[]): boolean => {
     const isWeekPassed = !hasWeekPassed(day[day.length - 1].endTime)
@@ -73,21 +69,15 @@ export const WeeklyCards = memo(({ data, isTeacher }: Props) => {
         </Flex>
       )}
 
-      <Grid columns={columnsCount} gutter={'lg'} justify={'flex-start'} pb={2} pt={2} w={'100%'}>
+      <div className={styles.grid}>
         {data?.map((day, i) => {
           const isShow = shouldShowDay(day)
 
           return (
-            <Fragment key={i}>
-              {isShow && (
-                <Grid.Col span={1}>
-                  <DayCard day={day} isTeacher={isTeacher} />
-                </Grid.Col>
-              )}
-            </Fragment>
+            <Fragment key={i}>{isShow && <DayCard day={day} isTeacher={isTeacher} />}</Fragment>
           )
         })}
-      </Grid>
+      </div>
     </Box>
   )
 })

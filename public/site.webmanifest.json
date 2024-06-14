@@ -1,21 +1,27 @@
 {
-    "name": "Расписание - УКСАП",
-    "short_name": "Расписание - УКСАП",
-    "description": "Расписание учебных занятий. Посмотрите актуальное расписание лекций, пар и практических занятий.",
-    "icons": [
-        {
-            "src": "/icons/android-chrome-96x96.png",
-            "sizes": "96x96",
-            "type": "image/png"
-        },
-        {
-            "src": "/icons/apple-touch-icon.png",
-            "sizes": "76x76",
-            "type": "image/png"
-        }
-    ],
-    "theme_color": "#fff",
-    "background_color": "#fff",
-    "display": "standalone",
-    "lang": "ru"
+  "name": "Расписание - УКСАП",
+  "short_name": "Расписание - УКСАП",
+  "description": "Расписание учебных занятий. Посмотрите актуальное расписание лекций, пар и практических занятий.",
+  "icons": [
+    {
+      "src": "./icons/android-chrome-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "./icons/apple-touch-icon.png",
+      "sizes": "76x76",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#fff",
+  "background_color": "#fff",
+  "display": "standalone",
+  "capture_links": "existing_client_event",
+  "url_handlers": [
+    {
+      "origin": "https://uksap.vercel.app"
+    }
+  ],
+  "lang": "ru"
 }
