@@ -10,12 +10,13 @@ export const getGroupNameDataSelect = (names: string[]): GroupNames[] => {
   const groupData: GroupNames[] = []
   const groupItemsMap = new Map()
   const groupKeys = Object.keys(GROUP_NAME)
+  const defaultGroupKey = GROUP_NAME['Остальные']
 
   names.forEach(name => {
     const extractedLetters = extractText(name) as KeysGroupName
 
     if (extractedLetters && groupKeys.includes(extractedLetters)) {
-      const groupKey = truncateString(GROUP_NAME[extractedLetters], 40)
+      const groupKey = truncateString(GROUP_NAME[extractedLetters], 80)
 
       if (groupItemsMap.has(groupKey)) {
         const allValues = groupItemsMap.get(groupKey)
@@ -24,6 +25,12 @@ export const getGroupNameDataSelect = (names: string[]): GroupNames[] => {
       } else {
         groupItemsMap.set(groupKey, [name])
       }
+    } else if (groupItemsMap.has(defaultGroupKey)) {
+      const allValues = groupItemsMap.get(defaultGroupKey)
+
+      groupItemsMap.set(defaultGroupKey, [...allValues, name])
+    } else {
+      groupItemsMap.set(defaultGroupKey, [name])
     }
   })
 

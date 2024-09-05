@@ -64,7 +64,6 @@ export const CustomSelect: FC<CustomSelectProps> = ({
           onClick={() => setIsOpen(!isOpen)}
           radius={'lg'}
           rightSection={<InputAnimatedIcon />}
-          searchable
           size={'xl'}
           styles={{
             wrapper: {
